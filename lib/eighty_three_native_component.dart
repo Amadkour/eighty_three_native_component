@@ -11,8 +11,6 @@ import 'package:eighty_three_native_component/core/utils/parsing/parent_model.da
 
 import 'core/res/src/cubit/currency/provider/repo/currency_repo.dart';
 
-export '/core/shared/authentication/modules/otp/controller/otp_cubit.dart';
-export '/core/shared/authentication/modules/otp/provider/repo/otp_repo.dart';
 
 String tr(String key, {bool isError = false}) {
   if (!isError) {

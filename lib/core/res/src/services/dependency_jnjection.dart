@@ -20,8 +20,8 @@ import 'package:image_picker/image_picker.dart';
 
 final GetIt sl = GetIt.instance;
 
-class CustomDependencyInjection {
-  static setUp({String? apiBaseUrl}) async {
+class NativeCustomDependencyInjection {
+  static nativeSetUp({String? apiBaseUrl}) async {
     //! packages
     registerSingleton(
       () => const FlutterSecureStorage(),
@@ -80,6 +80,6 @@ class CustomDependencyInjection {
 
   static Future<void> reInitialize() async {
     await sl.reset();
-    await setUp();
+    await nativeSetUp();
   }
 }

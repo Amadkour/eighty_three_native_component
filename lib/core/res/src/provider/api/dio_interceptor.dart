@@ -6,7 +6,6 @@ import 'package:dio/dio.dart';
 
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/provider/model/logged_in_user_model.dart';
-import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
 
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/dialogs/api_error_dialogs.dart';
