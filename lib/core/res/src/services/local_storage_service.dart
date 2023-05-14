@@ -3,11 +3,11 @@ library eighty_three_component;
 import 'dart:developer';
 
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
-import 'package:eighty_three_native_component/core/res/src/provider/model/logged_in_user_model.dart';
+import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
+import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constant/shared_orefrences_keys.dart';
 
 class LocalStorageService {
   late SharedPreferences _sharedPreferences;
@@ -61,7 +61,8 @@ class LocalStorageService {
   Future<void> removeSession() async {
     await removeAllSecureKeys();
     await removeAllKeysInSharedPreferencesExceptLanguage();
-    loggedInUser = LoggedInUser();
+
+    currentUserPermission = UserPermission();
     writeKey(appInstalled, true);
   }
 
@@ -97,57 +98,59 @@ class LocalStorageService {
   ///-----setters
   Future<void> setUserToken(String token) async {
     await writeSecureKey(userToken, token);
-    loggedInUser.token = token;
+    currentUserPermission.token = token;
+
+    print('currentUserPermission.token = token = ${currentUserPermission.token}');
   }
 
   Future<void> setUserUUID(String uuid) async {
     await writeSecureKey(userUUID, uuid);
-    loggedInUser.uuid = uuid;
+    currentUserPermission.userId = uuid;
   }
 
   Future<void> setUserPhone(String phone) async {
     await writeSecureKey(userPhone, phone);
-    loggedInUser.phone = phone;
+    currentUserPermission.phone = phone;
   }
 
   Future<void> setUserPinCode(String pinCode) async {
     await writeSecureKey(userPinCode, pinCode);
-    loggedInUser.pinCode = pinCode;
+    currentUserPermission.pinCode = pinCode;
   }
 
   Future<void> setTouchIdValue({required bool touchId}) async {
     await writeKey(userTouchId, touchId);
-    loggedInUser.isTouchIdActive = touchId;
+    currentUserPermission.isTouchIdActive = touchId;
   }
 
   Future<void> setUsername(String name) async {
     await writeKey(userName, name);
-    loggedInUser.name = name;
+    currentUserPermission.name = name;
   }
 
   Future<void> setFullName(String name) async {
     await writeKey(fullName, name);
-    loggedInUser.name = name;
+    currentUserPermission.name = name;
   }
 
   Future<void> setFaceIdValue({required bool faceId}) async {
     await writeKey(userFaceId, faceId);
-    loggedInUser.isFaceIdActive = faceId;
+    currentUserPermission.isFaceIdActive = faceId;
   }
 
   Future<void> setUserCountry({required String country}) async {
     await writeSecureKey(userCountry, country);
-    loggedInUser.country = country;
+    currentUserPermission.country = country;
   }
 
   Future<void> setUserCurrency({required String currency}) async {
     await writeSecureKey(userCurrency, currency);
-    loggedInUser.currency = currency;
+    currentUserPermission.currency = currency;
   }
 
   Future<void> setUserId(String id) async {
     await writeSecureKey(userId, id);
-    loggedInUser.identityId = id;
+    currentUserPermission.identityId = id;
   }
 
   Future<void> setAppInstalled() async {
@@ -187,7 +190,6 @@ class LocalStorageService {
   Future<String?> get getUserPinCode => readSecureKey(userPinCode);
 
   Future<String?> get getUserId => readSecureKey(userId);
-
   Future<String?> get getUserEmail => readSecureKey(userEmail);
 
   bool get getUserTouchId => readBool(userTouchId);
@@ -195,20 +197,18 @@ class LocalStorageService {
   bool get getUserFaceId => readBool(userFaceId);
 
   String? get getUserName => readString(userName);
-
   String? get getUserLanguage => readString('lang');
-
   bool get getIsProfileCompleted => readBool(profileCompleted);
-
   Future<String?> get getUserRole => readSecureKey(role);
 
   bool get isAppInstalled => readBool(appInstalled);
+  String? get getFullName => readString(fullName);
 
-  Future<void> cacheCurrentUser(LoggedInUser user) async {
+  Future<void> cacheCurrentUser(UserPermission user) async {
     await setUserId(user.identityId.toString());
     await setUsername(user.name.toString());
     await setUserToken(user.token.toString());
-    await setUserUUID(user.uuid.toString());
+    await setUserUUID(user.userId.toString());
     await setUserPhone(user.phone.toString());
     await setUserPinCode(user.pinCode.toString());
     await setUserCountry(country: user.country.toString());

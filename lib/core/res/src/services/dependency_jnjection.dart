@@ -9,8 +9,6 @@ import 'package:eighty_three_native_component/core/res/src/services/analytics_se
 import 'package:eighty_three_native_component/core/res/src/services/image_picker_service.dart';
 import 'package:eighty_three_native_component/core/res/src/services/local_storage_service.dart';
 import 'package:eighty_three_native_component/core/res/src/services/notification_service.dart';
-import 'package:eighty_three_native_component/core/utils/pdf_service.dart';
-import 'package:eighty_three_native_component/core/utils/screen_shot_service.dart';
 import 'package:eighty_three_native_component/core/utils/share_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -20,7 +18,7 @@ import 'package:image_picker/image_picker.dart';
 
 final GetIt sl = GetIt.instance;
 
-class NativeCustomDependencyInjection {
+class CustomDependencyInjection {
   static nativeSetUp({String? apiBaseUrl}) async {
     //! packages
     registerSingleton(
@@ -34,9 +32,7 @@ class NativeCustomDependencyInjection {
     //!services
     final localStorageService = await LocalStorageService(sl()).init();
     registerSingleton(() => localStorageService);
-    registerSingleton(() => ScreenShotService());
     registerSingleton(() => ShareService());
-    registerSingleton(() => PdfService());
     registerSingleton(() => NotificationService(sl()));
     registerSingleton(() => ImagePickerService(sl()));
     registerSingleton(() => AnalyticsService());
@@ -53,11 +49,9 @@ class NativeCustomDependencyInjection {
     //!Country
     registerSingleton(() => CountryTypeCubit());
 
-
-
     ///error screen
-       ErrorWidget.builder =
-      (FlutterErrorDetails details) => const SizedBox.shrink();
+    ErrorWidget.builder =
+        (FlutterErrorDetails details) => const SizedBox.shrink();
   }
 
   static registerFactory<T extends Object>(T Function() factory,

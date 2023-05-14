@@ -1,5 +1,5 @@
+import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
-import 'package:eighty_three_native_component/core/shared/authentication/modules/login/provider/model/logged_in_user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -23,7 +23,7 @@ class CustomBackButton extends StatelessWidget {
         }
       },
       icon: RotatedBox(
-        quarterTurns: loggedInUser.isArabic ? 2 : 0,
+        quarterTurns: currentUserPermission.isArabic ? 2 : 0,
         child: SvgPicture.asset("assets/icons/back.svg"),
       ),
     );

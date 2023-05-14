@@ -1,14 +1,13 @@
 import 'package:eighty_three_native_component/core/res/src/constant/widget_keys.dart';
-import 'package:eighty_three_native_component/core/res/src/provider/model/logged_in_user_model.dart';
+import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/button/loading_button.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/images/my_image.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:eighty_three_native_component/core/res/theme/font_styles.dart';
-import 'package:eighty_three_native_component/core/shared/authentication/modules/login/provider/model/logged_in_user_model.dart';
 import 'package:eighty_three_native_component/core/utils/extenstions.dart';
-import 'package:eighty_three_native_component/eighty_three_native_component.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 
 void showCustomBottomSheet({
@@ -38,7 +37,7 @@ void showCustomBottomSheet({
     builder: (BuildContext context) {
       return Directionality(
         textDirection:
-            loggedInUser.isArabic ? TextDirection.rtl : TextDirection.ltr,
+            currentUserPermission.isArabic ? TextDirection.rtl : TextDirection.ltr,
         child: Container(
           constraints: BoxConstraints(maxHeight: context.height * 0.9),
           // margin: margin ?? const EdgeInsets.only(top: 60),

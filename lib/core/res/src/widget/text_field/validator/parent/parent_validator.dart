@@ -1,4 +1,4 @@
-import 'package:eighty_three_native_component/eighty_three_native_component.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 
 abstract class ParentValidator {
   String? Function(String?)? getValidation() {

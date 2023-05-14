@@ -8,7 +8,7 @@ import 'package:eighty_three_native_component/core/res/src/widget/images/my_imag
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/design/parent/parent.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/validator/child/phone_validator.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
-import 'package:eighty_three_native_component/eighty_three_native_component.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

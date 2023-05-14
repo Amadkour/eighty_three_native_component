@@ -1,15 +1,15 @@
-library eighty_three_native_component;
+library eighty_three_component;
 
 import 'package:eighty_three_native_component/core/res/src/cubit/country/country_list_model.dart';
 import 'package:eighty_three_native_component/core/res/src/cubit/country/country_util.dart';
 
 import 'package:eighty_three_native_component/core/res/src/cubit/currency/provider/model/currency_list_model.dart';
+import 'package:eighty_three_native_component/core/res/src/cubit/currency/provider/repo/currency_repo.dart';
 import 'package:eighty_three_native_component/core/res/src/errors/failures.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/utils/currency_util.dart';
 import 'package:eighty_three_native_component/core/utils/parsing/parent_model.dart';
 
-import 'core/res/src/cubit/currency/provider/repo/currency_repo.dart';
 
 
 String tr(String key, {bool isError = false}) {

@@ -5,7 +5,7 @@ import 'package:eighty_three_native_component/core/res/src/provider/api/api_conn
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
-import 'package:eighty_three_native_component/eighty_three_native_component.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 import 'custom_success_dialog.dart';
 import 'error_dialog.dart';
@@ -126,6 +126,7 @@ void showTimeOutDialog(DioError error, {required APIConnection apiConnection}) {
 
 void unauthorizedDialog(DioError error,
     {required Future<void> Function() onRemoveSession}) {
+
   CustomSuccessDialog.instance.show(
     context: globalKey.currentContext,
     canClose: true,

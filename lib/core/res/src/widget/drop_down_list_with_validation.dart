@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 
 import 'package:eighty_three_native_component/core/res/src/widget/images/my_image.dart';
 import 'package:eighty_three_native_component/core/res/src/loading.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:eighty_three_native_component/core/res/theme/decoration_values.dart';
-import 'package:eighty_three_native_component/core/shared/authentication/modules/login/provider/model/logged_in_user_model.dart';
-import 'package:eighty_three_native_component/eighty_three_native_component.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -65,7 +65,7 @@ class CustomDropDownListWithValidator extends StatelessWidget {
                   overflow: TextOverflow.ellipsis),
               selectedItemBuilder: (BuildContext context) => list
                   .map((DropdownMenuItem<dynamic> e) => Container(
-                      alignment: loggedInUser.isArabic
+                      alignment: currentUserPermission.isArabic
                           ? Alignment.centerRight
                           : Alignment.centerLeft,
                       width: double.infinity,
@@ -74,8 +74,8 @@ class CustomDropDownListWithValidator extends StatelessWidget {
                           if (isFlagExist)
                             Padding(
                               padding: EdgeInsets.only(
-                                  right: !loggedInUser.isArabic ? 7 : 0,
-                                  left: !loggedInUser.isArabic ? 0 : 7),
+                                  right: !currentUserPermission.isArabic ? 7 : 0,
+                                  left: !currentUserPermission.isArabic ? 0 : 7),
                               child: ClipOval(
                                 child: itemIcon != null
                                     ? SizedBox(

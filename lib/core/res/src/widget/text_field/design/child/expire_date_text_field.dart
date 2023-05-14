@@ -2,7 +2,7 @@ import 'package:eighty_three_native_component/core/res/src/widget/text_field/des
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/design/parent/parent.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/validator/child/expire_date_validator.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
-import 'package:eighty_three_native_component/eighty_three_native_component.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,11 +13,19 @@ class ExpireDateTextField extends StatelessWidget {
     required this.controller,
     this.date,
     required this.focusNode,
+    this.haveTitle = true,
+    this.fillColor,
+    this.borderColor,
+    this.borderRadius,
   });
 
   final ValueChanged<String> onChanged;
   final TextEditingController controller;
   final String? date;
+  final Color? fillColor;
+  final Color? borderColor;
+  final bool haveTitle;
+  final double? borderRadius;
   final FocusNode focusNode;
 
   @override
@@ -26,6 +34,10 @@ class ExpireDateTextField extends StatelessWidget {
       controller: controller,
       readOnly: true,
       focusNode: focusNode,
+      borderColor: borderColor,
+      borderRadius: borderRadius,
+      title: haveTitle ? tr("valid_until") : null,
+      fillColor: fillColor ?? AppColors.backgroundColor,
       keyboardType: TextInputType.number,
       textInputFormatter: <TextInputFormatter>[
         MaskedTextInputFormatter(
@@ -36,9 +48,7 @@ class ExpireDateTextField extends StatelessWidget {
       ],
       onChanged: onChanged,
       validator: ExpireDateValidator().validation(),
-      fillColor: AppColors.backgroundColor,
       hint: "MM/YY",
-      title: tr("valid_until"),
     );
   }
 }

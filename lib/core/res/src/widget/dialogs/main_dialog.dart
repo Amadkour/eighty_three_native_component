@@ -7,7 +7,7 @@ import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.da
 import 'package:eighty_three_native_component/core/res/src/widget/images/my_image.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:eighty_three_native_component/core/utils/extenstions.dart';
-import 'package:eighty_three_native_component/eighty_three_native_component.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 
 class MainDialog {

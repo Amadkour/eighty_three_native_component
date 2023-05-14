@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:eighty_three_native_component/core/res/theme/decoration_values.dart';
-import 'package:eighty_three_native_component/core/shared/authentication/modules/login/provider/model/logged_in_user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -25,19 +25,19 @@ class ItemInDropDown extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
             color: AppColors.lightWhite, borderRadius: defaultBorderRadius),
-        alignment: loggedInUser.isArabic
+        alignment: currentUserPermission.isArabic
             ? Alignment.centerRight
             : Alignment.centerLeft,
         padding: const EdgeInsets.all(3),
         child: Row(
           textDirection:
-              !loggedInUser.isArabic ? TextDirection.ltr : TextDirection.rtl,
+              !currentUserPermission.isArabic ? TextDirection.ltr : TextDirection.rtl,
           children: <Widget>[
             if (haveImage)
               Padding(
                 padding: EdgeInsets.only(
-                    right: !loggedInUser.isArabic ? 7 : 0,
-                    left: !loggedInUser.isArabic ? 0 : 7),
+                    right: !currentUserPermission.isArabic ? 7 : 0,
+                    left: !currentUserPermission.isArabic ? 0 : 7),
                 child: ClipOval(
                   child: itemImageUrl != null
                       ? SizedBox(
@@ -63,7 +63,7 @@ class ItemInDropDown extends StatelessWidget {
             Expanded(
                 child: AutoSizeText(itemText,
                     overflow: TextOverflow.ellipsis,
-                    textDirection: !loggedInUser.isArabic
+                    textDirection: !currentUserPermission.isArabic
                         ? TextDirection.ltr
                         : TextDirection.rtl,
                     style: const TextStyle(

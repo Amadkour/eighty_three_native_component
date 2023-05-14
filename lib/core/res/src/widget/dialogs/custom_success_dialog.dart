@@ -1,5 +1,6 @@
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/widget_keys.dart';
+import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
 
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
@@ -7,7 +8,7 @@ import 'package:eighty_three_native_component/core/res/src/widget/button/loading
 import 'package:eighty_three_native_component/core/res/src/widget/images/my_image.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:eighty_three_native_component/core/utils/extenstions.dart';
-import 'package:eighty_three_native_component/eighty_three_native_component.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 
 class CustomSuccessDialog {
@@ -35,7 +36,7 @@ class CustomSuccessDialog {
       context: context ?? globalKey.currentContext!,
       builder: (BuildContext context) {
         return Directionality(
-          textDirection: loggedInUser.locale == 'ar'
+          textDirection: currentUserPermission.locale == 'ar'
               ? TextDirection.rtl
               : TextDirection.ltr,
           child: WillPopScope(

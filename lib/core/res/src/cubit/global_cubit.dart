@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:eighty_three_native_component/core/res/src/provider/model/logged_in_user_model.dart';
+import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/res/src/services/local_storage_service.dart';
-import 'package:eighty_three_native_component/eighty_three_native_component.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 part 'global_state.dart';
 
@@ -27,7 +28,7 @@ class GlobalCubit extends Cubit<GlobalState> {
     errorLocalization = jsonDecode(errorTranslation) as Map<String, dynamic>;
     await sl<LocalStorageService>().writeKey('lang', l);
 
-    loggedInUser.locale = l;
+    currentUserPermission.locale = l;
 
     emit(LanguageChanged());
   }
@@ -45,5 +46,5 @@ class GlobalCubit extends Cubit<GlobalState> {
 }
 
 bool get isArabic {
-  return loggedInUser.locale == 'ar';
+  return currentUserPermission.locale == 'ar';
 }

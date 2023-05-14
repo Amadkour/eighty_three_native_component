@@ -1,6 +1,6 @@
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/design/parent/parent.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/validator/child/account_validator.dart';
-import 'package:eighty_three_native_component/eighty_three_native_component.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,19 +8,25 @@ class AccountNumText extends StatelessWidget {
   final TextEditingController? accountNumber;
   final String? accountNumberError;
   final FocusNode? focusNode;
+  final bool haveTitle;
+  final double? borderRadius;
   final String? title;
+  final Color? borderColor;
   final double? titleFontSize;
   final void Function(String)? onChanged;
   const AccountNumText({
     super.key,
 
-    
+
     this.titleFontSize,
     this.accountNumber,
     this.focusNode,
     this.onChanged,
     this.accountNumberError,
     this.title,
+    this.borderColor,
+    this.haveTitle=true,
+    this.borderRadius,
   });
 
   @override
@@ -34,6 +40,7 @@ class AccountNumText extends StatelessWidget {
           error = '';
         }
       },
+      borderColor: borderColor,
       textInputFormatter: <MaskedTextInputFormatter>[
         MaskedTextInputFormatter(
           mask: '****-****-****-****-****-****-****-****-****-****',
@@ -41,13 +48,15 @@ class AccountNumText extends StatelessWidget {
         ),
       ],
       maxLength: 49,
+      borderRadius: borderRadius,
       controller: accountNumber,
       titleFontSize: titleFontSize,
       keyboardType: TextInputType.number,
       hint: "0000-0000-0000-0000-0000-00000",
       validator: AccountNumberValidator().validation(),
-      title:
-          title != null ? tr("Account Number/Address") : tr("Account NUMBER"),
+      title: haveTitle
+          ? title ?? tr("Account Number/Address")
+          : null,
       focusNode: focusNode,
       error: error,
     );

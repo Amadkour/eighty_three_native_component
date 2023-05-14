@@ -2,6 +2,7 @@ import 'package:eighty_three_native_component/core/res/src/constant/shared_orefr
 import 'package:flutter/material.dart';
 
 RegExp numberRegExp = RegExp(r"\D");
+final alphabetic = RegExp(r'^[a-z]+$');
 
 extension Cleaining on TextEditingController {
   String get removeNonNumber => text.replaceAll(numberRegExp, "");
@@ -92,5 +93,13 @@ extension CustomString on String? {
 
   String capitalize() {
     return (this?[0].toUpperCase() ?? "") + (this?.substring(1) ?? "");
+  }
+
+  bool get isAlphabetOnly {
+    return alphabetic.hasMatch(this!);
+  }
+
+  bool get isNumericOnly {
+    return numberRegExp.hasMatch(this!);
   }
 }

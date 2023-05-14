@@ -2,7 +2,7 @@ import 'package:eighty_three_native_component/core/res/src/widget/text_field/des
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/validator/child/description_validation.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:eighty_three_native_component/core/utils/extenstions.dart';
-import 'package:eighty_three_native_component/eighty_three_native_component.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 
 class DescriptionTextField extends StatelessWidget {

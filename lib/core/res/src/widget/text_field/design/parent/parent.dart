@@ -9,6 +9,7 @@ class ParentTextField extends StatelessWidget {
   final String? name;
   final bool enableCopy;
   final bool autoFocus;
+  final String? titleFontFamily;
   final List<TextInputFormatter>? textInputFormatter;
   final double? hintFontSize;
   final Color? fillColor;
@@ -44,6 +45,7 @@ class ParentTextField extends StatelessWidget {
   final String? hint;
   final String? defaultValue;
   final String? prefixText;
+  final Color? titleFontColor;
   final TextAlign textAlign;
   final double cursorWidth;
   final int? maxLength;
@@ -82,6 +84,7 @@ class ParentTextField extends StatelessWidget {
     this.decoration,
     this.style,
     this.borderRadius,
+    this.titleFontFamily,
     this.defaultValue,
     this.textAlign = TextAlign.start,
     this.textInputFormatter,
@@ -91,6 +94,7 @@ class ParentTextField extends StatelessWidget {
     this.enableCopy = true,
     this.autoFocus = false,
     this.prefixText,
+    this.titleFontColor,
   });
 
   @override
@@ -104,7 +108,8 @@ class ParentTextField extends StatelessWidget {
             title!,
             style: TextStyle(
                 fontSize: titleFontSize,
-                color: AppColors.blackColor,
+                color: titleFontColor ?? AppColors.blackColor,
+                fontFamily: titleFontFamily,
                 fontWeight: FontWeight.w500),
           ),
         if (title != null)
@@ -161,19 +166,19 @@ class ParentTextField extends StatelessWidget {
             decoration: decoration ??
                 InputDecoration(
                   prefixText: prefixText,
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.transparent),
                     borderRadius: BorderRadius.all(
                       Radius.circular(
-                        10.0,
+                        borderRadius ?? 10.0,
                       ),
                     ),
                   ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.transparent),
                     borderRadius: BorderRadius.all(
                       Radius.circular(
-                        10.0,
+                        borderRadius ?? 10.0,
                       ),
                     ),
                   ),

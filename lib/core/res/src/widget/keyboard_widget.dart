@@ -1,6 +1,6 @@
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/design/child/account_num_text_field.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
-import 'package:eighty_three_native_component/eighty_three_native_component.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

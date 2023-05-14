@@ -2,7 +2,7 @@ import 'package:eighty_three_native_component/core/res/src/constant/widget_keys.
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/design/parent/parent.dart';
-import 'package:eighty_three_native_component/eighty_three_native_component.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 
 class ConfirmChangePasswordTextField extends StatelessWidget {
   final String? passwordControllerError;

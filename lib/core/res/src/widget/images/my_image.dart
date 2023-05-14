@@ -74,7 +74,7 @@ class MyImage extends StatelessWidget {
   }) {
     final _SvgImageNetwork image = _SvgImageNetwork(
       key: key,
-      url: url,
+      url:  url.contains('cdn')?url.replaceFirst('public', 'storage'):url,
       height: height,
       width: width,
       borderRadius: borderRadius,
@@ -106,7 +106,8 @@ class MyImage extends StatelessWidget {
           )
         : _NetworkImage(
             key: key,
-            url: url,
+            ///remove it when resolve res cdn problem
+            url:  url.contains('cdn')?url.replaceFirst('public', 'storage'):url,
             defaultUrl: defaultUrl,
             height: height,
             width: width,
@@ -127,7 +128,7 @@ class MyImage extends StatelessWidget {
   }) {
     return CashedNetworkImage(
       key: key,
-      url: url,
+      url:  url.contains('cdn')?url.replaceFirst('public', 'storage'):url,
       height: height,
       width: width,
       borderRadius: borderRadius,

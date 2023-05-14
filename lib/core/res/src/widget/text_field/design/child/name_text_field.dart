@@ -1,6 +1,6 @@
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/design/parent/parent.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/validator/child/empty_validation.dart';
-import 'package:eighty_three_native_component/eighty_three_native_component.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 
 class NameTextField extends StatelessWidget {
@@ -9,6 +9,9 @@ class NameTextField extends StatelessWidget {
   final String? textInputType;
   final String? title;
   final String hint;
+  final Color? borderColor;
+  final double? borderRadius;
+  final String? titleFontFamily;
   final int? minLength;
   final int? multiLine;
   final String? errorMessage;
@@ -38,6 +41,9 @@ class NameTextField extends StatelessWidget {
     this.color,
     this.isRequired = true,
     this.defaultValue,
+    this.borderColor,
+    this.borderRadius,
+    this.titleFontFamily
   });
 
   @override
@@ -45,6 +51,9 @@ class NameTextField extends StatelessWidget {
     String? error = nameControllerError;
 
     return ParentTextField(
+      borderRadius: borderRadius,
+      borderColor: borderColor,
+      titleFontFamily: titleFontFamily,
       multiLine: multiLine ?? 1,
       controller: nameController,
       // keyboardType: TextInputType.name,
