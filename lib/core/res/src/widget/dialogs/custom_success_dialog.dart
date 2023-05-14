@@ -1,5 +1,4 @@
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
-import 'package:eighty_three_native_component/core/res/src/constant/widget_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
 
@@ -110,7 +109,7 @@ class CustomSuccessDialog {
                     ),
                     haveSecondButton
                         ? LoadingButton(
-                            key: viewEReceiptKey,
+                            key: const Key("view_e_receipt"),
                             onTap: onPressedFirstButton,
                             title: firstButtonText ?? tr("view_e_receipt"),
                             isLoading: false,
@@ -122,7 +121,7 @@ class CustomSuccessDialog {
                     ),
                     bottomWidget ??
                         LoadingButton(
-                          key: backToHomeDialogKey,
+                          key: const Key("back_to_home_dialog_key"),
                           onTap: onPressedSecondButton ??
                               () {
                                 CustomNavigator.instance.pushReplacementNamed(

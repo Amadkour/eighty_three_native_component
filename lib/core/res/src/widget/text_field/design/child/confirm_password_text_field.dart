@@ -1,4 +1,3 @@
-import 'package:eighty_three_native_component/core/res/src/constant/widget_keys.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/design/parent/parent.dart';
@@ -46,7 +45,7 @@ class ConfirmChangePasswordTextField extends StatelessWidget {
               width: 20,
             )
           : IconButton(
-              key: showPasswordIconKey,
+              key: const Key("show_password_button"),
               icon: Icon(
                 secureText!
                     ? Icons.visibility_off_outlined

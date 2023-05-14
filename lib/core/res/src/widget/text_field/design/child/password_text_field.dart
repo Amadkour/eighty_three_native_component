@@ -1,4 +1,3 @@
-import 'package:eighty_three_native_component/core/res/src/constant/widget_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/design/parent/parent.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/validator/child/password_validator.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
@@ -49,7 +48,7 @@ class PasswordTextField extends StatelessWidget {
         },
         onTab: onTab,
         suffix: IconButton(
-            key: showPasswordIconKey,
+            key: const Key("show_password_button"),
             icon: Icon(
               securePasswordText
                   ? Icons.visibility_off_outlined

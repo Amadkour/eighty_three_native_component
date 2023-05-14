@@ -2,7 +2,6 @@ import 'dart:core';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
-import 'package:eighty_three_native_component/core/res/src/constant/widget_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/images/my_image.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
@@ -70,7 +69,7 @@ class MainDialog {
                       height: 8,
                     ),
                     InkWell(
-                      key: goBackKey,
+                      key: const Key("go_back_key"),
                       onTap: onPressedText,
                       child: AutoSizeText(
                         tr(dialogSupTitle!),

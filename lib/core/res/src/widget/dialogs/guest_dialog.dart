@@ -1,4 +1,3 @@
-import 'package:eighty_three_native_component/core/res/src/constant/widget_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
@@ -55,7 +54,7 @@ class GuestDialog extends StatelessWidget {
                 width: 5,
               ),
               InkWell(
-                key: goToSignUpKey,
+                key: const Key('go_to_signup_key'),
                 onTap: () {
                   CustomNavigator.instance.pushNamed(RoutesName.register);
                 },

@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:eighty_three_native_component/core/res/src/constant/widget_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.dart';
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
@@ -43,7 +42,7 @@ class ConfirmCancelDialog {
                   width: 100,
                   height: 40,
                   child: TextButton(
-                    key: cancelButtonDialogKey,
+                    key: const Key('cancel_button_dialog_key'),
                     onPressed: () {
                       CustomNavigator.instance.pop();
                     },
@@ -60,7 +59,7 @@ class ConfirmCancelDialog {
                   width: 100,
                   height: 40,
                   child: TextButton(
-                    key: confirmButtonDialogKey,
+                    key: const Key('confirm_button_dialog_key'),
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(AppColors.blackColor)),

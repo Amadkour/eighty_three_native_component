@@ -1,4 +1,3 @@
-import 'package:eighty_three_native_component/core/res/src/constant/widget_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
@@ -94,7 +93,7 @@ void showCustomBottomSheet({
                       if (hasButtons) ...<Widget>[
                         LoadingButton(
                           hasBottomSaveArea: false,
-                          key: sheetApplyButtonKey,
+                          key: const Key("history_period_apply_button"),
                           isLoading: false,
                           title: blackButtonTitle ?? tr('apply'),
                           onTap: () {
@@ -107,7 +106,7 @@ void showCustomBottomSheet({
                         if (isTwoButtons)
                           Center(
                             child: TextButton(
-                              key: sheetCancelButtonKey,
+                              key: const Key("history_period_cancel_button"),
                               onPressed: () {
                                 CustomNavigator.instance.pop();
                                 onCanceled?.call();
