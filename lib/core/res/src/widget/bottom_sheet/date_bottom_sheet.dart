@@ -7,86 +7,86 @@ import 'package:flutter/material.dart';
 Future<void> showActiveDateSheet(
   BuildContext context,
   void Function(String) onChange,
-  String? date,
+  String? date, {
   dynamic dateCubit,
-) {
+}) {
   return showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (BuildContext context) =>Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(15),
-                              topLeft: Radius.circular(15)),
-                        ),
-                        padding: const EdgeInsets.all(8),
-                        child: Column(
-                          children: <Widget>[
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: InkWell(
-                                onTap: () {
-                                  FocusScope.of(context).nextFocus();
-                                  Navigator.pop(context);
-                                },
-                                child: const Icon(Icons.close,
-                                    color: Colors.black, size: 15),
-                              ),
-                            ),
-                            Row(
-                              children: <Widget>[
-                                const Expanded(
-                                  child: SizedBox(),
-                                ),
-                                Expanded(
-                                    flex: 2,
-                                    child: months(context, (String v) {
-                                      dateCubit.setMonth(v);
-                                    }, dateCubit)),
-                                const SizedBox(
-                                  width: 40,
-                                ),
-                                Expanded(
-                                    flex: 2,
-                                    child: years(context, (String v) {
-                                      dateCubit.setYear(v);
-                                    }, dateCubit)),
-                                const Expanded(
-                                  child: SizedBox(),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Align(
-                              child: LoadingButton(
-                                  key: const Key('confirm_date_key'),
-                                  topPadding: 0,
-                                  isLoading: false,
-                                  title: tr("done"),
-                                  onTap: () {
-                                    final String date =
-                                        '${dateCubit.month}/${dateCubit.year}';
-                                    onChange(date);
-                                    CustomNavigator.instance.pop();
-                                    FocusScope.of(context).nextFocus();
-                                  }),
-                            ),
-                          ],
+      builder: (BuildContext context) => Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(15),
+                        topLeft: Radius.circular(15)),
+                  ),
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: InkWell(
+                          onTap: () {
+                            FocusScope.of(context).nextFocus();
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(Icons.close,
+                              color: Colors.black, size: 15),
                         ),
                       ),
-                    )
-                  ],
-                ));
-              }
+                      Row(
+                        children: <Widget>[
+                          const Expanded(
+                            child: SizedBox(),
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: months(context, (String v) {
+                                dateCubit.setMonth(v);
+                              }, dateCubit)),
+                          const SizedBox(
+                            width: 40,
+                          ),
+                          Expanded(
+                              flex: 2,
+                              child: years(context, (String v) {
+                                dateCubit.setYear(v);
+                              }, dateCubit)),
+                          const Expanded(
+                            child: SizedBox(),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Align(
+                        child: LoadingButton(
+                            key: const Key('confirm_date_key'),
+                            topPadding: 0,
+                            isLoading: false,
+                            title: tr("done"),
+                            onTap: () {
+                              final String date =
+                                  '${dateCubit.month}/${dateCubit.year}';
+                              onChange(date);
+                              CustomNavigator.instance.pop();
+                              FocusScope.of(context).nextFocus();
+                            }),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ));
+}
 
 Widget months(BuildContext context, ValueChanged<String> onMonthChanged,
     dynamic dateCubit) {
@@ -195,6 +195,7 @@ Widget days(BuildContext context, ValueChanged<String> onDayChanged,
 
 class OvalTitle extends StatelessWidget {
   final String title;
+
   const OvalTitle({Key? key, required this.title}) : super(key: key);
 
   @override

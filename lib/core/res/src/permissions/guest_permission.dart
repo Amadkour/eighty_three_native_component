@@ -1,4 +1,4 @@
-import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
+import 'package:res/modules/authentication/permissions/permission.dart';
 
 class GuestPermission extends UserPermission {
   GuestPermission() {
