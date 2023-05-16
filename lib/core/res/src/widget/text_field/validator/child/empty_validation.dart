@@ -14,7 +14,9 @@ class EmptyValidator extends ParentValidator {
         IsRequired(
           errorMessage(key),
         ),
-        MaxLength(maxLength ?? 10, errorMessage('id_greater')),
+        if(maxLength!=null)...[
+          MaxLength(maxLength ?? 10, errorMessage('id_greater')),
+        ],
         if (minLength != null) ...<TextValidationRule>[
           MinLength(
             minLength!,
