@@ -15,13 +15,15 @@ class EmptyValidator extends ParentValidator {
           errorMessage(key),
         ),
         if(maxLength!=null)...[
-          MaxLength(maxLength ?? 10, errorMessage('id_greater')),
+          MaxLength(
+              maxLength ?? 10,
+              errorMessage(minErrorMessage ?? "${tr("name_greater")}${maxLength ?? 10} ${tr("letters")}"),
+          ),
         ],
         if (minLength != null) ...<TextValidationRule>[
           MinLength(
-            minLength!,
-            errorMessage(minErrorMessage ??
-                "${tr("at least")} $minLength ${tr("letters")}"),
+            minLength ?? 4,
+            errorMessage(minErrorMessage ?? "${tr("at_least")}${minLength ?? 4} ${tr("letters")}"),
           ),
         ]
       ],
