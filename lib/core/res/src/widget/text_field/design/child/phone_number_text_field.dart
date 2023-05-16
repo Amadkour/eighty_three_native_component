@@ -1,9 +1,9 @@
 import 'package:eighty_three_native_component/core/res/src/cubit/country_type/provider/model/country_type.dart';
 import 'package:eighty_three_native_component/core/res/src/cubit/country_type/controller/country_type_cubit.dart';
-import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.dart';
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
+import 'package:eighty_three_native_component/core/res/src/widget/bottom_sheet/country_bottom_sheet_content.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/images/my_image.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/design/parent/parent.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/validator/child/phone_validator.dart';
@@ -125,10 +125,11 @@ class PhoneNumberTextField extends StatelessWidget {
                           : InkWell(
                               onTap: allowChangeCountry
                                   ? () {
-                                  phoneNumberBottomSheet(
-                                    context: context,
-                                    onCountryChanged: onCountryChanged
-                                  );
+                                CountryBottomSheet.instance.show(
+                                  context: context,
+                                  onChangeSelectedCountry: onCountryChanged!,
+                                  country: cubit.selectedCountry!,
+                                );
                                 }
                               : null,
                               child: Row(
@@ -169,97 +170,6 @@ class PhoneNumberTextField extends StatelessWidget {
   }
 }
 
-void phoneNumberBottomSheet({required BuildContext context,void Function(CountryType)? onCountryChanged}) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (_) => BlocBuilder<CountryTypeCubit, CountryTypeState>(
-      bloc: sl<CountryTypeCubit>(),
-      builder: (BuildContext context, CountryTypeState state) => Container(
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(15), topLeft: Radius.circular(15))),
-        child: Directionality(
-          textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
-          child: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      tr("select_country"),
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge!
-                          .copyWith(fontSize: 18, color: Colors.black),
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-                    child: Divider(),
-                  ),
-                  ...List<Widget>.generate(
-                    countryTypes.length,
-                    (int index) {
-                      return ListTile(
-                        title: Row(
-                          children: <Widget>[
-                            Container(
-                              width: 30,
-                              height: 40,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: MyImage.svgNetwork(
-                                url: countryTypes[index].icon!,
-                                height: 30,
-                                width: 30,
-                                fit: BoxFit.fitHeight,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              tr(countryTypes[index].title!),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(fontSize: 14, color: Colors.black),
-                            ),
-                            const Spacer(),
-                            Text(
-                              '+${countryTypes[index].phoneCode}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                      fontSize: 14,
-                                      color: AppColors.blackColor),
-                            ),
-                          ],
-                        ),
-                        onTap: () async {
-                          if(onCountryChanged!=null) {
-                            onCountryChanged.call(countryTypes[index]);
-                          }
-                          sl<CountryTypeCubit>().changeSelectedCountry(index);
-                          CustomNavigator.instance.pop();
-                        },
-                      );
-                    },
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-}
 
 /**
  * Container(
