@@ -64,7 +64,7 @@ class NameTextField extends StatelessWidget {
       readOnly: readOnly ?? false,
       validator: isRequired
           ? EmptyValidator(
-        maxLength: minLength,
+        maxLength: maxLength,
                   minLength: minLength, minErrorMessage: minErrorMessage)
               .getValidationWithParameter(errorMessage ?? "name_empty")
           : null,
