@@ -29,7 +29,6 @@ class ParentTextField extends StatelessWidget {
   final double? width;
   final FormFieldValidator<String>? validator;
   final bool readOnly;
-  final bool fromRightToLeft;
   final FocusNode? focusNode;
   final bool isPassword;
   final TextInputAction? textInputAction;
@@ -96,7 +95,6 @@ class ParentTextField extends StatelessWidget {
     this.autoFocus = false,
     this.prefixText,
     this.titleFontColor,
-    this.fromRightToLeft=false,
   });
 
   @override
@@ -119,7 +117,7 @@ class ParentTextField extends StatelessWidget {
             height: 5,
           ),
         Directionality(
-          textDirection: (!isArabic || keyboardType == TextInputType.number && !fromRightToLeft)
+          textDirection: (!isArabic || keyboardType == TextInputType.number)
               ? TextDirection.ltr
               : TextDirection.rtl,
           child: TextFormField(

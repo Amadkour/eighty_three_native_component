@@ -16,7 +16,6 @@ class SalaryTextField extends AmountTextField {
     String hintText = "500",
     double? hintFontSize,
     double? titleFontSize,
-    bool? fromRightToLeft,
     Color? borderColor,
     double? borderRadius,
     String? initialText,
@@ -50,7 +49,6 @@ class SalaryTextField extends AmountTextField {
   Widget build(BuildContext context) {
     return ParentTextField(
       fillColor: color,
-      fromRightToLeft: fromRightToLeft,
       borderColor: borderColor,
       borderRadius: borderRadius,
       defaultValue: initialText,
