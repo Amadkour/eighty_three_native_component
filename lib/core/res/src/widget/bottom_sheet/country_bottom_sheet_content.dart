@@ -68,7 +68,7 @@ class CountryBottomSheetContent extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      if(!haveSearchBar)...[
+                      if(haveSearchBar)...[
                         Padding(
                           padding: const EdgeInsets.all(10),
                           child: Text(

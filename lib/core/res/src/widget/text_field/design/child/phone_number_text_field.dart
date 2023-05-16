@@ -22,6 +22,7 @@ class PhoneNumberTextField extends StatelessWidget {
   final String? searchIconPath;
   final Color? fillColor;
   final bool? readOnly;
+  final bool? haveSearchBar;
   final bool allowChangeCountry;
   final double? hintFontSize;
   final double? titleFontSize;
@@ -54,7 +55,8 @@ class PhoneNumberTextField extends StatelessWidget {
       this.suffixWidget,
       this.onCountryChanged,
       this.allowChangeCountry=true,
-      this.searchIconPath});
+      this.searchIconPath,
+      this.haveSearchBar});
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +132,7 @@ class PhoneNumberTextField extends StatelessWidget {
                                 CountryBottomSheet.instance.show(
                                   context: context,
                                   searchIconPath: searchIconPath,
+                                  haveSearchBar: haveSearchBar,
                                   onChangeSelectedCountry: onCountryChanged!,
                                   country: cubit.selectedCountry!,
                                 );
