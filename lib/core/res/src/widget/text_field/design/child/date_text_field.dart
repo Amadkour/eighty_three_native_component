@@ -127,7 +127,7 @@ void dateSheet({
   VoidCallback? onChanged,
   FocusNode? focusNode,
   required bool mustAdult,
-  required String? dob,
+  String? dob,
 }) {
   showModalBottomSheet<void>(
       context: context,
@@ -196,8 +196,7 @@ void dateSheet({
                           .subtract(const Duration(days: 6574, hours: 2))
                       : DateTime.tryParse(dateController.text) != null
                           ? DateTime.parse(dateController.text)
-                          : DateTime.parse(
-                              dob!),
+                          : DateTime.parse(dob ?? ""),
                   onDateTimeChanged: (DateTime newDate) {
                     dateController.text =
                         intl.DateFormat('yyyy-MM-dd').format(newDate);
