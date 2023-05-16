@@ -19,6 +19,7 @@ class PasswordTextField extends StatelessWidget {
   final void Function()? onTab;
   final void Function(String?) onChanged;
   final Widget? prefix;
+  final bool hasPrefix;
   const PasswordTextField({
     super.key,
     this.passwordFocusNode,
@@ -33,12 +34,22 @@ class PasswordTextField extends StatelessWidget {
     required this.onChanged,
     this.controller,
     this.prefix,
+    this.hasPrefix = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return ParentTextField(
-        prefix: prefix,
+        prefix: hasPrefix
+            ? prefix ??
+            const Padding(
+              padding: EdgeInsets.all(5),
+              child: Icon(
+                Icons.lock_outline,
+                size: 30,
+              ),
+            )
+            : null,
         isPassword: securePasswordText,
         error: error,
         titleFontSize: titleFontSize,
@@ -65,3 +76,4 @@ class PasswordTextField extends StatelessWidget {
         focusNode: passwordFocusNode);
   }
 }
+
