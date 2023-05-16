@@ -40,11 +40,11 @@ class DioInterceptor extends Interceptor {
     log(err.response.toString());
     log(err.response?.data.toString() ?? '');
     try {
-      if (<DioErrorType>[DioErrorType.response].contains(errorType)) {
+      if (<DioErrorType>[DioErrorType.badResponse].contains(errorType)) {
         await _handleDialogError(err, handler);
         handler.resolve(err.response!);
         // handler.next(err);
-      } else if (<DioErrorType>[DioErrorType.other].contains(errorType)) {
+      } else if (<DioErrorType>[DioErrorType.unknown].contains(errorType)) {
         throw SocketException(err.error.toString());
       } else {
         ///timeout

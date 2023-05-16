@@ -6,7 +6,7 @@ import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class MainAppBar extends StatelessWidget with PreferredSizeWidget {
+class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final Color? backgroundColor;
   final bool showShadow;

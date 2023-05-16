@@ -55,8 +55,8 @@ class APIConnection {
           baseUrl ?? (userOldServer ? "https:/" : "http://gfi.group/api");
       dio.options.followRedirects = false;
       dio.options.contentType = 'application/json';
-      dio.options.connectTimeout = 50000;
-      dio.options.receiveTimeout = 50000;
+      dio.options.connectTimeout = const Duration(seconds: 50);
+      dio.options.receiveTimeout = const Duration(seconds: 50);
       dio.options.validateStatus = (int? statusCode) {
         if (statusCode == null) {
           return false;
@@ -68,7 +68,7 @@ class APIConnection {
           return statusCode >= 200 && statusCode < 300;
         }
       };
-      dio.options.setRequestContentTypeWhenNoPayload = true;
+      // dio.options.setRequestContentTypeWhenNoPayload = true;
       dio.interceptors.add(DioInterceptor(
         networkError: networkError,
         onFetch: dio.fetch,
