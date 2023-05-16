@@ -23,7 +23,7 @@ class EmptyValidator extends ParentValidator {
         if (minLength != null) ...<TextValidationRule>[
           MinLength(
             minLength ?? 4,
-            errorMessage(minErrorMessage ?? "${tr("at_least")}${minLength ?? 4} ${tr("letters")}"),
+            errorMessage(minErrorMessage ?? "${tr("name_at_least")}${minLength ?? 4} ${tr("letters")}"),
           ),
         ]
       ],
