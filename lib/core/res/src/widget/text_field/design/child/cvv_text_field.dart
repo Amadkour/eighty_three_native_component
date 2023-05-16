@@ -13,10 +13,12 @@ class CvvTextField extends StatelessWidget {
     this.borderColor,
     this.haveTitle=true,
     this.borderRadius,
+    this.cvvController,
   });
 
   final ValueChanged<String> onChanged;
   final FocusNode? focusNode;
+  final TextEditingController? cvvController;
   final Color? fillColor;
   final Color? borderColor;
   final double? borderRadius;
@@ -26,6 +28,7 @@ class CvvTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ParentTextField(
+      controller: cvvController,
       keyboardType: TextInputType.number,
       onChanged: onChanged,
       validator: CVVValidator().validation(),

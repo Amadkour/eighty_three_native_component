@@ -11,18 +11,20 @@ class SearchBar extends StatelessWidget {
   final VoidCallback? onClear;
   final TextEditingController? controller;
   final bool showClear;
+  final String? searchIconPath;
   final double verticalPadding;
   final Color? backGroundColor;
 
   const SearchBar(
       {super.key,
-      this.verticalPadding = 10,
-      this.backGroundColor,
-      this.showClear = false,
-      required this.hintText,
-      required this.onChanged,
-      this.onClear,
-      this.controller});
+        this.verticalPadding = 10,
+        this.backGroundColor,
+        this.showClear = false,
+        required this.hintText,
+        required this.onChanged,
+        this.onClear,
+        this.controller,
+        this.searchIconPath});
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +39,19 @@ class SearchBar extends StatelessWidget {
         children: <Widget>[
           showClear
               ? MyImage.svgAssets(
-                  width: 17,
-                  height: 17,
-                  url: "assets/icons/transfer/searchicon.svg",
-                )
+            width: 17,
+            height: 17,
+            url: searchIconPath ?? "assets/icons/transfer/searchicon.svg",
+          )
               : InkWell(
-                  key: const Key("clear_history_search_textfield_button"),
-                  onTap: () {
-                    onClear?.call();
-                  },
-                  child: const Icon(
-                    Icons.close_sharp,
-                    color: Colors.grey,
-                    size: 20,
-                  )),
+              onTap: () {
+                onClear?.call();
+              },
+              child: const Icon(
+                Icons.close_sharp,
+                color: Colors.grey,
+                size: 20,
+              )),
           const SizedBox(
             width: 11,
           )

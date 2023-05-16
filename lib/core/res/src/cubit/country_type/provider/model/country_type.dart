@@ -8,13 +8,14 @@ class CountryType extends ParentModel {
     String? countryTypeTitle,
     String? countryPhoneCode,
     String? countryTypeIcon,
-    int? idLimit,
+    int? idMax,
   }) {
     id = countryTypeId;
     code = countryTypeCode;
     title = countryTypeTitle;
     phoneCode = countryPhoneCode;
     icon = countryTypeIcon;
+    idLimit = idMax;
   }
 
   late int? id;
@@ -34,7 +35,7 @@ class CountryType extends ParentModel {
       countryTypeTitle: converter.convertToString(key: 'name'),
       countryPhoneCode: converter.convertToString(key: 'phone_code'),
       countryTypeIcon: converter.convertToString(key: 'flag'),
-      idLimit: converter.convertToInt(key: 'id_limit') ?? 3,
+      idMax: converter.convertToInt(key: 'id_limit') ?? 3,
     );
   }
 }
