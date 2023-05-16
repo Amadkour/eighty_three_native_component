@@ -12,9 +12,9 @@ class IDValidator extends ParentValidator {
         ),
         MinLength(
           8,
-          errorMessage('id_at_least'),
+          errorMessage("${tr("id_at_least")}8 ${tr("letters")}"),
         ),
-        MaxLength(10, errorMessage('id_greater'))
+        MaxLength(10,  errorMessage("${tr("id_greater")}10 ${tr("letters")}"),)
       ],
     );
   }
@@ -29,11 +29,11 @@ class IDValidator extends ParentValidator {
         ),
         MinLength(
           minLength ?? 10,
-          errorMessage("${tr("id_at_least")} $minLength ${tr("letters")}"),
+          errorMessage("${tr("id_at_least")}$minLength ${tr("letters")}"),
         ),
         MaxLength(
             maxLength ?? 10,
-            errorMessage("${tr("id_greater")} $maxLength ${tr("letters")}"),
+            errorMessage("${tr("id_greater")}$maxLength ${tr("letters")}"),
         )
       ],
     );
