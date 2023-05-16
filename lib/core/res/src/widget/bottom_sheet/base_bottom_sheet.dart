@@ -35,8 +35,9 @@ void showCustomBottomSheet({
     backgroundColor: Colors.transparent,
     builder: (BuildContext context) {
       return Directionality(
-        textDirection:
-            currentUserPermission.isArabic ? TextDirection.rtl : TextDirection.ltr,
+        textDirection: currentUserPermission.isArabic
+            ? TextDirection.rtl
+            : TextDirection.ltr,
         child: Container(
           constraints: BoxConstraints(maxHeight: context.height * 0.9),
           // margin: margin ?? const EdgeInsets.only(top: 60),

@@ -28,7 +28,7 @@ class GlobalCubit extends Cubit<GlobalState> {
     errorLocalization = jsonDecode(errorTranslation) as Map<String, dynamic>;
     await sl<LocalStorageService>().writeKey('lang', l);
 
-    currentUserPermission.locale = l;
+    currentUserPermission.language = l;
 
     emit(LanguageChanged());
   }

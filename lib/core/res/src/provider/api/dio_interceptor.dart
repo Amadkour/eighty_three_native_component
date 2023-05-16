@@ -107,7 +107,7 @@ class DioInterceptor extends Interceptor {
   Future<dynamic> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     options.headers = <String, String>{
       'Accept': 'application/json',
-      'Accept-Language': currentUserPermission.locale ?? 'en',
+      'Accept-Language': currentUserPermission.language ?? 'en',
       "Authorization": currentUserPermission.token ?? "",
       "X-USER-ROLE": "merchant"
     };
