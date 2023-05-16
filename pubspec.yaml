@@ -32,6 +32,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   firebase_core: ^2.4.1
   image_picker: ^0.8.6+1
+  font_awesome_flutter: ^10.3.0
 
   image_cropper: ^4.0.1
   badges: ^3.0.2

@@ -11,28 +11,34 @@ class AccountNumText extends StatelessWidget {
   final bool haveTitle;
   final double? borderRadius;
   final String? title;
+  final String? titleFontFamily;
+  final String? hint;
   final Color? borderColor;
+  final bool readOnly;
   final double? titleFontSize;
   final void Function(String)? onChanged;
+
   const AccountNumText({
     super.key,
-
-
     this.titleFontSize,
     this.accountNumber,
     this.focusNode,
     this.onChanged,
     this.accountNumberError,
+    this.titleFontFamily,
     this.title,
     this.borderColor,
-    this.haveTitle=true,
+    this.haveTitle = true,
     this.borderRadius,
+    this.hint,
+    this.readOnly = false,
   });
 
   @override
   Widget build(BuildContext context) {
     String? error = accountNumberError;
     return ParentTextField(
+      titleFontFamily: titleFontFamily,
       onChanged: (String val) {
         if (onChanged != null) {
           onChanged!(val);
@@ -52,12 +58,11 @@ class AccountNumText extends StatelessWidget {
       controller: accountNumber,
       titleFontSize: titleFontSize,
       keyboardType: TextInputType.number,
-      hint: "0000-0000-0000-0000-0000-00000",
+      hint: hint ?? "0000-0000-0000-0000-0000-00000",
       validator: AccountNumberValidator().validation(),
-      title: haveTitle
-          ? title ?? tr("Account Number/Address")
-          : null,
+      title: haveTitle ? title ?? tr("Account Number/Address") : null,
       focusNode: focusNode,
+      readOnly: readOnly,
       error: error,
     );
   }
