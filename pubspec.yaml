@@ -13,7 +13,6 @@ dependencies:
     sdk: flutter
   flutter_html:
   auto_size_text: ^3.0.0
-  cupertino_icons: ^1.0.5
   dartz: ^0.10.1
   flutter_bloc: ^8.1.1
   connectivity_plus: ^4.0.0
@@ -24,7 +23,6 @@ dependencies:
   equatable: ^2.0.5
   queen_validators:
   shared_preferences: ^2.0.17
-  local_auth: ^2.1.3
   get_it: ^7.2.0
   flutter_secure_storage: ^8.0.0
   path_provider: ^2.0.11
@@ -35,20 +33,14 @@ dependencies:
   font_awesome_flutter: ^10.3.0
 
   image_cropper: ^4.0.1
-  badges: ^3.0.2
-  smooth_page_indicator: ^1.0.0+2
   easy_refresh: ^3.3.1
   ##TODO: Upgrade to a higher version
   keyboard_actions: ^4.2.0
   firebase_messaging: ^14.3.0
   flutter_local_notifications: ^14.0.0+2
-  contacts_service: ^0.6.3
-  permission_handler: ^10.2.0
-  excel: ^2.0.4
   multiple_images_picker: ^1.0.1
   lecle_flutter_absolute_path: ^0.0.2+1
   firebase_analytics: ^10.1.6
-  firebase_crashlytics: ^3.0.17
   cached_network_image: ^3.2.3
 #  multi_select_flutter:
 #    git:
