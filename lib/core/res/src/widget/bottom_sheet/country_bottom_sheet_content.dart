@@ -32,11 +32,13 @@ class CountryBottomSheet {
 class CountryBottomSheetContent extends StatelessWidget {
   final String? title;
   final CountryType country;
+  final String? searchIconPath;
   const CountryBottomSheetContent({
     required this.onChangeSelectedCountry,
     required this.country,
     this.title,
     super.key, this.haveSearchBar=false,
+    this.searchIconPath,
   });
   final bool haveSearchBar;
   final void Function(CountryType) onChangeSelectedCountry;
@@ -74,6 +76,7 @@ class CountryBottomSheetContent extends StatelessWidget {
                           ),
                         ),
                         CustomSearchBar(
+                          searchIconPath: searchIconPath,
                           verticalPadding: 20,
                           backGroundColor: Colors.white,
                           showClear: true,
