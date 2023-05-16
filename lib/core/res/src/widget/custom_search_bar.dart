@@ -5,7 +5,7 @@ import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 
 
-class SearchBar extends StatelessWidget {
+class CustomSearchBar extends StatelessWidget {
   final String hintText;
   final ValueChanged<String> onChanged;
   final VoidCallback? onClear;
@@ -15,7 +15,7 @@ class SearchBar extends StatelessWidget {
   final double verticalPadding;
   final Color? backGroundColor;
 
-  const SearchBar(
+  const CustomSearchBar(
       {super.key,
         this.verticalPadding = 10,
         this.backGroundColor,
