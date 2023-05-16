@@ -37,7 +37,6 @@ dependencies:
   image_cropper: ^4.0.1
   badges: ^3.0.2
   smooth_page_indicator: ^1.0.0+2
-  flutter_slidable: ^3.0.0
   easy_refresh: ^3.3.1
   ##TODO: Upgrade to a higher version
   keyboard_actions: ^4.2.0
