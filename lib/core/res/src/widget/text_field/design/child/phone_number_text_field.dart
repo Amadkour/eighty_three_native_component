@@ -26,6 +26,7 @@ class PhoneNumberTextField extends StatelessWidget {
   final double? fullWidth;
   final void Function()? onTab;
   final void Function(String)? onChanged;
+  final void Function(CountryType)? onCountryChanged;
   final CountryType? selectedCountry;
   final bool hasPrefix;
   final bool hasSuffix;
@@ -48,7 +49,8 @@ class PhoneNumberTextField extends StatelessWidget {
       this.hasSuffix = false,
       this.onTab,
       this.onChanged,
-      this.suffixWidget});
+      this.suffixWidget,
+      this.onCountryChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +124,7 @@ class PhoneNumberTextField extends StatelessWidget {
                               onTap: () {
                                 _phoneNumberBottomSheet(
                                   context: context,
+                                  onCountryChanged: onCountryChanged
                                 );
                               },
                               child: Row(
@@ -162,7 +165,7 @@ class PhoneNumberTextField extends StatelessWidget {
   }
 }
 
-void _phoneNumberBottomSheet({required BuildContext context}) {
+void _phoneNumberBottomSheet({required BuildContext context,void Function(CountryType)? onCountryChanged}) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -235,7 +238,12 @@ void _phoneNumberBottomSheet({required BuildContext context}) {
                           ],
                         ),
                         onTap: () async {
-                          sl<CountryTypeCubit>().changeSelectedCountry(index);
+                          if(onCountryChanged!=null) {
+                            onCountryChanged.call(countryTypes[index]);
+                          }
+                          else{
+                            sl<CountryTypeCubit>().changeSelectedCountry(index);
+                          }
                           CustomNavigator.instance.pop();
                         },
                       );
