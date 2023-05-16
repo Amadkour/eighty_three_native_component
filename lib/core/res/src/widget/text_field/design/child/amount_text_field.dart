@@ -14,6 +14,7 @@ class AmountTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final TextAlign textAlign;
   final bool readOnly;
+  final bool fromRightToLeft;
   final Color? borderColor;
   final double? borderRadius;
   final bool isLocal;
@@ -45,6 +46,7 @@ class AmountTextField extends StatelessWidget {
     this.keyboardType,
     this.borderColor,
     this.borderRadius,
+    this.fromRightToLeft=false,
   });
 
   factory AmountTextField.salaryAmount({
@@ -53,6 +55,7 @@ class AmountTextField extends StatelessWidget {
     String hintText = "500",
     double? hintFontSize,
     double? borderRadius,
+    bool fromRightToLeft =false,
     double? titleFontSize,
     String? initialText,
     String? titleText,
@@ -71,6 +74,7 @@ class AmountTextField extends StatelessWidget {
     final SalaryTextField image = SalaryTextField(
       hasValidationMessage: hasValidation,
       key: key,
+      fromRightToLeft: fromRightToLeft,
       borderColor: borderColor,
       borderRadius: borderRadius,
       color: color,
