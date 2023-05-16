@@ -125,7 +125,7 @@ class PhoneNumberTextField extends StatelessWidget {
                           : InkWell(
                               onTap: allowChangeCountry
                                   ? () {
-                                  _phoneNumberBottomSheet(
+                                  phoneNumberBottomSheet(
                                     context: context,
                                     onCountryChanged: onCountryChanged
                                   );
@@ -169,7 +169,7 @@ class PhoneNumberTextField extends StatelessWidget {
   }
 }
 
-void _phoneNumberBottomSheet({required BuildContext context,void Function(CountryType)? onCountryChanged}) {
+void phoneNumberBottomSheet({required BuildContext context,void Function(CountryType)? onCountryChanged}) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
