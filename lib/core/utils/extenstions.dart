@@ -34,6 +34,9 @@ extension SizeExtension on BuildContext {
 extension DateTimeConstrain on DateTime {
   ///return true if user age < 18 years
   bool isUnderAge() => DateTime.now().difference(this).inDays < 6574;
+  bool isEqual(DateTime date) {
+    return year == date.year && month == date.month && day == date.day;
+  }
 }
 
 extension ListExtensions<T> on Iterable<T> {
