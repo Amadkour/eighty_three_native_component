@@ -17,6 +17,8 @@ class CountryBottomSheet {
   Future<void> show(
       {required BuildContext context,
         required CountryType country,
+        String? searchIconPath,
+        bool ? haveSearchBar,
         required ValueChanged<CountryType> onChangeSelectedCountry}) async {
     showModalBottomSheet(
       context: context,
@@ -24,6 +26,8 @@ class CountryBottomSheet {
       builder: (BuildContext context) => CountryBottomSheetContent(
         onChangeSelectedCountry: onChangeSelectedCountry,
         country: country,
+        searchIconPath: searchIconPath,
+        haveSearchBar: haveSearchBar ?? false,
       ),
     );
   }
