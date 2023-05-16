@@ -207,7 +207,7 @@ void _phoneNumberBottomSheet({required BuildContext context}) {
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                               ),
-                              child: MyImage.assets(
+                              child: MyImage.svgNetwork(
                                 url: countryTypes[index].icon!,
                                 height: 30,
                                 width: 30,
