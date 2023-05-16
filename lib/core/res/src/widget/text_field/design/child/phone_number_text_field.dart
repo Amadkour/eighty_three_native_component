@@ -135,7 +135,6 @@ class PhoneNumberTextField extends StatelessWidget {
                                       shape: BoxShape.circle,
                                     ),
                                     child: MyImage.svgNetwork(
-                                      defaultUrl: "assets/images/default-image.png",
                                       url: cubit.selectedCountry!.icon!,
                                       width: 30,
                                       height: 30,
