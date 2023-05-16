@@ -38,14 +38,14 @@ class CountryBottomSheetContent extends StatelessWidget {
   final CountryType country;
   final String? searchIconPath;
   const CountryBottomSheetContent({
-    required this.onChangeSelectedCountry,
+    this.onChangeSelectedCountry,
     required this.country,
     this.title,
     super.key, this.haveSearchBar=false,
     this.searchIconPath,
   });
   final bool haveSearchBar;
-  final void Function(CountryType) onChangeSelectedCountry;
+  final void Function(CountryType)? onChangeSelectedCountry;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +152,10 @@ class CountryBottomSheetContent extends StatelessWidget {
               ],
             ),
             onTap: () async {
-              onChangeSelectedCountry.call(data[index]);
+              if(onChangeSelectedCountry!=null) {
+                onChangeSelectedCountry?.call(countryTypes[index]);
+              }
+              sl<CountryTypeCubit>().changeSelectedCountry(index);
               CustomNavigator.instance.pop();
             },
           );
