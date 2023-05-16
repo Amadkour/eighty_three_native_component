@@ -10,11 +10,11 @@ class IbanValidator extends ParentValidator {
         ),
         MaxLength(
           40,
-          errorMessage('IBAN_greater', maxLength: 40.toString()),
+          errorMessage('IBAN_greater', maxLength: 40),
         ),
         MinLength(
           6,
-          errorMessage('IBAN_lower', maxLength: 6.toString()),
+          errorMessage('IBAN_lower', maxLength: 6),
         ),
       ],
     );
