@@ -18,7 +18,7 @@ dependencies:
   flutter_bloc: ^8.1.1
   connectivity_plus: ^4.0.0
   flutter_svg: ^2.0.5
-  intl: ^0.18.1
+  intl: ^0.18.0
   flutter_native_splash:
   barcode_widget: ^2.0.3
   flutter_launcher_icons:
@@ -42,15 +42,10 @@ dependencies:
   printing: ^5.9.3
   dotted_border: ^2.0.0+3
   fl_chart: ^0.62.0
-  just_audio: ^0.9.31
-  video_player: ^2.4.10
-  video_thumbnail: ^0.5.3
   loading_animation_widget: ^1.2.0+4
   firebase_core: ^2.4.1
   image_picker: ^0.8.6+1
   image_cropper: ^4.0.1
-  geolocator: ^9.0.2
-  geocoding: ^2.0.5
   badges: ^3.0.2
   smooth_page_indicator: ^1.0.0+2
   flutter_slidable: ^3.0.0
