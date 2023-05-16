@@ -4,8 +4,9 @@ import 'package:queen_validators/queen_validators.dart';
 
 class EmptyValidator extends ParentValidator {
   final int? minLength;
+  final int? maxLength;
   final String? minErrorMessage;
-  EmptyValidator({this.minLength, this.minErrorMessage});
+  EmptyValidator({this.maxLength, this.minLength, this.minErrorMessage});
   @override
   String? Function(String?)? getValidationWithParameter(String key) {
     return qValidator(
@@ -13,6 +14,7 @@ class EmptyValidator extends ParentValidator {
         IsRequired(
           errorMessage(key),
         ),
+        MaxLength(maxLength ?? 10, errorMessage('id_greater')),
         if (minLength != null) ...<TextValidationRule>[
           MinLength(
             minLength!,
