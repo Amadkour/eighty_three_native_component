@@ -1,4 +1,5 @@
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/validator/parent/parent_validator.dart';
+import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:queen_validators/queen_validators.dart';
 
 class IbanValidator extends ParentValidator {
@@ -10,11 +11,11 @@ class IbanValidator extends ParentValidator {
         ),
         MaxLength(
           40,
-          errorMessage('IBAN_greater', maxLength: 40.toString()),
+          errorMessage("${tr("IBAN_greater")}40 ${tr("letters")}"),
         ),
         MinLength(
           6,
-          errorMessage('IBAN_lower', maxLength: 6.toString()),
+          errorMessage("${tr("IBAN_lower")}6 ${tr("letters")}"),
         ),
       ],
     );
