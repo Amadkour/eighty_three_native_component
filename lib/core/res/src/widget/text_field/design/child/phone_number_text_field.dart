@@ -21,6 +21,7 @@ class PhoneNumberTextField extends StatelessWidget {
   final String? error;
   final Color? fillColor;
   final bool? readOnly;
+  final bool allowChangeCountry;
   final double? hintFontSize;
   final double? titleFontSize;
   final double? fullWidth;
@@ -50,7 +51,8 @@ class PhoneNumberTextField extends StatelessWidget {
       this.onTab,
       this.onChanged,
       this.suffixWidget,
-      this.onCountryChanged});
+      this.onCountryChanged,
+      this.allowChangeCountry=true});
 
   @override
   Widget build(BuildContext context) {
@@ -121,12 +123,14 @@ class PhoneNumberTextField extends StatelessWidget {
                               ),
                             )
                           : InkWell(
-                              onTap: () {
-                                _phoneNumberBottomSheet(
-                                  context: context,
-                                  onCountryChanged: onCountryChanged
-                                );
-                              },
+                              onTap: allowChangeCountry
+                                  ? () {
+                                  _phoneNumberBottomSheet(
+                                    context: context,
+                                    onCountryChanged: onCountryChanged
+                                  );
+                                }
+                              : null,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
