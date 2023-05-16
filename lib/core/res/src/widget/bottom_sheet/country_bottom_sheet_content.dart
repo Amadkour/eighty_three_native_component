@@ -16,15 +16,12 @@ class CountryBottomSheet {
 
   Future<void> show(
       {required BuildContext context,
-      required CountryType country,
-        bool? haveSearchBar,
-      required ValueChanged<CountryType> onChangeSelectedCountry}) async {
+        required CountryType country,
+        required ValueChanged<CountryType> onChangeSelectedCountry}) async {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      useRootNavigator: true,
       builder: (BuildContext context) => CountryBottomSheetContent(
-        haveSearchBar: haveSearchBar??false,
         onChangeSelectedCountry: onChangeSelectedCountry,
         country: country,
       ),
@@ -52,49 +49,52 @@ class CountryBottomSheetContent extends StatelessWidget {
         final CountryTypeCubit controller = context.read<CountryTypeCubit>();
         return Container(
           margin:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          height: MediaQuery.of(context).size.height * 0.6,
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          // height: MediaQuery.of(context).size.height * 0.6,
           decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(15), topLeft: Radius.circular(15))),
           child: BlocBuilder<CountryTypeCubit, CountryTypeState>(
             builder: (BuildContext context, CountryTypeState index) {
-              return SafeArea(
-                child: ListView(
-                  children: <Widget>[
-                    if(haveSearchBar)...[
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          title ?? ' ',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge!
-                              .copyWith(fontSize: 18, color: Colors.black),
+              return SingleChildScrollView(
+                child: SafeArea(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      if(!haveSearchBar)...[
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            title ?? ' ',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(fontSize: 18, color: Colors.black),
+                          ),
                         ),
-                      ),
-                      CustomSearchBar(
-                        verticalPadding: 20,
-                        backGroundColor: Colors.white,
-                        showClear: true,
-                        hintText: "searchHer",
-                        onChanged: (String value) {
-                          controller.search(value);
-                        },
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-                        child: Divider(),
+                        CustomSearchBar(
+                          verticalPadding: 20,
+                          backGroundColor: Colors.white,
+                          showClear: true,
+                          hintText: "searchHer",
+                          onChanged: (String value) {
+                            controller.search(value);
+                          },
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+                          child: Divider(),
+                        ),
+                      ],
+                      BlocBuilder<CountryTypeCubit, CountryTypeState>(
+                        builder: (BuildContext context, CountryTypeState state) =>
+                            Column(
+                              children: getList(controller.displayedList, context),
+                            ),
                       ),
                     ],
-                    BlocBuilder<CountryTypeCubit, CountryTypeState>(
-                      builder: (BuildContext context, CountryTypeState state) =>
-                          Column(
-                        children: getList(controller.displayedList, context),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               );
             },
@@ -107,7 +107,7 @@ class CountryBottomSheetContent extends StatelessWidget {
   List<Widget> getList(List<CountryType> data, BuildContext context) =>
       List<Widget>.generate(
         data.length,
-        (int index) {
+            (int index) {
           return ListTile(
             key: Key("country_$index"),
             title: Row(
