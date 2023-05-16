@@ -245,9 +245,7 @@ void _phoneNumberBottomSheet({required BuildContext context,void Function(Countr
                           if(onCountryChanged!=null) {
                             onCountryChanged.call(countryTypes[index]);
                           }
-                          else{
-                            sl<CountryTypeCubit>().changeSelectedCountry(index);
-                          }
+                          sl<CountryTypeCubit>().changeSelectedCountry(index);
                           CustomNavigator.instance.pop();
                         },
                       );
