@@ -114,7 +114,7 @@ class DioInterceptor extends Interceptor {
 
     log('onRequest ${options.path} =>  token => ${currentUserPermission.token}');
     if (options.method == 'GET') {
-      options.queryParameters.addAll(<String, dynamic>{"user_uuid": currentUserPermission});
+      options.queryParameters.addAll(<String, dynamic>{"user_uuid": currentUserPermission.userId});
     }
     //TODO should remove in production
     if (options.method.toUpperCase() == "POST" &&
