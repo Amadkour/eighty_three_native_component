@@ -23,7 +23,7 @@ class PhoneNumberTextField extends StatelessWidget {
   final Color? fillColor;
   final bool? readOnly;
   final bool? haveSearchBar;
-  final bool? isRequired;
+  final bool isRequired;
   final bool allowChangeCountry;
   final double? hintFontSize;
   final double? titleFontSize;
@@ -80,7 +80,7 @@ class PhoneNumberTextField extends StatelessWidget {
               ),
               LengthLimitingTextInputFormatter(10)
             ],
-            validator: isRequired!=null ? PhoneValidator().getValidation() : null,
+            validator: isRequired ? PhoneValidator().getValidation() : null,
             keyboardType: TextInputType.number,
             readOnly: readOnly ?? false,
             title: tr(phoneTitle!),
