@@ -3,7 +3,6 @@ import 'package:eighty_three_native_component/core/utils/parsing/parent_model.da
 
 import 'guest_permission.dart';
 
-
 UserPermission currentUserPermission = GuestPermission();
 
 class UserPermission extends ParentModel {
@@ -50,7 +49,6 @@ class UserPermission extends ParentModel {
     this.username,
   });
 
-
   bool get isArabic => locale == 'ar';
 
   bool get isUsingLocalAuth =>
@@ -58,17 +56,16 @@ class UserPermission extends ParentModel {
 
   @override
   ParentModel fromJsonInstance(Map<String, dynamic> json) {
-
     final FromMap converter =
-    FromMap(map: json['user'] as Map<String, dynamic>);
+        FromMap(map: json['user'] as Map<String, dynamic>);
     return UserPermission(
-      country: getCountryCode(json,converter),
+      country: getCountryCode(json, converter),
       token: converter.convertToString(key: 'token'),
-      locale: json["user"]['locale']!=null
+      locale: json["user"]['locale'] != null
           ? converter.convertToString(key: "locale")
           : converter.convertToString(key: "language"),
       email: converter.convertToString(key: 'email'),
-      userId: json["id"]!=null
+      userId: json["id"] != null
           ? converter.convertToString(key: 'id')
           : converter.convertToString(key: 'uuid'),
       name: converter.convertToString(key: 'full_name'),
@@ -80,24 +77,21 @@ class UserPermission extends ParentModel {
       isSetTouchId: converter.convertToBool(key: "touch_id_activated"),
       pinCode: converter.convertToString(key: "pincode"),
       isFaceIdActive:
-      converter.convertToBool(key: "is_active", defaultValue: false),
+          converter.convertToBool(key: "is_active", defaultValue: false),
       isTouchIdActive:
-      converter.convertToBool(key: "touch_id_active", defaultValue: false),
+          converter.convertToBool(key: "touch_id_active", defaultValue: false),
       currency: converter.convertToString(key: "currency", defaultValue: ""),
     );
   }
 
-  String? getCountryCode(Map<String,dynamic> json,FromMap converter) {
-    if(json["user"]["country"] is Map<String, dynamic>){
+  String? getCountryCode(Map<String, dynamic> json, FromMap converter) {
+    if (json["user"]["country"] is Map<String, dynamic>) {
       return converter.convertToString(
           key: 'code',
           innerMap: (json['user'] as Map<String, dynamic>)['country']
-          as Map<String, dynamic>
-      );
-    }
-    else{
+              as Map<String, dynamic>);
+    } else {
       return converter.convertToString(key: "country");
     }
   }
-
 }
