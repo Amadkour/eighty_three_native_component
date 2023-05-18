@@ -11,6 +11,7 @@ class CvvTextField extends StatelessWidget {
     this.focusNode,
     this.fillColor,
     this.borderColor,
+    this.readOnly=false,
     this.haveTitle=true,
     this.borderRadius,
     this.cvvController,
@@ -23,6 +24,7 @@ class CvvTextField extends StatelessWidget {
   final Color? borderColor;
   final double? borderRadius;
   final bool haveTitle;
+  final bool readOnly;
 
 
   @override
@@ -30,6 +32,7 @@ class CvvTextField extends StatelessWidget {
     return ParentTextField(
       controller: cvvController,
       keyboardType: TextInputType.number,
+      readOnly: readOnly,
       onChanged: onChanged,
       validator: CVVValidator().validation(),
       textInputFormatter: <TextInputFormatter>[
