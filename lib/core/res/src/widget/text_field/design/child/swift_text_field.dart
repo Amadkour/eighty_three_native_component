@@ -9,17 +9,19 @@ class CvvTextField extends StatelessWidget {
   const CvvTextField({
     super.key,
     required this.onChanged,
-    this.focusNode,
+    this.focusNode, this.readOnly=false,
   });
 
   final ValueChanged<String> onChanged;
   final FocusNode? focusNode;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
     return ParentTextField(
       keyboardType: TextInputType.number,
       onChanged: onChanged,
+      readOnly: readOnly,
       validator: CVVValidator().validation(),
       textInputFormatter: <TextInputFormatter>[
         FilteringTextInputFormatter.allow(RegExp('[0-9]')),
