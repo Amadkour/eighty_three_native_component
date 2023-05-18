@@ -167,7 +167,7 @@ class ParentTextField extends StatelessWidget {
                 InputDecoration(
                   prefixText: prefixText,
                   enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.transparent),
+                    borderSide: BorderSide(color: borderColor ?? Colors.transparent),
                     borderRadius: BorderRadius.all(
                       Radius.circular(
                         borderRadius ?? 10.0,
@@ -175,7 +175,7 @@ class ParentTextField extends StatelessWidget {
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.transparent),
+                    borderSide: BorderSide(color: borderColor ?? Colors.transparent),
                     borderRadius: BorderRadius.all(
                       Radius.circular(
                         borderRadius ?? 10.0,

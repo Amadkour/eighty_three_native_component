@@ -3,12 +3,10 @@ import 'package:eighty_three_native_component/core/utils/parsing/parent_model.da
 
 import 'guest_permission.dart';
 
-enum RoleName { guest, parent, child }
 
 UserPermission currentUserPermission = GuestPermission();
 
 class UserPermission extends ParentModel {
-  RoleName role = RoleName.parent;
   String? token;
   String? name;
   String? userId;
@@ -50,7 +48,6 @@ class UserPermission extends ParentModel {
     this.isTouchIdActive,
     this.language,
     this.username,
-    this.role = RoleName.guest,
   });
 
 
@@ -63,18 +60,11 @@ class UserPermission extends ParentModel {
   ParentModel fromJsonInstance(Map<String, dynamic> json) {
     final FromMap converter =
     FromMap(map: json['user'] as Map<String, dynamic>);
-    role = ((json['user'] as Map<String, dynamic>)['is_parent'] as bool)
-        ? RoleName.parent
-        : RoleName.child;
-
     return UserPermission(
       country: converter.convertToString(
           key: 'code',
           innerMap: (json['user'] as Map<String, dynamic>)['country']
           as Map<String, dynamic>),
-      role: ((json['user'] as Map<String, dynamic>)['is_parent'] as bool)
-          ? RoleName.parent
-          : RoleName.child,
       token: converter.convertToString(key: 'token'),
       locale: converter.convertToString(key: "language"),
       email: converter.convertToString(key: 'email'),

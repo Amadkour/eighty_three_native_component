@@ -19,7 +19,7 @@ class GlobalCubit extends Cubit<GlobalState> {
   Future<void> loadLanguage(String l) async {
     String translation;
     String errorTranslation;
-    final String langFileName = l == 'ar' ? 'ar_AE' : 'en_US';
+    final String langFileName = l;
     translation =
         await rootBundle.loadString('assets/localization/$langFileName.json');
     errorTranslation =

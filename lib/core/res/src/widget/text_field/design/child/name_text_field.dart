@@ -13,6 +13,7 @@ class NameTextField extends StatelessWidget {
   final double? borderRadius;
   final String? titleFontFamily;
   final int? minLength;
+  final int? maxLength;
   final int? multiLine;
   final String? errorMessage;
   final String? minErrorMessage;
@@ -43,7 +44,8 @@ class NameTextField extends StatelessWidget {
     this.defaultValue,
     this.borderColor,
     this.borderRadius,
-    this.titleFontFamily
+    this.titleFontFamily,
+    this.maxLength
   });
 
   @override
@@ -62,6 +64,7 @@ class NameTextField extends StatelessWidget {
       readOnly: readOnly ?? false,
       validator: isRequired
           ? EmptyValidator(
+        maxLength: maxLength,
                   minLength: minLength, minErrorMessage: minErrorMessage)
               .getValidationWithParameter(errorMessage ?? "name_empty")
           : null,

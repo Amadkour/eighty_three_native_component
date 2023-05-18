@@ -1,9 +1,9 @@
 import 'package:eighty_three_native_component/core/res/src/cubit/country_type/provider/model/country_type.dart';
 import 'package:eighty_three_native_component/core/res/src/cubit/country_type/controller/country_type_cubit.dart';
-import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.dart';
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
+import 'package:eighty_three_native_component/core/res/src/widget/bottom_sheet/country_bottom_sheet_content.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/images/my_image.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/design/parent/parent.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/validator/child/phone_validator.dart';
@@ -19,13 +19,18 @@ class PhoneNumberTextField extends StatelessWidget {
   final String? phoneTitle;
   final String? phoneHint;
   final String? error;
+  final String? searchIconPath;
   final Color? fillColor;
   final bool? readOnly;
+  final bool? haveSearchBar;
+  final bool isRequired;
+  final bool allowChangeCountry;
   final double? hintFontSize;
   final double? titleFontSize;
   final double? fullWidth;
   final void Function()? onTab;
   final void Function(String)? onChanged;
+  final void Function(CountryType)? onCountryChanged;
   final CountryType? selectedCountry;
   final bool hasPrefix;
   final bool hasSuffix;
@@ -48,7 +53,12 @@ class PhoneNumberTextField extends StatelessWidget {
       this.hasSuffix = false,
       this.onTab,
       this.onChanged,
-      this.suffixWidget});
+      this.suffixWidget,
+      this.onCountryChanged,
+      this.allowChangeCountry=true,
+      this.searchIconPath,
+      this.haveSearchBar,
+      this.isRequired=true});
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +80,7 @@ class PhoneNumberTextField extends StatelessWidget {
               ),
               LengthLimitingTextInputFormatter(10)
             ],
-            validator: PhoneValidator().getValidation(),
+            validator: isRequired ? PhoneValidator().getValidation() : null,
             keyboardType: TextInputType.number,
             readOnly: readOnly ?? false,
             title: tr(phoneTitle!),
@@ -119,11 +129,17 @@ class PhoneNumberTextField extends StatelessWidget {
                               ),
                             )
                           : InkWell(
-                              onTap: () {
-                                _phoneNumberBottomSheet(
+                              onTap: allowChangeCountry
+                                  ? () {
+                                CountryBottomSheet.instance.show(
                                   context: context,
+                                  searchIconPath: searchIconPath,
+                                  haveSearchBar: haveSearchBar,
+                                  onChangeSelectedCountry: onCountryChanged!,
+                                  country: cubit.selectedCountry!,
                                 );
-                              },
+                                }
+                              : null,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
@@ -134,7 +150,7 @@ class PhoneNumberTextField extends StatelessWidget {
                                     decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
                                     ),
-                                    child: MyImage.assets(
+                                    child: MyImage.svgNetwork(
                                       url: cubit.selectedCountry!.icon!,
                                       width: 30,
                                       height: 30,
@@ -162,94 +178,6 @@ class PhoneNumberTextField extends StatelessWidget {
   }
 }
 
-void _phoneNumberBottomSheet({required BuildContext context}) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (_) => BlocBuilder<CountryTypeCubit, CountryTypeState>(
-      bloc: sl<CountryTypeCubit>(),
-      builder: (BuildContext context, CountryTypeState state) => Container(
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(15), topLeft: Radius.circular(15))),
-        child: Directionality(
-          textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
-          child: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      tr("select_country"),
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge!
-                          .copyWith(fontSize: 18, color: Colors.black),
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-                    child: Divider(),
-                  ),
-                  ...List<Widget>.generate(
-                    countryTypes.length,
-                    (int index) {
-                      return ListTile(
-                        title: Row(
-                          children: <Widget>[
-                            Container(
-                              width: 30,
-                              height: 40,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: MyImage.assets(
-                                url: countryTypes[index].icon!,
-                                height: 30,
-                                width: 30,
-                                fit: BoxFit.fitHeight,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              tr(countryTypes[index].title!),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(fontSize: 14, color: Colors.black),
-                            ),
-                            const Spacer(),
-                            Text(
-                              '+${countryTypes[index].phoneCode}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                      fontSize: 14,
-                                      color: AppColors.blackColor),
-                            ),
-                          ],
-                        ),
-                        onTap: () async {
-                          sl<CountryTypeCubit>().changeSelectedCountry(index);
-                          CustomNavigator.instance.pop();
-                        },
-                      );
-                    },
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-}
 
 /**
  * Container(
