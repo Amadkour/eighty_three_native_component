@@ -95,5 +95,5 @@ class UserPermission extends ParentModel {
       currency: converter.convertToString(key: "currency", defaultValue: ""),
     );
   }
-}
 
+}
