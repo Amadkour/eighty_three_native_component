@@ -1,6 +1,6 @@
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
-import 'package:eighty_three_native_component/core/res/src/services/firebase/Firebase_notification_service.dart';
 import 'package:eighty_three_native_component/core/res/src/services/firebase/firebase_crashlytics_service.dart';
+import 'package:eighty_three_native_component/core/res/src/services/firebase/firebase_notification_service.dart';
 
 class InitFirebase {
   InitFirebase._singleTone();
@@ -11,6 +11,7 @@ class InitFirebase {
     // crashlytics
     await sl<FirebaseCrashlyticsService>().init();
     // notifications
-    await sl<FirebaseNotificationService>().initNotificationService();
+    await sl<FirebaseNotificationsService>().initNotificationService();
+
   }
 }

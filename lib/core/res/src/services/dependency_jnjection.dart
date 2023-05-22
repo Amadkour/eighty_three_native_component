@@ -9,10 +9,11 @@ import 'package:eighty_three_native_component/core/res/src/services/analytics_se
 import 'package:eighty_three_native_component/core/res/src/services/firebase/firbase_performance_service.dart';
 import 'package:eighty_three_native_component/core/res/src/services/firebase/firebase_analytics_service.dart';
 import 'package:eighty_three_native_component/core/res/src/services/firebase/firebase_crashlytics_service.dart';
+import 'package:eighty_three_native_component/core/res/src/services/firebase/firebase_notification_service.dart';
 import 'package:eighty_three_native_component/core/res/src/services/firebase/init_firebase.dart';
 import 'package:eighty_three_native_component/core/res/src/services/image_picker_service.dart';
 import 'package:eighty_three_native_component/core/res/src/services/local_storage_service.dart';
-import 'package:eighty_three_native_component/core/res/src/services/firebase/firebase_notification_service.dart';
+
 import 'package:eighty_three_native_component/core/utils/share_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -35,8 +36,8 @@ class CustomDependencyInjection {
 
 // firebase
     registerSingleton(() => FlutterLocalNotificationsPlugin());
-    registerSingleton(() => FirebaseNotificationService(sl(),
-        packageName: packageName, appName: appName));
+    registerSingleton(
+        () => FirebaseNotificationsService(sl(), packageName, appName));
     registerSingleton(() => FirebasePerformancesService());
     registerSingleton(() => FirebaseCrashlyticsService());
     registerSingleton(() => FirebaseAnalyticsService());

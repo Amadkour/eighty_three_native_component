@@ -3,12 +3,12 @@ import 'package:eighty_three_native_component/core/res/src/configuration/top_lev
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class FirebaseNotificationService {
+class FirebaseNotificationsService {
   final FlutterLocalNotificationsPlugin _localNotificationsPlugin;
   String packageName;
   String appName;
-  FirebaseNotificationService(
-      this._localNotificationsPlugin, {required this.packageName,required this.appName});
+  FirebaseNotificationsService(
+      this._localNotificationsPlugin,  this.packageName, this.appName);
 
   Future<void> initNotificationService() async {
     await FirebaseMessaging.instance.requestPermission(
