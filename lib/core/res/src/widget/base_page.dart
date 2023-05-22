@@ -69,17 +69,19 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    print("current state: ");
-    print(state.name);
-    print(await sl<FlutterSecureStorage>().containsKey(key: userToken));
-    print(DateTime.now().difference(_backgroundTime).inSeconds);
-    print(await sl<FlutterSecureStorage>().containsKey(key: userPinCode));
-    print(haveLocalAuth);
+
     if (_state != state) {
       _state = state;
 
       ///--------------foreground
       if (state == AppLifecycleState.resumed) {
+        print("current state: ");
+        print(state.name);
+        print(await sl<FlutterSecureStorage>().containsKey(key: userToken));
+        print(DateTime.now().difference(_backgroundTime).inSeconds);
+        print(await sl<FlutterSecureStorage>().containsKey(key: userPinCode));
+        print(haveLocalAuth);
+        print("-----------------------------------------------");
         /// To ensure login
         if (await sl<FlutterSecureStorage>().containsKey(key: userToken) &&
 
