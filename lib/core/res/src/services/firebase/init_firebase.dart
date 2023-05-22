@@ -9,6 +9,7 @@ class InitFirebase {
   Future<void> init() async {
     // crashlytics
     await _firebaseCrashlyticsService.init();
+    // notifications
     await _firebaseNotificationService.initNotificationService();
   }
 }
