@@ -11,6 +11,7 @@ class AmountTextField extends StatelessWidget {
   final String? titleFontFamily;
   final String? label;
   final double? titleFontSize;
+  final FocusNode? focusNode;
   final double? hintFontSize;
   final Widget? suffixIcon;
   final TextAlign textAlign;
@@ -47,6 +48,7 @@ class AmountTextField extends StatelessWidget {
     this.borderColor,
     this.borderRadius,
     this.titleFontFamily,
+    this.focusNode,
   });
 
   factory AmountTextField.salaryAmount({
@@ -59,6 +61,7 @@ class AmountTextField extends StatelessWidget {
     String? initialText,
     String? titleText,
     String? titleFontFamily,
+    FocusNode? focusNode,
     Widget? suffixIcon,
     void Function(String value)? onChanged,
     TextEditingController? controller,
@@ -74,6 +77,7 @@ class AmountTextField extends StatelessWidget {
     final SalaryTextField image = SalaryTextField(
       hasValidationMessage: hasValidation,
       key: key,
+      focusNode: focusNode,
       titleFontFamily:titleFontFamily,
       borderColor: borderColor,
       borderRadius: borderRadius,

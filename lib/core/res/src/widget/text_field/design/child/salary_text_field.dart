@@ -19,6 +19,7 @@ class SalaryTextField extends AmountTextField {
     String? titleFontFamily,
     Color? borderColor,
     double? borderRadius,
+    FocusNode? focusNode,
     String? initialText,
     Widget? suffixIcon,
     void Function(String value)? onChanged,
@@ -33,6 +34,7 @@ class SalaryTextField extends AmountTextField {
     this.validator,
   }) : super(
             onChanged: onChanged,
+            focusNode: focusNode,
             controller: controller,
             borderRadius: borderRadius,
             borderColor: borderColor,
@@ -58,6 +60,7 @@ class SalaryTextField extends AmountTextField {
       controller: controller,
       key: const Key('salary_text_field'),
       readOnly: readOnly,
+      focusNode: focusNode,
       title: titleText,
       hintFontSize: hintFontSize,
       titleFontSize: titleFontSize,
