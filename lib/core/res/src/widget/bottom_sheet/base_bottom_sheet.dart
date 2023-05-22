@@ -126,7 +126,7 @@ void showCustomBottomSheet({
                   ),
                 ),
               ),
-              const SizedBox(
+               SizedBox(
                 height:MediaQuery.of(context).viewInsets.bottom+ 10,
               )
             ],
