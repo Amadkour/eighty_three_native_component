@@ -23,7 +23,10 @@ import 'package:image_picker/image_picker.dart';
 final GetIt sl = GetIt.instance;
 
 class CustomDependencyInjection {
-  static nativeSetUp({String? apiBaseUrl}) async {
+  static nativeSetUp(
+      {String? apiBaseUrl,
+      required String packageName,
+      required String appName}) async {
     //! packages
     registerSingleton(
       () => const FlutterSecureStorage(),
@@ -32,7 +35,8 @@ class CustomDependencyInjection {
 
 // firebase
     registerSingleton(() => FlutterLocalNotificationsPlugin());
-    registerSingleton(() => FirebaseNotificationService(sl()));
+    registerSingleton(() => FirebaseNotificationService(sl(),
+        packageName: packageName, appName: appName));
     registerSingleton(() => FirebasePerformancesService());
     registerSingleton(() => FirebaseCrashlyticsService());
     registerSingleton(() => FirebaseAnalyticsService());
@@ -82,8 +86,9 @@ class CustomDependencyInjection {
     await sl.reset();
   }
 
-  static Future<void> reInitialize() async {
+  static Future<void> reInitialize(
+      {required String packageName, required String appName}) async {
     await sl.reset();
-    await nativeSetUp();
+    await nativeSetUp(appName: appName, packageName: packageName);
   }
 }

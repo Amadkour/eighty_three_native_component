@@ -5,8 +5,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class FirebaseNotificationService {
   final FlutterLocalNotificationsPlugin _localNotificationsPlugin;
-
-  FirebaseNotificationService(this._localNotificationsPlugin);
+  String packageName;
+  String appName;
+  FirebaseNotificationService(
+      this._localNotificationsPlugin, {required this.packageName,required this.appName});
 
   Future<void> initNotificationService() async {
     await FirebaseMessaging.instance.requestPermission(
@@ -52,10 +54,10 @@ class FirebaseNotificationService {
       notification?.notification?.title ??
           notification?.data['title'] as String?,
       notification?.notification?.body ?? notification?.data['body'] as String?,
-      const NotificationDetails(
+      NotificationDetails(
         android: AndroidNotificationDetails(
-          "com.Res.pay.sa.res_pay_merchant",
-          "Res Pay Merchant",
+          packageName,
+          appName,
           icon: 'app_logo',
         ),
       ),
