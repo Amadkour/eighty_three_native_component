@@ -12,6 +12,7 @@ class CustomDropdown<T> extends StatelessWidget {
   final String Function(T)? itemToString;
   final String? label;
   final Widget? addIcon;
+  final FocusNode? focusNode;
   final Widget Function(T item)? itemBuilder;
   final String? hintText;
   final Widget? leading;
@@ -37,6 +38,7 @@ class CustomDropdown<T> extends StatelessWidget {
     this.hintText,
     this.addIcon,
     this.itemBuilder,
+    this.focusNode,
   });
 
   @override
@@ -79,6 +81,7 @@ class CustomDropdown<T> extends StatelessWidget {
                     ),
             );
           }).toList(),
+          focusNode: focusNode,
           onChanged: onChanged,
           isExpanded: true,
           hint: AutoSizeText(

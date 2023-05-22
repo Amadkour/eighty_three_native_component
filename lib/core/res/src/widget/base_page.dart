@@ -69,6 +69,7 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+
     if (_state != state) {
       _state = state;
 
