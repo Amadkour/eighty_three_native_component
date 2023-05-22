@@ -65,7 +65,7 @@ class CustomDependencyInjection {
         (FlutterErrorDetails details) => const SizedBox.shrink();
 
     // init firebase services
-    await InitFirebase(sl(), sl()).init();
+    await InitFirebase.instance.init();
   }
 
   static registerFactory<T extends Object>(T Function() factory,
