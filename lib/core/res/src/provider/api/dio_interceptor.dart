@@ -207,9 +207,10 @@ class DioInterceptor extends Interceptor {
           //   _repeatOnError(handler, requestOptions);
           // }
         }
-      } else if (outerCode == 401
-          // && innerCode == 1041
-          ) {
+      }
+      /// 401 : login from another app
+      /// 429 : request limit
+      else if ([429,401].contains(outerCode)) {
         unauthorizedDialog(error, onRemoveSession: onRemoveSession);
       }
     } catch (e) {
