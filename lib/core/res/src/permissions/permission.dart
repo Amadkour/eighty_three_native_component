@@ -64,7 +64,9 @@ class UserPermission extends ParentModel {
     return UserPermission(
       country: getCountryCode(json,converter),
       token: converter.convertToString(key: 'token'),
-      locale: converter.convertToString(key: "language"),
+      locale: json['locale']!=null
+          ? converter.convertToString(key: "locale")
+          : converter.convertToString(key: "language"),
       email: converter.convertToString(key: 'email'),
       userId:
       converter.convertToString(key: 'id', defaultValue: json['user_uuid']),
