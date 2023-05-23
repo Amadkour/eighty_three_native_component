@@ -6,9 +6,14 @@ import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.da
 import 'package:eighty_three_native_component/core/res/src/provider/api/api_connection.dart';
 
 import 'package:eighty_three_native_component/core/res/src/services/analytics_service.dart';
+import 'package:eighty_three_native_component/core/res/src/services/firebase/firbase_performance_service.dart';
+import 'package:eighty_three_native_component/core/res/src/services/firebase/firebase_analytics_service.dart';
+import 'package:eighty_three_native_component/core/res/src/services/firebase/firebase_crashlytics_service.dart';
+import 'package:eighty_three_native_component/core/res/src/services/firebase/firebase_notification_service.dart';
+import 'package:eighty_three_native_component/core/res/src/services/firebase/init_firebase.dart';
 import 'package:eighty_three_native_component/core/res/src/services/image_picker_service.dart';
 import 'package:eighty_three_native_component/core/res/src/services/local_storage_service.dart';
-import 'package:eighty_three_native_component/core/res/src/services/notification_service.dart';
+
 import 'package:eighty_three_native_component/core/utils/share_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -19,21 +24,28 @@ import 'package:image_picker/image_picker.dart';
 final GetIt sl = GetIt.instance;
 
 class CustomDependencyInjection {
-  static nativeSetUp({String? apiBaseUrl}) async {
+  static nativeSetUp(
+      {String? apiBaseUrl,
+      required String packageName,
+      required String appName}) async {
     //! packages
     registerSingleton(
       () => const FlutterSecureStorage(),
     );
-
-    registerSingleton(() => FlutterLocalNotificationsPlugin());
-
     registerSingleton(() => ImagePicker());
+
+// firebase
+    registerSingleton(() => FlutterLocalNotificationsPlugin());
+    registerSingleton(
+        () => FirebaseNotificationsService(sl(), packageName, appName));
+    registerSingleton(() => FirebasePerformancesService());
+    registerSingleton(() => FirebaseCrashlyticsService());
+    registerSingleton(() => FirebaseAnalyticsService());
 
     //!services
     final localStorageService = await LocalStorageService(sl()).init();
     registerSingleton(() => localStorageService);
     registerSingleton(() => ShareService());
-    registerSingleton(() => NotificationService(sl()));
     registerSingleton(() => ImagePickerService(sl()));
     registerSingleton(() => AnalyticsService());
 
@@ -52,6 +64,9 @@ class CustomDependencyInjection {
     ///error screen
     ErrorWidget.builder =
         (FlutterErrorDetails details) => const SizedBox.shrink();
+
+    // init firebase services
+    await InitFirebase.instance.init();
   }
 
   static registerFactory<T extends Object>(T Function() factory,
@@ -72,8 +87,9 @@ class CustomDependencyInjection {
     await sl.reset();
   }
 
-  static Future<void> reInitialize() async {
+  static Future<void> reInitialize(
+      {required String packageName, required String appName}) async {
     await sl.reset();
-    await nativeSetUp();
+    await nativeSetUp(appName: appName, packageName: packageName);
   }
 }

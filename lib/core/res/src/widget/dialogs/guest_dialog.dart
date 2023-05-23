@@ -12,8 +12,12 @@ class GuestDialog extends StatelessWidget {
     required this.child,
     this.onPressedFirstButton,
     this.onPressedSecondButton,
+    required this.packageName,
+    required this.appName,
   });
   final Widget child;
+  final String packageName;
+  final String appName;
   final void Function()? onPressedFirstButton;
   final void Function()? onPressedSecondButton;
 
@@ -30,7 +34,8 @@ class GuestDialog extends StatelessWidget {
               'You are in guest mode, please login or sign up to use all features'),
           onPressedFirstButton: () async {
             /// add these methods to reset dependencies again when login
-            await CustomDependencyInjection.reInitialize();
+            await CustomDependencyInjection.reInitialize(
+                packageName: packageName, appName: appName);
             onPressedFirstButton?.call();
             CustomNavigator.instance.pushNamed(RoutesName.login);
           },
