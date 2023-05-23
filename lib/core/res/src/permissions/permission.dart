@@ -64,7 +64,7 @@ class UserPermission extends ParentModel {
     return UserPermission(
       country: getCountryCode(json,converter),
       token: converter.convertToString(key: 'token'),
-      locale: json['locale']!=null
+      locale: json["user"]['locale']!=null
           ? converter.convertToString(key: "locale")
           : converter.convertToString(key: "language"),
       email: converter.convertToString(key: 'email'),
@@ -87,7 +87,7 @@ class UserPermission extends ParentModel {
   }
 
   String? getCountryCode(Map<String,dynamic> json,FromMap converter) {
-    if(json["country"] is Map<String, dynamic>){
+    if(json["user"]["country"] is Map<String, dynamic>){
       return converter.convertToString(
           key: 'code',
           innerMap: (json['user'] as Map<String, dynamic>)['country']
