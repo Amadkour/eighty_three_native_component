@@ -58,6 +58,8 @@ class UserPermission extends ParentModel {
 
   @override
   ParentModel fromJsonInstance(Map<String, dynamic> json) {
+    print("response");
+    print(json['user']);
     final FromMap converter =
     FromMap(map: json['user'] as Map<String, dynamic>);
     return UserPermission(
