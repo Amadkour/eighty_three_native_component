@@ -58,18 +58,19 @@ class UserPermission extends ParentModel {
 
   @override
   ParentModel fromJsonInstance(Map<String, dynamic> json) {
+
     final FromMap converter =
     FromMap(map: json['user'] as Map<String, dynamic>);
     return UserPermission(
-      country: converter.convertToString(
-          key: 'code',
-          innerMap: (json['user'] as Map<String, dynamic>)['country']
-          as Map<String, dynamic>),
+      country: getCountryCode(json,converter),
       token: converter.convertToString(key: 'token'),
-      locale: converter.convertToString(key: "language"),
+      locale: json["user"]['locale']!=null
+          ? converter.convertToString(key: "locale")
+          : converter.convertToString(key: "language"),
       email: converter.convertToString(key: 'email'),
-      userId:
-      converter.convertToString(key: 'id', defaultValue: json['user_uuid']),
+      userId: json["id"]!=null
+          ? converter.convertToString(key: 'id')
+          : converter.convertToString(key: 'uuid'),
       name: converter.convertToString(key: 'full_name'),
       identityId: converter.convertToString(
           key: 'identity', defaultValue: json["identity_id"].toString()),
@@ -84,6 +85,19 @@ class UserPermission extends ParentModel {
       converter.convertToBool(key: "touch_id_active", defaultValue: false),
       currency: converter.convertToString(key: "currency", defaultValue: ""),
     );
+  }
+
+  String? getCountryCode(Map<String,dynamic> json,FromMap converter) {
+    if(json["user"]["country"] is Map<String, dynamic>){
+      return converter.convertToString(
+          key: 'code',
+          innerMap: (json['user'] as Map<String, dynamic>)['country']
+          as Map<String, dynamic>
+      );
+    }
+    else{
+      return converter.convertToString(key: "country");
+    }
   }
 
 }

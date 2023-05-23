@@ -34,7 +34,7 @@ class CountryType extends ParentModel {
       countryTypeCode: converter.convertToString(key: 'code'),
       countryTypeTitle: converter.convertToString(key: 'name'),
       countryPhoneCode: converter.convertToString(key: 'phone_code'),
-      countryTypeIcon: converter.convertToString(key: 'flag'),
+      countryTypeIcon: json['icon']!=null ? converter.convertToString(key: 'icon') : converter.convertToString(key: 'flag'),
       idMax: converter.convertToInt(key: 'id_limit') ?? 3,
     );
   }

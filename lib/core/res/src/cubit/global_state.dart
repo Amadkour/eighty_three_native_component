@@ -10,3 +10,6 @@ class LanguageChanged extends GlobalState {}
 class TextFieldChanged extends GlobalState {}
 
 class GlobalInitial extends GlobalState {}
+class GlobalButtonLoading extends GlobalState {}
+
+class GlobalButtonLoaded extends GlobalState {}

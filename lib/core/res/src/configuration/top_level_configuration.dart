@@ -13,6 +13,8 @@ String defaultImage = 'assets/images/logo.png';
 ///if user open face id and wait for 25 seconds
 bool haveLocalAuth = true;
 bool userOldServer = true;
+
+bool isLocalAuth = false;
 bool isSecure = false;
 bool showDevicePreview = false;
 bool showLocalBeneficiaryInRequestAndGift = true;

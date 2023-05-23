@@ -12,12 +12,10 @@ class GuestDialog extends StatelessWidget {
     required this.child,
     this.onPressedFirstButton,
     this.onPressedSecondButton,
-    required this.packageName,
-    required this.appName,
+    required this.isREsPay,
   });
   final Widget child;
-  final String packageName;
-  final String appName;
+  final bool isREsPay;
   final void Function()? onPressedFirstButton;
   final void Function()? onPressedSecondButton;
 
@@ -35,7 +33,11 @@ class GuestDialog extends StatelessWidget {
           onPressedFirstButton: () async {
             /// add these methods to reset dependencies again when login
             await CustomDependencyInjection.reInitialize(
-                packageName: packageName, appName: appName);
+              packageName: isREsPay
+                  ? "com.Res.pay.sa.res_pay"
+                  : "com.Res.pay.sa.res_pay_merchant",
+              appName: isREsPay ? "Res Pay" : "Res Pay Merchant",
+            );
             onPressedFirstButton?.call();
             CustomNavigator.instance.pushNamed(RoutesName.login);
           },
