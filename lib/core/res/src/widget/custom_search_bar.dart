@@ -11,6 +11,7 @@ class CustomSearchBar extends StatelessWidget {
   final VoidCallback? onClear;
   final TextEditingController? controller;
   final bool showClear;
+  final void Function()? onTab;
   final String? searchIconPath;
   final double verticalPadding;
   final Color? backGroundColor;
@@ -24,7 +25,8 @@ class CustomSearchBar extends StatelessWidget {
         required this.onChanged,
         this.onClear,
         this.controller,
-        this.searchIconPath});
+        this.searchIconPath,
+        this.onTab});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class CustomSearchBar extends StatelessWidget {
       controller: controller,
       onChanged: onChanged,
       verticalPadding: verticalPadding,
+      onTab: onTab,
       fillColor: backGroundColor ?? AppColors.lightWhite,
       suffix: Row(
         mainAxisSize: MainAxisSize.min,
