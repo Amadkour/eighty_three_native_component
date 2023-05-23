@@ -8,7 +8,7 @@ ThemeData lightTheme = ThemeData(
       brightness: Brightness.light,
     ),
     primaryColor: AppColors.primaryColor,
-    backgroundColor: AppColors.backgroundColor,
+    backgroundColor: AppColors.blackColor,
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: AppColors.primaryColor,
     ),
