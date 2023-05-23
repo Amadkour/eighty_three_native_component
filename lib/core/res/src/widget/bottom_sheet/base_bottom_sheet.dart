@@ -115,8 +115,11 @@ void showCustomBottomSheet({
                                 child: Text(
                                   whiteButtonText ?? tr('cancel'),
                                   style: buttonsStyle.copyWith(
+
                                     fontSize: whiteButtonFontSize,
+
                                     color: whiteButtonTextColor ?? Colors.black,
+                                    fontWeight:FontWeight.normal
                                   ),
                                 ),
                               ),
