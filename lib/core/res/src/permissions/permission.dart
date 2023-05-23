@@ -70,7 +70,7 @@ class UserPermission extends ParentModel {
       email: converter.convertToString(key: 'email'),
       userId: json["id"]!=null
           ? converter.convertToString(key: 'id')
-          : converter.convertToString(key: 'user_uuid'),
+          : converter.convertToString(key: 'uuid'),
       name: converter.convertToString(key: 'full_name'),
       identityId: converter.convertToString(
           key: 'identity', defaultValue: json["identity_id"].toString()),
