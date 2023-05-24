@@ -10,7 +10,6 @@ class UserPermission extends ParentModel {
   String? token;
   String? name;
   String? userId;
-  String? language;
   String? phone;
   String? username;
   String? country;
@@ -46,7 +45,6 @@ class UserPermission extends ParentModel {
     this.currency,
     this.isFaceIdActive,
     this.isTouchIdActive,
-    this.language,
     this.username,
   });
 
