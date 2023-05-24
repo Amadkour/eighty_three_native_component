@@ -69,7 +69,6 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-
     if (_state != state) {
       _state = state;
 
@@ -78,16 +77,16 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
         /// To ensure login
         if (await sl<FlutterSecureStorage>().containsKey(key: userToken) &&
 
-            /// To ensure threshold 25s
-            DateTime.now().difference(_backgroundTime).inSeconds > 25 &&
+                /// To ensure threshold 25s
+                DateTime.now().difference(_backgroundTime).inSeconds > 25 &&
 
-            /// To ensure secureCode configuration
-            await sl<FlutterSecureStorage>()
-                .containsKey(key: userPinCode) &&
-            haveLocalAuth
+                /// To ensure secureCode configuration
+                await sl<FlutterSecureStorage>()
+                    .containsKey(key: userPinCode) &&
+                haveLocalAuth
 
-        /// To ensure in non configuration page
-        ) {
+            /// To ensure in non configuration page
+            ) {
           if (type != 'integration test') {
             CustomNavigator.instance
                 .pushNamed(RoutesName.pinCodeWithoutAnimation);
