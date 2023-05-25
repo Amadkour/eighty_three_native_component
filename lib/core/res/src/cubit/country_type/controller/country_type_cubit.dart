@@ -1,5 +1,5 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 
 import '../provider/model/country_type.dart';
 import '../provider/repo/country_type_repository.dart';
@@ -28,6 +28,12 @@ class CountryTypeCubit extends Cubit<CountryTypeState> {
     });
   }
 
+  /// Change Country in the phone number TextField
+  void changeSelectedCountryByCountry(CountryType countryType) {
+    selectedCountry = countryType;
+
+    emit(CountryTypeChangeSelectedCountry());
+  }
   /// Change Country in the phone number TextField
   void changeSelectedCountry(int index) {
     selectedCountry = countryTypes[index];
