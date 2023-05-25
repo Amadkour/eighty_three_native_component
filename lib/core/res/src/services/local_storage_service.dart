@@ -1,6 +1,7 @@
 library eighty_three_component;
 
 import 'dart:developer';
+import 'dart:html';
 
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
@@ -58,12 +59,14 @@ class LocalStorageService {
     }
   }
 
-  Future<void> removeSession() async {
+  Future<void> removeSession({required VoidCallback resetCallback}) async {
     await removeAllSecureKeys();
     await removeAllKeysInSharedPreferencesExceptLanguage();
 
     currentUserPermission = UserPermission();
     writeKey(appInstalled, true);
+    resetCallback.call();
+
   }
 
   Future<String?> readSecureKey(String key, {String? defaultValue}) async {

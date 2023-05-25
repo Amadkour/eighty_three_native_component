@@ -26,6 +26,7 @@ final GetIt sl = GetIt.instance;
 class CustomDependencyInjection {
   static nativeSetUp(
       {String? apiBaseUrl,
+        VoidCallback? resetCallback,
       required String packageName,
       required String appName}) async {
     //! packages
@@ -50,7 +51,7 @@ class CustomDependencyInjection {
     registerSingleton(() => AnalyticsService());
 
     //! api connections
-    registerSingleton(() => APIConnection(baseUrl: apiBaseUrl));
+    registerSingleton(() => APIConnection(baseUrl: apiBaseUrl,resetCallback: resetCallback));
 
     registerSingleton(() => GlobalCubit());
 
