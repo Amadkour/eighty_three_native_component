@@ -45,8 +45,11 @@ class CustomNavigator {
     required Widget routeWidget,
     required bool Function(Route<dynamic> route) callback,
   }) {
-    Navigator.pushAndRemoveUntil(globalKey.currentContext!,
-        MaterialPageRoute<dynamic>(builder: (_) => routeWidget), callback,);
+    Navigator.pushAndRemoveUntil(
+      globalKey.currentContext!,
+      MaterialPageRoute<dynamic>(builder: (_) => routeWidget),
+      callback,
+    );
   }
 
   void popAndPushNamed({required String routeName, Object? argument}) {
@@ -60,12 +63,12 @@ class CustomNavigator {
         arguments: argument);
   }
 
-  void push({
+  Future<T?> push<T>({
     required Widget routeWidget,
   }) {
-    Navigator.push(
+    return Navigator.push<T>(
       globalKey.currentContext!,
-      MaterialPageRoute<dynamic>(builder: (_) => routeWidget),
+      MaterialPageRoute<T>(builder: (_) => routeWidget),
     );
   }
 
