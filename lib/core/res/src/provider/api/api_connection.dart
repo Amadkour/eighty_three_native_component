@@ -46,7 +46,7 @@ class APIConnection {
   APIConnection({
     String userRole = '',
     String? baseUrl,
-    Future<void> Function()? resetCallback
+    //Future<void> Function()? resetCallback
   }) {
     {
       //urlFromEnum(BaseUrlModules.authentication);
@@ -74,7 +74,7 @@ class APIConnection {
         networkError: networkError,
         onFetch: dio.fetch,
         setNetworkError: (value) => networkError = value,
-        onRemoveSession: resetCallback ?? sl<LocalStorageService>().removeSession,
+        onRemoveSession: sl<LocalStorageService>().removeSession,
         readSecureKey: sl<LocalStorageService>().readSecureKey,
         writeSecureKey: sl<LocalStorageService>().writeSecureKey,
         userRole: userRole,

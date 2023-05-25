@@ -1,7 +1,6 @@
 library eighty_three_component;
 
 import 'dart:developer';
-import 'dart:html';
 
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
