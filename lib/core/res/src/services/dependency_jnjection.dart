@@ -26,7 +26,7 @@ final GetIt sl = GetIt.instance;
 class CustomDependencyInjection {
   static nativeSetUp(
       {String? apiBaseUrl,
-        VoidCallback? resetCallback,
+      Future<void> Function()? resetCallback,
       required String packageName,
       required String appName}) async {
     //! packages

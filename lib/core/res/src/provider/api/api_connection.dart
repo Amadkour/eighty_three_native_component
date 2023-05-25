@@ -1,6 +1,5 @@
 library eighty_three_component;
 
-import 'dart:html';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -47,7 +46,7 @@ class APIConnection {
   APIConnection({
     String userRole = '',
     String? baseUrl,
-    VoidCallback? resetCallback
+    Future<void> Function()? resetCallback
   }) {
     {
       //urlFromEnum(BaseUrlModules.authentication);
@@ -75,9 +74,7 @@ class APIConnection {
         networkError: networkError,
         onFetch: dio.fetch,
         setNetworkError: (value) => networkError = value,
-        onRemoveSession: () async{
-          sl<LocalStorageService>().removeSession(resetCallback: resetCallback??(){});
-        },
+        onRemoveSession: resetCallback ?? sl<LocalStorageService>().removeSession,
         readSecureKey: sl<LocalStorageService>().readSecureKey,
         writeSecureKey: sl<LocalStorageService>().writeSecureKey,
         userRole: userRole,

@@ -59,14 +59,12 @@ class LocalStorageService {
     }
   }
 
-  Future<void> removeSession({required VoidCallback resetCallback}) async {
+  Future<void> removeSession() async {
     await removeAllSecureKeys();
     await removeAllKeysInSharedPreferencesExceptLanguage();
 
     currentUserPermission = UserPermission();
     writeKey(appInstalled, true);
-    resetCallback.call();
-
   }
 
   Future<String?> readSecureKey(String key, {String? defaultValue}) async {
