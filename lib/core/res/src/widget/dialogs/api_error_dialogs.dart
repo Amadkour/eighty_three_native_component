@@ -135,7 +135,7 @@ void unauthorizedDialog(DioError error,
         tr('You are unauthorized, please login or sign up to use all features'),
     onPressedFirstButton: () async {
       await onRemoveSession();
-      CustomNavigator.instance.pushReplacementNamed(RoutesName.login);
+      CustomNavigator.instance.pushNamed(RoutesName.login);
     },
     onPressedSecondButton: () {},
     imageUrl: 'assets/images/home/guestDialog.svg',
