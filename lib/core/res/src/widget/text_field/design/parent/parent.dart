@@ -116,6 +116,7 @@ class ParentTextField extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
+
         Directionality(
           textDirection: (!isArabic || keyboardType == TextInputType.number)
               ? TextDirection.ltr
@@ -124,6 +125,7 @@ class ParentTextField extends StatelessWidget {
             //enabled: !readOnly,
             enableInteractiveSelection: enableCopy,
             autofocus: autoFocus,
+            maxLength: maxLength,
             onFieldSubmitted: onSubmitted,
             cursorColor: Colors.black,
             cursorWidth: cursorWidth,
