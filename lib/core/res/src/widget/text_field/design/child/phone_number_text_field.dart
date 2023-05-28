@@ -55,10 +55,10 @@ class PhoneNumberTextField extends StatelessWidget {
       this.onChanged,
       this.suffixWidget,
       this.onCountryChanged,
-      this.allowChangeCountry=true,
+      this.allowChangeCountry = true,
       this.searchIconPath,
       this.haveSearchBar,
-      this.isRequired=true});
+      this.isRequired = true});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,6 @@ class PhoneNumberTextField extends StatelessWidget {
           final CountryTypeCubit cubit = sl<CountryTypeCubit>();
           return ParentTextField(
             maxLength: 12,
-
             key: key,
             controller: phoneNumberController,
             textInputFormatter: <TextInputFormatter>[
@@ -79,7 +78,7 @@ class PhoneNumberTextField extends StatelessWidget {
               FilteringTextInputFormatter.deny(
                 RegExp('^0+'), //users can't type 0 at 1st position
               ),
-              LengthLimitingTextInputFormatter(10)
+              LengthLimitingTextInputFormatter(12)
             ],
             validator: isRequired ? PhoneValidator().getValidation() : null,
             keyboardType: TextInputType.number,
@@ -132,15 +131,16 @@ class PhoneNumberTextField extends StatelessWidget {
                           : InkWell(
                               onTap: allowChangeCountry
                                   ? () {
-                                CountryBottomSheet.instance.show(
-                                  context: context,
-                                  searchIconPath: searchIconPath,
-                                  haveSearchBar: haveSearchBar,
-                                  onChangeSelectedCountry: onCountryChanged!,
-                                  country: cubit.selectedCountry!,
-                                );
-                                }
-                              : null,
+                                      CountryBottomSheet.instance.show(
+                                        context: context,
+                                        searchIconPath: searchIconPath,
+                                        haveSearchBar: haveSearchBar,
+                                        onChangeSelectedCountry:
+                                            onCountryChanged!,
+                                        country: cubit.selectedCountry!,
+                                      );
+                                    }
+                                  : null,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[

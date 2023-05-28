@@ -14,13 +14,13 @@ class PhoneValidator extends ParentValidator {
         //   errorMessage('phone_greater'),
         // ),
         MinLength(
-          10,
+          9,
           errorMessage('phone_greater'),
         ),
-        MaxLength(
-          10,
-          errorMessage('phone_greater'),
-        ),
+        // MaxLength(
+        //   12,
+        //   errorMessage('phone_greater'),
+        // ),
       ],
     );
   }

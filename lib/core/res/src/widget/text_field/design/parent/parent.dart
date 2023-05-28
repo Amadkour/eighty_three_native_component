@@ -116,7 +116,6 @@ class ParentTextField extends StatelessWidget {
           const SizedBox(
             height: 5,
           ),
-
         Directionality(
           textDirection: (!isArabic || keyboardType == TextInputType.number)
               ? TextDirection.ltr
@@ -127,6 +126,7 @@ class ParentTextField extends StatelessWidget {
             autofocus: autoFocus,
             maxLength: maxLength,
             onFieldSubmitted: onSubmitted,
+
             cursorColor: Colors.black,
             cursorWidth: cursorWidth,
             scrollPadding: EdgeInsets.symmetric(vertical: verticalPadding),
@@ -167,9 +167,11 @@ class ParentTextField extends StatelessWidget {
             onTap: onTab,
             decoration: decoration ??
                 InputDecoration(
+                  counterText: "",
                   prefixText: prefixText,
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: borderColor ?? Colors.transparent),
+                    borderSide:
+                        BorderSide(color: borderColor ?? Colors.transparent),
                     borderRadius: BorderRadius.all(
                       Radius.circular(
                         borderRadius ?? 10.0,
@@ -177,7 +179,8 @@ class ParentTextField extends StatelessWidget {
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: borderColor ?? Colors.transparent),
+                    borderSide:
+                        BorderSide(color: borderColor ?? Colors.transparent),
                     borderRadius: BorderRadius.all(
                       Radius.circular(
                         borderRadius ?? 10.0,
