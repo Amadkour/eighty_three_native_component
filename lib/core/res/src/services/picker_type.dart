@@ -154,7 +154,7 @@ class PickerType {
         );
       }
       if (result != null && (type == 1 || type == 0)) {
-        result = XFile((await ImageCropper().cropImage(
+        result = XFile(((await ImageCropper().cropImage(
           sourcePath: result.path,
           aspectRatioPresets: <CropAspectRatioPreset>[
             CropAspectRatioPreset.square,
@@ -176,7 +176,7 @@ class PickerType {
                 aspectRatioLockDimensionSwapEnabled: true)
           ],
         ))!
-            .path);
+            .path));
       }
     }
 

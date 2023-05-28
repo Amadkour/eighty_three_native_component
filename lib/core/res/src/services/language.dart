@@ -22,7 +22,7 @@ Future<void> loadLanguage(
   localization = jsonDecode(translation) as Map<String, dynamic>;
   errorLocalization = jsonDecode(errorTranslation) as Map<String, dynamic>;
 
-  currentUserPermission.language = langKey;
+  currentUserPermission.locale = langKey;
 
   await localStorageService.writeKey('lang', langKey);
   // emit(LanguageChanged());

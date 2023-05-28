@@ -11,6 +11,7 @@ class AmountTextField extends StatelessWidget {
   final String? titleFontFamily;
   final String? label;
   final double? titleFontSize;
+  final int maxLength;
   final FocusNode? focusNode;
   final double? hintFontSize;
   final Widget? suffixIcon;
@@ -49,6 +50,7 @@ class AmountTextField extends StatelessWidget {
     this.borderRadius,
     this.titleFontFamily,
     this.focusNode,
+    required this.maxLength,
   });
 
   factory AmountTextField.salaryAmount({
@@ -57,6 +59,7 @@ class AmountTextField extends StatelessWidget {
     String hintText = "500",
     double? hintFontSize,
     double? borderRadius,
+    int? maxLength,
     double? titleFontSize,
     String? initialText,
     String? titleText,
@@ -77,6 +80,7 @@ class AmountTextField extends StatelessWidget {
     final SalaryTextField image = SalaryTextField(
       hasValidationMessage: hasValidation,
       key: key,
+      maxLength: maxLength,
       focusNode: focusNode,
       titleFontFamily:titleFontFamily,
       borderColor: borderColor,

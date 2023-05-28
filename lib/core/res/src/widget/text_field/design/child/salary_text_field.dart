@@ -19,6 +19,7 @@ class SalaryTextField extends AmountTextField {
     String? titleFontFamily,
     Color? borderColor,
     double? borderRadius,
+    int? maxLength,
     FocusNode? focusNode,
     String? initialText,
     Widget? suffixIcon,
@@ -35,6 +36,7 @@ class SalaryTextField extends AmountTextField {
   }) : super(
             onChanged: onChanged,
             focusNode: focusNode,
+            maxLength: maxLength??6,
             controller: controller,
             borderRadius: borderRadius,
             borderColor: borderColor,
@@ -67,7 +69,7 @@ class SalaryTextField extends AmountTextField {
       textInputFormatter: inputFormatters ??
           <TextInputFormatter>[
             FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-            LengthLimitingTextInputFormatter(6)
+            LengthLimitingTextInputFormatter(maxLength)
           ],
       onChanged: onChanged,
       hint: hintText ?? "500",

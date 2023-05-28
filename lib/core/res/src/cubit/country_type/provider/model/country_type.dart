@@ -4,6 +4,7 @@ import 'package:eighty_three_native_component/core/utils/parsing/parent_model.da
 class CountryType extends ParentModel {
   CountryType({
     int? countryTypeId,
+    String? countryTypeUUID,
     String? countryTypeCode,
     String? countryTypeTitle,
     String? countryPhoneCode,
@@ -11,6 +12,7 @@ class CountryType extends ParentModel {
     int? idMax,
   }) {
     id = countryTypeId;
+    uuid = countryTypeUUID;
     code = countryTypeCode;
     title = countryTypeTitle;
     phoneCode = countryPhoneCode;
@@ -19,6 +21,7 @@ class CountryType extends ParentModel {
   }
 
   late int? id;
+  late String? uuid;
   late String? code;
   late String? title;
   late String? phoneCode;
@@ -31,6 +34,7 @@ class CountryType extends ParentModel {
 
     return CountryType(
       countryTypeId: converter.convertToInt(key: 'id'),
+      countryTypeUUID: converter.convertToString(key: 'uuid'),
       countryTypeCode: converter.convertToString(key: 'code'),
       countryTypeTitle: converter.convertToString(key: 'name'),
       countryPhoneCode: converter.convertToString(key: 'phone_code'),
