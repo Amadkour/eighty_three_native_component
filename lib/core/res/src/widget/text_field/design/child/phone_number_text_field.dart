@@ -69,6 +69,7 @@ class PhoneNumberTextField extends StatelessWidget {
           final CountryTypeCubit cubit = sl<CountryTypeCubit>();
           return ParentTextField(
             maxLength: 12,
+            multiLine:12,
             key: key,
             controller: phoneNumberController,
             textInputFormatter: <TextInputFormatter>[
