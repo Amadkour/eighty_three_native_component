@@ -38,7 +38,7 @@ class ParentTextField extends StatelessWidget {
   final InputDecoration? decoration;
   final TextStyle? style;
   final double? borderRadius;
-
+  final bool lteOnly;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
 
@@ -95,6 +95,7 @@ class ParentTextField extends StatelessWidget {
     this.autoFocus = false,
     this.prefixText,
     this.titleFontColor,
+    this.lteOnly=true,
   });
 
   @override
@@ -117,7 +118,7 @@ class ParentTextField extends StatelessWidget {
             height: 5,
           ),
         Directionality(
-          textDirection: (!isArabic || keyboardType == TextInputType.number)
+          textDirection: (!isArabic || keyboardType == TextInputType.number && lteOnly)
               ? TextDirection.ltr
               : TextDirection.rtl,
           child: TextFormField(

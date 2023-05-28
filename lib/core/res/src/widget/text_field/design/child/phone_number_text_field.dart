@@ -34,6 +34,7 @@ class PhoneNumberTextField extends StatelessWidget {
   final CountryType? selectedCountry;
   final bool hasPrefix;
   final bool hasSuffix;
+  final bool lteOnly;
   final Widget? suffixWidget;
 
   const PhoneNumberTextField(
@@ -58,7 +59,8 @@ class PhoneNumberTextField extends StatelessWidget {
       this.allowChangeCountry = true,
       this.searchIconPath,
       this.haveSearchBar,
-      this.isRequired = true});
+      this.isRequired = true,
+      this.lteOnly=true});
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +70,7 @@ class PhoneNumberTextField extends StatelessWidget {
         builder: (BuildContext context, CountryTypeState state) {
           final CountryTypeCubit cubit = sl<CountryTypeCubit>();
           return ParentTextField(
+            lteOnly: lteOnly,
             maxLength: 12,
             key: key,
             controller: phoneNumberController,

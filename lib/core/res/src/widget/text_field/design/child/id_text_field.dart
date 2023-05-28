@@ -9,6 +9,7 @@ class IDTextField extends StatelessWidget {
   final String? idTitle;
   final String? idHint;
   final bool? readOnly;
+  final bool lteOnly;
   final String? error;
   final double? fullWidth;
   final double? titleFontSize;
@@ -36,6 +37,7 @@ class IDTextField extends StatelessWidget {
     this.suffix,
     this.maxLength = 10,
     this.minLength = 8,
+    this.lteOnly=true,
   });
 
   @override
@@ -51,6 +53,7 @@ class IDTextField extends StatelessWidget {
       onTab: onTab,
       readOnly: readOnly ?? false,
       titleFontSize: titleFontSize,
+      lteOnly: lteOnly,
       fillColor: fillColor ?? Colors.white,
       validator: IDValidator()
           .getValidationWithLength(maxLength: maxLength, minLength: minLength),
