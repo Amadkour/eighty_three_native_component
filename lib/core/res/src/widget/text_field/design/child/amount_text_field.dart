@@ -9,6 +9,7 @@ class AmountTextField extends StatelessWidget {
   final String? hintText;
   final String? defaultValue;
   final String? titleFontFamily;
+  final String? errorMessage;
   final String? label;
   final double? titleFontSize;
   final int maxLength;
@@ -51,6 +52,7 @@ class AmountTextField extends StatelessWidget {
     this.titleFontFamily,
     this.focusNode,
     required this.maxLength,
+    this.errorMessage,
   });
 
   factory AmountTextField.salaryAmount({
@@ -72,6 +74,7 @@ class AmountTextField extends StatelessWidget {
     bool hasValidation = true,
     Color? color,
     String? defaultValue,
+    String? errorMessage,
     bool isRequired = true,
     List<TextInputFormatter>? inputFormatters,
     TextInputType? keyboardType,
@@ -82,6 +85,7 @@ class AmountTextField extends StatelessWidget {
       key: key,
       maxLength: maxLength,
       focusNode: focusNode,
+      errorMessage: errorMessage,
       titleFontFamily:titleFontFamily,
       borderColor: borderColor,
       borderRadius: borderRadius,

@@ -59,7 +59,6 @@ class RefreshMainScaffold<T extends BaseCubit> extends StatelessWidget
                             header: const MaterialHeader(),
                             notLoadFooter:
                                 const NotLoadFooter(maxOverOffset: 0),
-                            noMoreLoad: true,
                             onRefresh: () async {
                               await (sl<T>()).onRefresh();
                             },
