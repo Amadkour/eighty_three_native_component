@@ -10,7 +10,9 @@ class EmailTextField extends StatelessWidget {
   final double? border;
   final bool? readOnly;
   final String? emailTitle;
+  final Widget? prefixWidget;
   final String? emailHint;
+  final TextAlign? textAlign;
   final Color? fillColor;
   final void Function()? onTab;
   final void Function(String)? onChanged;
@@ -26,7 +28,8 @@ class EmailTextField extends StatelessWidget {
       this.border,
       this.emailTitle = '',
       this.emailHint = '',
-       this.onChanged});
+      this.onChanged, this.textAlign,
+      this.prefixWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +38,10 @@ class EmailTextField extends StatelessWidget {
       readOnly: readOnly ?? false,
       borderRadius: border,
       title: tr(emailTitle!),
+      textAlign: textAlign ?? TextAlign.start,
       controller: emailController,
       onTab: onTab,
+      prefix: prefixWidget,
       keyboardType: TextInputType.emailAddress,
       name: tr(emailHint!),
       validator: EmailValidator().getValidation(),
