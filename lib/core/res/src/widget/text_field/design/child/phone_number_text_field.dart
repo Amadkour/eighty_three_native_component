@@ -18,11 +18,13 @@ class PhoneNumberTextField extends StatelessWidget {
   final FocusNode? phoneNumberFocusNode;
   final String? phoneTitle;
   final String? phoneHint;
+  final int? maxLength;
   final String? error;
   final String? searchIconPath;
   final Color? fillColor;
   final bool? readOnly;
   final bool? haveSearchBar;
+  final TextAlign? textAlign;
   final bool isRequired;
   final bool allowChangeCountry;
   final double? hintFontSize;
@@ -36,6 +38,7 @@ class PhoneNumberTextField extends StatelessWidget {
   final bool hasSuffix;
   final bool lteOnly;
   final Widget? suffixWidget;
+  final Widget? prefixWidget;
 
   const PhoneNumberTextField(
       {super.key,
@@ -60,7 +63,10 @@ class PhoneNumberTextField extends StatelessWidget {
       this.searchIconPath,
       this.haveSearchBar,
       this.isRequired = true,
-      this.lteOnly=true});
+      this.lteOnly=true,
+      this.textAlign,
+      this.prefixWidget,
+        this.maxLength});
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +77,10 @@ class PhoneNumberTextField extends StatelessWidget {
           final CountryTypeCubit cubit = sl<CountryTypeCubit>();
           return ParentTextField(
             lteOnly: lteOnly,
-            maxLength: 12,
+            maxLength: maxLength ?? 12,
             key: key,
             controller: phoneNumberController,
+            textAlign: textAlign??TextAlign.start,
             textInputFormatter: <TextInputFormatter>[
               FilteringTextInputFormatter.allow(
                 RegExp('[0-9]'),
@@ -81,7 +88,7 @@ class PhoneNumberTextField extends StatelessWidget {
               FilteringTextInputFormatter.deny(
                 RegExp('^0+'), //users can't type 0 at 1st position
               ),
-              LengthLimitingTextInputFormatter(12)
+              LengthLimitingTextInputFormatter(maxLength ?? 12)
             ],
             validator: isRequired ? PhoneValidator().getValidation() : null,
             keyboardType: TextInputType.number,
@@ -112,9 +119,9 @@ class PhoneNumberTextField extends StatelessWidget {
                               width: 5,
                               height: 5)),
                     )
-                : const SizedBox.shrink(),
+                : null,
             prefix: hasPrefix
-                ? Directionality(
+                ? prefixWidget??Directionality(
                     textDirection: TextDirection.ltr,
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 5),

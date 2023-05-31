@@ -28,7 +28,7 @@ class ResAppImage extends StatelessWidget {
         height: height,
         padding: const EdgeInsets.all(10),
         child: Image.asset(
-          "assets/icons/res_logo.png",
+          "assets/icons/res_logo.webp",
           fit: BoxFit.fill,
         ),
       ),
