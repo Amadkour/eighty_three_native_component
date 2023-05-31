@@ -17,6 +17,7 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
   final Widget? bottomNavigationBar;
   final Color? backgroundColor;
   final bool? resizeToAvoidBottomInset;
+  final bool extendBodyBehindAppBar;
 
   MainScaffold({
     super.key,
@@ -25,11 +26,14 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
     this.appBarWidget,
     this.bottomNavigationBar,
     this.resizeToAvoidBottomInset,
+    this.extendBodyBehindAppBar = false,
     this.backgroundColor,
   }) {
     WidgetsBinding.instance.addObserver(this);
   }
+
   final globalCubit = sl<GlobalCubit>();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<GlobalCubit>.value(
@@ -49,6 +53,7 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
                   },
                   child: Scaffold(
                     bottomNavigationBar: bottomNavigationBar,
+                    extendBodyBehindAppBar: extendBodyBehindAppBar,
                     floatingActionButton: floatingActionButton,
                     resizeToAvoidBottomInset: resizeToAvoidBottomInset,
                     appBar: appBarWidget,
