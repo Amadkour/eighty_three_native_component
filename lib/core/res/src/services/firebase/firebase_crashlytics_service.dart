@@ -17,4 +17,12 @@ class FirebaseCrashlyticsService {
     //   );
     // }).sendPort);
   }
+
+  void crash() {
+    FirebaseCrashlytics.instance.crash();
+  }
+
+  Future<void> recordError(String error) async {
+    await FirebaseCrashlytics.instance.recordError(error, StackTrace.empty);
+  }
 }
