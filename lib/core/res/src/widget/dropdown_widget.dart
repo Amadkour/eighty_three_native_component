@@ -15,6 +15,7 @@ class CustomDropdown<T> extends StatelessWidget {
   final FocusNode? focusNode;
   final Widget Function(T item)? itemBuilder;
   final String? hintText;
+  final String? iconPath;
   final Widget? leading;
   final Color? color;
   final bool hasClearButton;
@@ -28,6 +29,7 @@ class CustomDropdown<T> extends StatelessWidget {
     this.onChanged,
     this.itemToString,
     this.label,
+    this.iconPath,
     this.value,
     this.leading,
     this.color,
@@ -96,7 +98,7 @@ class CustomDropdown<T> extends StatelessWidget {
           icon: Row(
             children: <Widget>[
               MyImage.svgAssets(
-                url: "assets/icons/transfer/dropdownarrow.svg",
+                url: iconPath??"assets/icons/transfer/dropdownarrow.svg",
                 height: 4.5,
                 width: 8,
               ),
