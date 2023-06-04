@@ -95,17 +95,16 @@ class UserPermission extends ParentModel {
 
   Map<String, dynamic> toMap() {
     return {
-      "id": userId,
-      "token": token,
-      "name": name,
-      "username": username,
-      "phone": phone,
-      "country": country,
-      "identity_id": identityId,
-      "email": email,
-      "locale": locale,
-      "image": image,
-      "is_completed": isCompleted,
+      "id": userId ?? "0",
+      "token": token ?? "",
+      "name": name ?? "",
+      "username": username ?? "",
+      "phone": phone ?? "",
+      "country": country ?? "",
+      "identity_id": identityId ?? "",
+      "email": email ?? "",
+      "locale": locale ?? "",
+      "image": image ?? "",
     };
   }
 }
