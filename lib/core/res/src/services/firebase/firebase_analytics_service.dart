@@ -5,6 +5,7 @@ class FirebaseAnalyticsService {
 
   FirebaseAnalyticsObserver analyticsObserver() =>
 
+
       FirebaseAnalyticsObserver(analytics: firebaseAnalytics);
 
   Future<void> logEvent(String eventName,
