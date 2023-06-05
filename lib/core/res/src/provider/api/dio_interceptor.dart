@@ -113,7 +113,7 @@ class DioInterceptor extends Interceptor {
   @override
   Future<dynamic> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     ///start performance trace
-    sl<FirebasePerformancesService>().startTrace();
+    sl<FirebasePerformancesService>().startTrace(newTraceName: options.path);
     options.headers = <String, String>{
       'Accept': 'application/json',
       'Accept-Language': currentUserPermission.locale ?? 'en',
