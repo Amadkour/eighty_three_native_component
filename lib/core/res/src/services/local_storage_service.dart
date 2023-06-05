@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
+import 'package:eighty_three_native_component/core/res/src/permissions/guest_permission.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,7 +63,7 @@ class LocalStorageService {
     await removeAllSecureKeys();
     await removeAllKeysInSharedPreferencesExceptLanguage();
 
-    currentUserPermission = UserPermission();
+    currentUserPermission = GuestPermission();
     writeKey(appInstalled, true);
   }
 

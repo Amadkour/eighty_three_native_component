@@ -2,6 +2,6 @@ import 'package:eighty_three_native_component/core/res/src/permissions/permissio
 
 class GuestPermission extends UserPermission {
   GuestPermission() {
-    token = null;
+    super.token = null;
   }
 }
