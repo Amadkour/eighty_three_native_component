@@ -249,7 +249,8 @@ class DioInterceptor extends Interceptor {
   }
 
   DioError _dioError(Object error, RequestOptions options) {
-    return error is DioError ? error : DioMixin.assureDioError(error, options);
+    return error as DioError;
+    //return error is DioError ? error : DioMixin.assureDioError(error, options);
   }
 
   Future<void> onResumeNetworkError(ErrorInterceptorHandler handler, DioError err) async {
