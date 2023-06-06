@@ -40,16 +40,10 @@ class DioInterceptor extends Interceptor {
     ///stop performance trace
     sl<FirebasePerformancesService>().stopTrace();
     final DioErrorType errorType = err.type;
-    log('on Error');
-    log(err.type.name);
-    log(err.response.toString());
-    log(err.error.toString());
-    log(err.requestOptions.headers.toString());
-    log(err.requestOptions.extra.toString());
-    log(err.response?.data.toString() ?? '');
 
     try {
       if (err.response?.statusCode == 429) {
+        log('limit');
         show404Dialog(title: "please, try again after one hour");
         handler.resolve(err.response!);
       } else if (<DioErrorType>[DioErrorType.badResponse].contains(errorType)) {
