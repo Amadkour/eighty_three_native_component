@@ -79,6 +79,7 @@ class DioInterceptor extends Interceptor {
     final Map<String, dynamic> data = response.data as Map<String, dynamic>;
     log(data.toString());
     if (response.statusCode == 429) {
+      show404Dialog(title: "please, try again after one hour");
       MyToast("please, try again after one hour");
       return;
     }
