@@ -43,6 +43,9 @@ class DioInterceptor extends Interceptor {
     log('on Error');
     log(err.type.name);
     log(err.response.toString());
+    log(err.error.toString());
+    log(err.requestOptions.headers.toString());
+    log(err.requestOptions.extra.toString());
     log(err.response?.data.toString() ?? '');
 
     try {
