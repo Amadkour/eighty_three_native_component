@@ -11,9 +11,9 @@ class FirebaseEvents {
   /// authentication SHARED between 3 apps
   void logRegistrationEvent({required Map<String, dynamic> parameters}) {
     _firebaseAnalyticsService.logEvent("registration_event", parameters: <String, dynamic>{
-      'phone': parameters['phone'],
-      'email': parameters['email'],
-      'identity': parameters['identity']
+      'phone': parameters['phone_number'] ?? "",
+      'email': parameters['email'] ?? "",
+      'identity': parameters['identity_id'] ?? ""
     });
   }
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
@@ -92,7 +94,7 @@ void show404Dialog({String? title}) {
           color: AppColors.primaryColor,
           size: 50,
         ),
-        title: tr(title ?? 'Server Error'),
+        title: title ?? tr('Server Error'),
         isTwoButtons: false,
         button1String: '',
         button1OnTap: null,
@@ -126,7 +128,6 @@ void showTimeOutDialog(DioError error, {required APIConnection apiConnection}) {
 
 void unauthorizedDialog(DioError error,
     {required Future<void> Function() onRemoveSession}) {
-
   CustomSuccessDialog.instance.show(
     context: globalKey.currentContext,
     canClose: true,
@@ -135,7 +136,8 @@ void unauthorizedDialog(DioError error,
         tr('You are unauthorized, please login or sign up to use all features'),
     onPressedFirstButton: () async {
       await onRemoveSession();
-      CustomNavigator.instance.pushNamedAndRemoveUntil(RoutesName.login, (route) => false);
+      CustomNavigator.instance
+          .pushNamedAndRemoveUntil(RoutesName.login, (route) => false);
     },
     onPressedSecondButton: () {},
     imageUrl: 'assets/images/home/guestDialog.svg',
@@ -156,7 +158,8 @@ void unauthorizedDialog(DioError error,
         InkWell(
           onTap: () async {
             await onRemoveSession();
-            CustomNavigator.instance.pushNamedAndRemoveUntil(RoutesName.register, (route) => false);
+            CustomNavigator.instance
+                .pushNamedAndRemoveUntil(RoutesName.register, (route) => false);
           },
           child: Text(
             tr('Sign Up'),
