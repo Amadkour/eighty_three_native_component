@@ -8,6 +8,7 @@ import 'package:eighty_three_native_component/core/res/src/configuration/top_lev
 import 'package:eighty_three_native_component/core/res/src/provider/api/dio_interceptor.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/res/src/services/local_storage_service.dart';
+import 'package:flutter/cupertino.dart';
 
 enum BaseUrlModules {
   ecommerce,
@@ -87,35 +88,35 @@ class APIConnection {
     }
   }
 
-  Future<bool> checkConnection() async {
-    bool connectionStatus = true;
-    try {
-      await Connectivity()
-          .checkConnectivity()
-          .then((ConnectivityResult value) async {
-        if (value == ConnectivityResult.mobile ||
-            value == ConnectivityResult.wifi ||
-            value == ConnectivityResult.none) {
-          try {
-            final List<InternetAddress> result =
-                await InternetAddress.lookup('example.com');
-            if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-              connectionStatus = true;
-            } else {
-              connectionStatus = false;
-            }
-          } on SocketException catch (_) {
-            connectionStatus = false;
-            print('socket error1 = ${_.toString()}');
-          }
-        } else {
-          connectionStatus = false;
-        }
-      });
-    } catch (_) {
-      print('socket error2 = ${_.toString()}');
-      connectionStatus = false;
-    }
-    return connectionStatus;
-  }
+// Future<bool> checkConnection() async {
+//   bool connectionStatus = true;
+//   try {
+//     await Connectivity()
+//         .checkConnectivity()
+//         .then((ConnectivityResult value) async {
+//       if (value == ConnectivityResult.mobile ||
+//           value == ConnectivityResult.wifi ||
+//           value == ConnectivityResult.none) {
+//         try {
+//           final List<InternetAddress> result =
+//               await InternetAddress.lookup('example.com');
+//           if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+//             connectionStatus = true;
+//           } else {
+//             connectionStatus = false;
+//           }
+//         } on SocketException catch (_) {
+//           connectionStatus = false;
+//           print('socket error1 = ${_.toString()}');
+//         }
+//       } else {
+//         connectionStatus = false;
+//       }
+//     });
+//   } catch (_) {
+//     debugPrint('socket error2 = ${_.toString()}');
+//     connectionStatus = false;
+//   }
+//   return connectionStatus;
+// }
 }
