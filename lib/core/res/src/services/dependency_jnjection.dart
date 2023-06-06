@@ -37,7 +37,8 @@ class CustomDependencyInjection {
 
 // firebase
     registerSingleton(() => FlutterLocalNotificationsPlugin());
-    registerSingleton(() => FirebaseNotificationsService(sl(), packageName, appName));
+    registerSingleton(
+        () => FirebaseNotificationsService(sl(), packageName, appName));
     registerSingleton(() => FirebasePerformancesService());
     registerSingleton(() => FirebaseCrashlyticsService());
     registerSingleton(() => FirebaseAnalyticsService());
@@ -50,7 +51,7 @@ class CustomDependencyInjection {
     registerSingleton(() => AnalyticsService());
 
     //! api connections
-    registerSingleton(() => APIConnection(baseUrl: apiBaseUrl, resetCallback: resetCallback));
+    registerSingleton(() => APIConnection(baseUrl: apiBaseUrl,resetCallback: resetCallback));
 
     registerSingleton(() => GlobalCubit());
 
@@ -62,17 +63,20 @@ class CustomDependencyInjection {
     registerSingleton(() => CountryTypeCubit());
 
     ///error screen
-    ErrorWidget.builder = (FlutterErrorDetails details) => const SizedBox.shrink();
+    ErrorWidget.builder =
+        (FlutterErrorDetails details) => const SizedBox.shrink();
 
-    /// init firebase services
+    // init firebase services
     await InitFirebase.instance.init();
   }
 
-  static registerFactory<T extends Object>(T Function() factory, {String? instanceName}) {
+  static registerFactory<T extends Object>(T Function() factory,
+      {String? instanceName}) {
     sl.registerFactory<T>(factory, instanceName: instanceName);
   }
 
-  static void registerSingleton<T extends Object>(T Function() singleton, {String? instanceName}) {
+  static void registerSingleton<T extends Object>(T Function() singleton,
+      {String? instanceName}) {
     sl.registerLazySingleton(singleton, instanceName: instanceName);
   }
 
@@ -84,7 +88,8 @@ class CustomDependencyInjection {
     await sl.reset();
   }
 
-  static Future<void> reInitialize({required String packageName, required String appName}) async {
+  static Future<void> reInitialize(
+      {required String packageName, required String appName}) async {
     await sl.reset();
     await nativeSetUp(appName: appName, packageName: packageName);
   }

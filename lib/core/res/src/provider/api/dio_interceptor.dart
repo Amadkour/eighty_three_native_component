@@ -50,7 +50,8 @@ class DioInterceptor extends Interceptor {
         await _handleDialogError(err, handler);
         handler.resolve(err.response!);
         // handler.next(err);
-      } else if (<DioErrorType>[DioErrorType.unknown].contains(errorType)) {
+      }
+      else if (<DioErrorType>[DioErrorType.unknown].contains(errorType)) {
         throw SocketException(err.error.toString());
       } else {
         ///timeout
