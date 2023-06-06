@@ -84,7 +84,7 @@ void show401Dialog() {
       button2OnTap: () async {});
 }
 
-void show404Dialog() {
+void show404Dialog({String? title}) {
   try {
     CustomAlertDialog(
         alertIcon: Icon(
@@ -92,7 +92,7 @@ void show404Dialog() {
           color: AppColors.primaryColor,
           size: 50,
         ),
-        title: tr('Server Error'),
+        title: tr(title ?? 'Server Error'),
         isTwoButtons: false,
         button1String: '',
         button1OnTap: null,
