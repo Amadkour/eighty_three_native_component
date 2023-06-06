@@ -12,7 +12,7 @@ class FirebaseEvents {
     _firebaseAnalyticsService.logEvent("registration_event", parameters: <String, dynamic>{
       'phone': parameters['phone'],
       'email': parameters['email'],
-      'identity': parameters['identity']
+      'identity': parameters['identity_id']
     });
   }
 
