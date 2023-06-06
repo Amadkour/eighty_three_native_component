@@ -75,6 +75,10 @@ class DioInterceptor extends Interceptor {
 
     final Map<String, dynamic> data = response.data as Map<String, dynamic>;
     log(data.toString());
+    if (response.statusCode == 429) {
+      MyToast("please, try again after one hour");
+      return;
+    }
     if (data['code'] == 1022 &&
         (data['data'] as Map<String, dynamic>)['message'] ==
             "User Account Not Verified, verify your account first!") {
