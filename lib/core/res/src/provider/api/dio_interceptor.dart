@@ -36,20 +36,23 @@ class DioInterceptor extends Interceptor {
   });
 
   @override
-  Future<dynamic> onError(DioError err, ErrorInterceptorHandler handler) async {
+  Future<dynamic> onError(
+      DioException err, ErrorInterceptorHandler handler) async {
     ///stop performance trace
     sl<FirebasePerformancesService>().stopTrace();
-    final DioErrorType errorType = err.type;
+    final DioExceptionType errorType = err.type;
 
     try {
       if (err.response?.statusCode == 429) {
         MyToast("please, try again after one hour");
         handler.resolve(err.response!);
-      } else if (<DioErrorType>[DioErrorType.badResponse].contains(errorType)) {
+      } else if (<DioExceptionType>[DioExceptionType.badResponse]
+          .contains(errorType)) {
         await _handleDialogError(err, handler);
         handler.resolve(err.response!);
         // handler.next(err);
-      } else if (<DioErrorType>[DioErrorType.unknown].contains(errorType)) {
+      } else if (<DioExceptionType>[DioExceptionType.unknown]
+          .contains(errorType)) {
         throw SocketException(err.error.toString());
       } else {
         ///timeout
@@ -186,7 +189,7 @@ class DioInterceptor extends Interceptor {
   }
 
   Future<void> _handleDialogError(
-      DioError error, ErrorInterceptorHandler handler) async {
+      DioException error, ErrorInterceptorHandler handler) async {
     try {
       final Response<dynamic>? response = error.response;
       final Map<String, dynamic>? data =
@@ -263,13 +266,13 @@ class DioInterceptor extends Interceptor {
     } catch (_) {}
   }
 
-  DioError _dioError(Object error, RequestOptions options) {
-    return error as DioError;
+  DioException _dioError(Object error, RequestOptions options) {
+    return error as DioException;
     //return error is DioError ? error : DioMixin.assureDioError(error, options);
   }
 
   Future<void> onResumeNetworkError(
-      ErrorInterceptorHandler handler, DioError err) async {
+      ErrorInterceptorHandler handler, DioException err) async {
     ///add api to queue
     repeating.add(() async {
       await _repeatOnError(handler, err.requestOptions);
