@@ -50,10 +50,8 @@ class DioInterceptor extends Interceptor {
         await _handleDialogError(err, handler);
         handler.resolve(err.response!);
         // handler.next(err);
-      } else if (err.response?.statusCode == 429) {
-        show404Dialog(title: "please, try again after one hour");
-        handler.resolve(err.response!);
-      } else if (<DioErrorType>[DioErrorType.unknown].contains(errorType)) {
+      }
+      else if (<DioErrorType>[DioErrorType.unknown].contains(errorType)) {
         throw SocketException(err.error.toString());
       } else {
         ///timeout
