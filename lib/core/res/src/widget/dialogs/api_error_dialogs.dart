@@ -88,7 +88,6 @@ void show401Dialog() {
 
 void show404Dialog({String? title}) {
   try {
-    log('dialog');
     CustomAlertDialog(
         alertIcon: Icon(
           Icons.logout,

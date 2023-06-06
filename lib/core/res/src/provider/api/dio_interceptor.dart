@@ -43,8 +43,7 @@ class DioInterceptor extends Interceptor {
 
     try {
       if (err.response?.statusCode == 429) {
-        log('limit');
-        show404Dialog(title: "please, try again after one hour");
+        MyToast("please, try again after one hour");
         handler.resolve(err.response!);
       } else if (<DioErrorType>[DioErrorType.badResponse].contains(errorType)) {
         await _handleDialogError(err, handler);
