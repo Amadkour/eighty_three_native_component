@@ -77,7 +77,6 @@ class DioInterceptor extends Interceptor {
     sl<FirebasePerformancesService>().stopTrace();
 
     final Map<String, dynamic> data = response.data as Map<String, dynamic>;
-    log(data.toString());
     if (response.statusCode == 429) {
       MyToast("please, try again after one hour or contact us");
       return;
