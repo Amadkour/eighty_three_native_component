@@ -46,13 +46,13 @@ class DioInterceptor extends Interceptor {
     log(err.response?.data.toString() ?? '');
 
     try {
-      if (<DioErrorType>[DioErrorType.badResponse].contains(errorType)) {
+      if (err.response?.statusCode == 429) {
+        show404Dialog(title: "please, try again after one hour");
+        handler.resolve(err.response!);
+      } else if (<DioErrorType>[DioErrorType.badResponse].contains(errorType)) {
         await _handleDialogError(err, handler);
         handler.resolve(err.response!);
         // handler.next(err);
-      } else if (err.response?.statusCode == 429) {
-        show404Dialog(title: "please, try again after one hour");
-        handler.resolve(err.response!);
       } else if (<DioErrorType>[DioErrorType.unknown].contains(errorType)) {
         throw SocketException(err.error.toString());
       } else {
@@ -72,7 +72,8 @@ class DioInterceptor extends Interceptor {
   }
 
   @override
-  void onResponse(Response<dynamic> response, ResponseInterceptorHandler handler) {
+  void onResponse(
+      Response<dynamic> response, ResponseInterceptorHandler handler) {
     ///stop performance trace
     sl<FirebasePerformancesService>().stopTrace();
 
@@ -81,13 +82,16 @@ class DioInterceptor extends Interceptor {
     if (data['code'] == 1022 &&
         (data['data'] as Map<String, dynamic>)['message'] ==
             "User Account Not Verified, verify your account first!") {
-      MyToast(((data['data'] as Map<String, dynamic>)['otp'] as int).toString());
+      MyToast(
+          ((data['data'] as Map<String, dynamic>)['otp'] as int).toString());
       writeSecureKey("verify_account_pin_code",
           ((data['data'] as Map<String, dynamic>)['otp'] as int).toString());
       unverifiedOnResponse(response.requestOptions, handler);
     } else if (data['data'] is Map<String, dynamic> &&
-        (data['data'] as Map<String, dynamic>).containsKey('confirmation_code')) {
-      final String otp = (data['data'] as Map<String, dynamic>)['confirmation_code'] as String;
+        (data['data'] as Map<String, dynamic>)
+            .containsKey('confirmation_code')) {
+      final String otp =
+          (data['data'] as Map<String, dynamic>)['confirmation_code'] as String;
 
       /// used in testing only and removed when get production
       writeSecureKey("verify_confirmation_code", otp);
@@ -101,7 +105,8 @@ class DioInterceptor extends Interceptor {
             response.requestOptions.copyWith(
               data: (response.requestOptions.data as FormData)
                 ..fields.add(
-                  MapEntry<String, String>('confirmation_code', confirmationCode ?? ""),
+                  MapEntry<String, String>(
+                      'confirmation_code', confirmationCode ?? ""),
                 ),
             ),
           );
@@ -114,7 +119,8 @@ class DioInterceptor extends Interceptor {
   }
 
   @override
-  Future<dynamic> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+  Future<dynamic> onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
     ///start performance trace
     sl<FirebasePerformancesService>().startTrace(newTraceName: options.path);
     options.headers = <String, String>{
@@ -126,19 +132,22 @@ class DioInterceptor extends Interceptor {
 
     log('onRequest ${options.path} =>  token => ${currentUserPermission.token}');
     if (options.method == 'GET') {
-      options.queryParameters.addAll(<String, dynamic>{"user_uuid": currentUserPermission.userId});
+      options.queryParameters
+          .addAll(<String, dynamic>{"user_uuid": currentUserPermission.userId});
     }
     //TODO should remove in production
     if (options.method.toUpperCase() == "POST" &&
         currentUserPermission.userId != null &&
         options.data is Map<String, dynamic>) {
-      (options.data as Map<String, dynamic>)['user_uuid'] = currentUserPermission.userId;
+      (options.data as Map<String, dynamic>)['user_uuid'] =
+          currentUserPermission.userId;
     }
     if (options.method.toUpperCase() == "POST" &&
         currentUserPermission.userId != null &&
         options.data is FormData) {
       final FormData map = options.data as FormData;
-      map.fields.add(MapEntry<String, String>("user_uuid", currentUserPermission.userId ?? ''));
+      map.fields.add(MapEntry<String, String>(
+          "user_uuid", currentUserPermission.userId ?? ''));
 
       options.data = map;
     }
@@ -150,7 +159,8 @@ class DioInterceptor extends Interceptor {
       RequestOptions requestOptions, ResponseInterceptorHandler handler) async {
     final String? alreadyOpened = await isOtpScreenAlreadyOpened();
     if (alreadyOpened == "false") {
-      CustomNavigator.instance.pushNamed(RoutesName.otp, arguments: (String? code) async {
+      CustomNavigator.instance.pushNamed(RoutesName.otp,
+          arguments: (String? code) async {
         CustomNavigator.instance.pop();
 
         /// repeat last request with fresh token
@@ -165,7 +175,8 @@ class DioInterceptor extends Interceptor {
       RequestOptions requestOptions, ErrorInterceptorHandler handler) async {
     final String? alreadyOpened = await isOtpScreenAlreadyOpened();
     if (alreadyOpened == "false") {
-      CustomNavigator.instance.pushNamed(RoutesName.otp, arguments: (String? value) async {
+      CustomNavigator.instance.pushNamed(RoutesName.otp,
+          arguments: (String? value) async {
         CustomNavigator.instance.pop();
 
         /// repeat last request with fresh token
@@ -174,10 +185,12 @@ class DioInterceptor extends Interceptor {
     }
   }
 
-  Future<void> _handleDialogError(DioError error, ErrorInterceptorHandler handler) async {
+  Future<void> _handleDialogError(
+      DioError error, ErrorInterceptorHandler handler) async {
     try {
       final Response<dynamic>? response = error.response;
-      final Map<String, dynamic>? data = response?.data as Map<String, dynamic>?;
+      final Map<String, dynamic>? data =
+          response?.data as Map<String, dynamic>?;
       final int outerCode = error.response!.statusCode!;
       log(outerCode.toString());
       log(error.response.toString());
@@ -218,7 +231,8 @@ class DioInterceptor extends Interceptor {
     }
   }
 
-  Future<void> _repeatOnError(ErrorInterceptorHandler handler, RequestOptions options) async {
+  Future<void> _repeatOnError(
+      ErrorInterceptorHandler handler, RequestOptions options) async {
     if (options.data is FormData) {
       options.data = createNewFormData(options.data as FormData);
     }
@@ -234,7 +248,8 @@ class DioInterceptor extends Interceptor {
     } catch (_) {}
   }
 
-  Future<void> _repeatOnResponse(ResponseInterceptorHandler handler, RequestOptions options) async {
+  Future<void> _repeatOnResponse(
+      ResponseInterceptorHandler handler, RequestOptions options) async {
     if (options.data is FormData) {
       options.data = createNewFormData(options.data as FormData);
     }
@@ -253,7 +268,8 @@ class DioInterceptor extends Interceptor {
     //return error is DioError ? error : DioMixin.assureDioError(error, options);
   }
 
-  Future<void> onResumeNetworkError(ErrorInterceptorHandler handler, DioError err) async {
+  Future<void> onResumeNetworkError(
+      ErrorInterceptorHandler handler, DioError err) async {
     ///add api to queue
     repeating.add(() async {
       await _repeatOnError(handler, err.requestOptions);
