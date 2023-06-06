@@ -1,6 +1,5 @@
 import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
-import 'dart:io';
-import 'package:dio/dio.dart';
+
 import 'package:eighty_three_native_component/core/res/src/services/firebase/firebase_analytics_service.dart';
 
 class FirebaseEvents {
