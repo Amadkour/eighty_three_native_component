@@ -14,6 +14,7 @@ import 'package:eighty_three_native_component/core/res/src/services/navigation.d
 import 'package:eighty_three_native_component/core/res/src/widget/dialogs/api_error_dialogs.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/message.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/network_error_widget.dart';
+import 'package:flutter/cupertino.dart';
 
 class DioInterceptor extends Interceptor {
   List<Future<void> Function()> repeating = <Future<void> Function()>[];
@@ -43,14 +44,25 @@ class DioInterceptor extends Interceptor {
     final DioExceptionType errorType = err.type;
 
     try {
+      /// exceed number of hits
       if (err.response?.statusCode == 429) {
-        MyToast("please, try again after one hour");
-        handler.resolve(err.response!);
-      } else if (<DioExceptionType>[DioExceptionType.badResponse]
+        MyToast("please, try again after one hour or contact us");
+        return;
+      }
+
+      /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
+      /// unverified account
+      if (err.response?.data['code'] == 1062) {
+        unverifiedOnResponse(err.response!, errorHandler: handler);
+      }
+      if (err.response?.data['code'] == 1106) {
+        CustomNavigator.instance.pushNamedAndRemoveUntil(
+            RoutesName.changePassword, (Route<dynamic> route) => false);
+      }
+      if (<DioExceptionType>[DioExceptionType.badResponse]
           .contains(errorType)) {
         await _handleDialogError(err, handler);
         handler.resolve(err.response!);
-        // handler.next(err);
       } else if (<DioExceptionType>[DioExceptionType.unknown]
           .contains(errorType)) {
         throw SocketException(err.error.toString());
@@ -77,43 +89,27 @@ class DioInterceptor extends Interceptor {
     sl<FirebasePerformancesService>().stopTrace();
 
     final Map<String, dynamic> data = response.data as Map<String, dynamic>;
+
+    /// exceed number of hits
     if (response.statusCode == 429) {
       MyToast("please, try again after one hour or contact us");
       return;
     }
-    if (data['code'] == 1022 &&
-        (data['data'] as Map<String, dynamic>)['message'] ==
-            "User Account Not Verified, verify your account first!") {
-      MyToast(
-          ((data['data'] as Map<String, dynamic>)['otp'] as int).toString());
-      writeSecureKey("verify_account_pin_code",
-          ((data['data'] as Map<String, dynamic>)['otp'] as int).toString());
-      unverifiedOnResponse(response.requestOptions, handler);
-    } else if (data['data'] is Map<String, dynamic> &&
+
+    if (response.data['code'] == 1106) {
+      CustomNavigator.instance.pushNamedAndRemoveUntil(
+          RoutesName.changePassword, (Route<dynamic> route) => false);
+    }
+
+    /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
+    /// unverified account
+    if (data['code'] == 1062) {
+      unverifiedOnResponse(response, responseHandler: handler);
+    }
+    if (data['data'] is Map<String, dynamic> &&
         (data['data'] as Map<String, dynamic>)
             .containsKey('confirmation_code')) {
-      final String otp =
-          (data['data'] as Map<String, dynamic>)['confirmation_code'] as String;
-
-      /// used in testing only and removed when get production
-      writeSecureKey("verify_confirmation_code", otp);
-      MyToast(otp);
-
-      CustomNavigator.instance.pushNamed(
-        verificationMethodPath,
-        arguments: (String? confirmationCode) async {
-          await _repeatOnResponse(
-            handler,
-            response.requestOptions.copyWith(
-              data: (response.requestOptions.data as FormData)
-                ..fields.add(
-                  MapEntry<String, String>(
-                      'confirmation_code', confirmationCode ?? ""),
-                ),
-            ),
-          );
-        },
-      );
+      otpScenario(response, handler);
 
       return;
     }
@@ -129,36 +125,24 @@ class DioInterceptor extends Interceptor {
       'Accept': 'application/json',
       'Accept-Language': currentUserPermission.locale ?? 'en',
       "Authorization": currentUserPermission.token ?? "",
-      "X-USER-ROLE": "merchant"
     };
 
-    log('onRequest ${options.path} =>  token => ${currentUserPermission.token}');
-    if (options.method == 'GET') {
-      options.queryParameters
-          .addAll(<String, dynamic>{"user_uuid": currentUserPermission.userId});
-    }
-    //TODO should remove in production
-    if (options.method.toUpperCase() == "POST" &&
-        currentUserPermission.userId != null &&
-        options.data is Map<String, dynamic>) {
-      (options.data as Map<String, dynamic>)['user_uuid'] =
-          currentUserPermission.userId;
-    }
-    if (options.method.toUpperCase() == "POST" &&
-        currentUserPermission.userId != null &&
-        options.data is FormData) {
-      final FormData map = options.data as FormData;
-      map.fields.add(MapEntry<String, String>(
-          "user_uuid", currentUserPermission.userId ?? ''));
-
-      options.data = map;
-    }
+    ///RESPay and merchant config
+    ///:todo will remove on respay production
+    respayConfig(options);
 
     return handler.next(options);
   }
 
-  Future<void> unverifiedOnResponse(
-      RequestOptions requestOptions, ResponseInterceptorHandler handler) async {
+  Future<void> unverifiedOnResponse(Response response,
+      {ResponseInterceptorHandler? responseHandler,
+      ErrorInterceptorHandler? errorHandler}) async {
+    MyToast(((response.data['data'] as Map<String, dynamic>)['otp'] as int)
+        .toString());
+    writeSecureKey(
+        "verify_account_pin_code",
+        ((response.data['data'] as Map<String, dynamic>)['otp'] as int)
+            .toString());
     final String? alreadyOpened = await isOtpScreenAlreadyOpened();
     if (alreadyOpened == "false") {
       CustomNavigator.instance.pushNamed(RoutesName.otp,
@@ -166,8 +150,11 @@ class DioInterceptor extends Interceptor {
         CustomNavigator.instance.pop();
 
         /// repeat last request with fresh token
-
-        await _repeatOnResponse(handler, requestOptions);
+        if (errorHandler == null) {
+          await _repeatOnResponse(responseHandler!, response.requestOptions);
+        } else {
+          await _repeatOnError(errorHandler, response.requestOptions);
+        }
       });
     }
   }
@@ -310,4 +297,55 @@ class DioInterceptor extends Interceptor {
   }
 
   Future<String?> isOtpScreenAlreadyOpened() => readSecureKey("already_opened");
+
+  void otpScenario(Response response, ResponseInterceptorHandler handler) {
+    final String otp = (response.data['data']
+        as Map<String, dynamic>)['confirmation_code'] as String;
+
+    /// used in testing only and removed when get production
+    writeSecureKey("verify_confirmation_code", otp);
+    MyToast(otp);
+
+    CustomNavigator.instance.pushNamed(
+      verificationMethodPath,
+      arguments: (String? confirmationCode) async {
+        await _repeatOnResponse(
+          handler,
+          response.requestOptions.copyWith(
+            data: (response.requestOptions.data as FormData)
+              ..fields.add(
+                MapEntry<String, String>(
+                    'confirmation_code', confirmationCode ?? ""),
+              ),
+          ),
+        );
+      },
+    );
+  }
+
+  void respayConfig(RequestOptions options) {
+    if (options.method == 'GET') {
+      options.queryParameters
+          .addAll(<String, dynamic>{"user_uuid": currentUserPermission.userId});
+    }
+    //TODO should remove in production
+    if (options.method.toUpperCase() == "POST" &&
+        currentUserPermission.userId != null &&
+        options.data is Map<String, dynamic>) {
+      (options.data as Map<String, dynamic>)['user_uuid'] =
+          currentUserPermission.userId;
+    }
+    if (options.method.toUpperCase() == "POST" &&
+        currentUserPermission.userId != null &&
+        options.data is FormData) {
+      final FormData map = options.data as FormData;
+      map.fields.add(MapEntry<String, String>(
+          "user_uuid", currentUserPermission.userId ?? ''));
+
+      options.data = map;
+    }
+
+    /// for merchant only
+    options.headers = options.headers..addAll({"X-USER-ROLE": "merchant"});
+  }
 }
