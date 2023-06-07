@@ -7,11 +7,13 @@ class FirebaseEvents {
 
   FirebaseEvents(this._firebaseAnalyticsService);
 
+
+  /// authentication SHARED between 3 apps
   void logRegistrationEvent({required Map<String, dynamic> parameters}) {
     _firebaseAnalyticsService.logEvent("registration_event", parameters: <String, dynamic>{
-      'phone': parameters['phone'],
-      'email': parameters['email'],
-      'identity': parameters['identity']
+      'phone': parameters['phone_number'] ?? "",
+      'email': parameters['email'] ?? "",
+      'identity': parameters['identity_id'] ?? ""
     });
   }
 
@@ -19,6 +21,7 @@ class FirebaseEvents {
     _firebaseAnalyticsService.logEvent("login_event", parameters: parameters);
   }
 
+  /// Real State Details (RES)/////////////////////
   void logRealStateInvestment({required Map<String, dynamic> parameters}) {
     _firebaseAnalyticsService.logEvent("real_state_invest_event", parameters:parameters);
   }
@@ -84,4 +87,29 @@ class FirebaseEvents {
   Future<void> logEditProfileEvent({required Map<String, dynamic> parameters}) async {
     _firebaseAnalyticsService.logEvent("edit_profile_event", parameters: parameters);
   }
+
+/// Real State Details pay(RES pay)/////////////////////
+  Future<void> logDepositEvent({required Map<String, dynamic> parameters}) async {
+    _firebaseAnalyticsService.logEvent("edit_profile_event", parameters: parameters);
+  }
+
+  Future<void> logWithdrawEvent({required Map<String, dynamic> parameters}) async {
+    _firebaseAnalyticsService.logEvent("edit_profile_event", parameters: parameters);
+  }
+
+  Future<void> logTransferEvent({required Map<String, dynamic> parameters}) async {
+    _firebaseAnalyticsService.logEvent("edit_profile_event", parameters: parameters);
+  }
+
+  Future<void> logSaveEvent({required Map<String, dynamic> parameters}) async {
+    _firebaseAnalyticsService.logEvent("edit_profile_event", parameters: parameters);
+  }
+
+  Future<void> logAddCreditEvent({required Map<String, dynamic> parameters}) async {
+    _firebaseAnalyticsService.logEvent("edit_profile_event", parameters: parameters);
+  }
+  Future<void> logBeneficiaryEvent({required Map<String, dynamic> parameters}) async {
+    _firebaseAnalyticsService.logEvent("edit_profile_event", parameters: parameters);
+  }
+
 }
