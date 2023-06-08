@@ -1,7 +1,9 @@
 library eighty_three_component;
 
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:crypto/crypto.dart';
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/guest_permission.dart';
@@ -115,7 +117,7 @@ class LocalStorageService {
   }
 
   Future<void> setUserPinCode(String pinCode) async {
-    await writeSecureKey(userPinCode, pinCode);
+    await writeSecureKey(userPinCode, getHashedCode(pinCode));
     currentUserPermission.pinCode = pinCode;
   }
 
