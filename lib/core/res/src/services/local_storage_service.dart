@@ -84,7 +84,7 @@ class LocalStorageService {
 
     await _secureStorage.deleteAll();
 
-    await setUserPinCode(pinCode);
+    await writeSecureKey(userPinCode, pinCode);
     await setFaceIdValue(faceId: faceId);
     await setTouchIdValue(touchId: touchId);
   }
