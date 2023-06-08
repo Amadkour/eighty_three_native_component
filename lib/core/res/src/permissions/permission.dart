@@ -85,13 +85,10 @@ class UserPermission extends ParentModel {
           key: 'identity', defaultValue: json["identity_id"].toString()),
       phone: converter.convertToString(key: "phone_number"),
       isCompleted: converter.convertToBool(key: 'is_completed') ?? false,
-      isSetFaceId: converter.convertToBool(key: "face_id_activated"),
-      isSetTouchId: converter.convertToBool(key: "touch_id_activated"),
-      pinCode: converter.convertToString(key: "pincode"),
-      isFaceIdActive:
-          converter.convertToBool(key: "is_active", defaultValue: false),
-      isTouchIdActive:
-          converter.convertToBool(key: "touch_id_active", defaultValue: false),
+      //isSetFaceId: converter.convertToBool(key: "face_id_activated"),
+      //isSetTouchId: converter.convertToBool(key: "touch_id_activated"),
+      //isFaceIdActive: converter.convertToBool(key: "is_active", defaultValue: false),
+      //isTouchIdActive: converter.convertToBool(key: "touch_id_active", defaultValue: false),
       currency: converter.convertToString(key: "currency", defaultValue: ""),
     );
   }

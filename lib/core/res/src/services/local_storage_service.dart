@@ -125,8 +125,9 @@ class LocalStorageService {
   }
 
   Future<void> setUserPinCode(String pinCode) async {
-    await writeSecureKey(userPinCode, getHashedCode(pinCode));
-    currentUserPermission.pinCode = pinCode;
+    String hashed  = getHashedCode(pinCode);
+    await writeSecureKey(userPinCode, hashed);
+    currentUserPermission.pinCode = hashed;
   }
 
   Future<void> setTouchIdValue({required bool touchId}) async {
@@ -221,10 +222,10 @@ class LocalStorageService {
     await setUserToken(user.token.toString());
     await setUserUUID(user.userId.toString());
     await setUserPhone(user.phone.toString());
-    await setUserPinCode(user.pinCode.toString());
+    //await setUserPinCode(user.pinCode.toString());
     await setUserCountry(country: user.country.toString());
     await setUserCurrency(currency: user.currency.toString());
-    await setTouchIdValue(touchId: user.isTouchIdActive ?? false);
-    await setFaceIdValue(faceId: user.isFaceIdActive ?? false);
+    //await setTouchIdValue(touchId: user.isTouchIdActive ?? false);
+    //await setFaceIdValue(faceId: user.isFaceIdActive ?? false);
   }
 }
