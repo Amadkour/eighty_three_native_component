@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/utils/parsing/from_map.dart';
 import 'package:eighty_three_native_component/core/utils/parsing/parent_model.dart';
 

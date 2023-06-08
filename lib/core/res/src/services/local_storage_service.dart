@@ -125,9 +125,11 @@ class LocalStorageService {
   }
 
   Future<void> setUserPinCode(String pinCode) async {
-    String hashed  = getHashedCode(pinCode);
-    await writeSecureKey(userPinCode, hashed);
-    currentUserPermission.pinCode = hashed;
+    if(pinCode.isNotEmpty){
+      String hashed  = getHashedCode(pinCode);
+      await writeSecureKey(userPinCode, hashed);
+      currentUserPermission.pinCode = hashed;
+    }
   }
 
   Future<void> setTouchIdValue({required bool touchId}) async {
