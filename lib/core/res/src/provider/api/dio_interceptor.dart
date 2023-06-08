@@ -51,8 +51,8 @@ class DioInterceptor extends Interceptor {
       }
 
       /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
-      /// unverified account
-      if (err.response?.data['code'] == 1062) {
+      /// unverified account and expire otp
+      if ([1062, 1067].contains(err.response?.data['code'])) {
         unverifiedOnResponse(err.response!, errorHandler: handler);
       }
       if (err.response?.data['code'] == 1106) {
@@ -102,8 +102,8 @@ class DioInterceptor extends Interceptor {
     }
 
     /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
-    /// unverified account
-    if (data['code'] == 1062) {
+    /// unverified account and expire otp
+    if ([1062, 1067].contains(data['code'])) {
       unverifiedOnResponse(response, responseHandler: handler);
     }
     if (data['data'] is Map<String, dynamic> &&
