@@ -38,10 +38,10 @@ class DioInterceptor extends Interceptor {
 
   @override
   Future<dynamic> onError(
-      DioException err, ErrorInterceptorHandler handler) async {
+      DioError err, ErrorInterceptorHandler handler) async {
     ///stop performance trace
     sl<FirebasePerformancesService>().stopTrace();
-    final DioExceptionType errorType = err.type;
+    final DioErrorType errorType = err.type;
 
     try {
       /// exceed number of hits
@@ -59,11 +59,11 @@ class DioInterceptor extends Interceptor {
         CustomNavigator.instance.pushNamedAndRemoveUntil(
             RoutesName.changePassword, (Route<dynamic> route) => false);
       }
-      if (<DioExceptionType>[DioExceptionType.badResponse]
+      if (<DioErrorType>[DioErrorType.badResponse]
           .contains(errorType)) {
         await _handleDialogError(err, handler);
         handler.resolve(err.response!);
-      } else if (<DioExceptionType>[DioExceptionType.unknown]
+      } else if (<DioErrorType>[DioErrorType.unknown]
           .contains(errorType)) {
         throw SocketException(err.error.toString());
       } else {
@@ -175,7 +175,7 @@ class DioInterceptor extends Interceptor {
   }
 
   Future<void> _handleDialogError(
-      DioException error, ErrorInterceptorHandler handler) async {
+      DioError error, ErrorInterceptorHandler handler) async {
     try {
       final Response<dynamic>? response = error.response;
       final Map<String, dynamic>? data =
@@ -252,13 +252,13 @@ class DioInterceptor extends Interceptor {
     } catch (_) {}
   }
 
-  DioException _dioError(Object error, RequestOptions options) {
-    return error as DioException;
+  DioError _dioError(Object error, RequestOptions options) {
+    return error as DioError;
     //return error is DioError ? error : DioMixin.assureDioError(error, options);
   }
 
   Future<void> onResumeNetworkError(
-      ErrorInterceptorHandler handler, DioException err) async {
+      ErrorInterceptorHandler handler, DioError err) async {
     ///add api to queue
     repeating.add(() async {
       await _repeatOnError(handler, err.requestOptions);

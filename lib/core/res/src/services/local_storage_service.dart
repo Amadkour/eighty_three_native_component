@@ -78,7 +78,15 @@ class LocalStorageService {
   }
 
   Future<void> removeAllSecureKeys() async {
+    String pinCode = await getUserPinCode ??"";
+    bool faceId = getUserFaceId;
+    bool touchId = getUserTouchId;
+
     await _secureStorage.deleteAll();
+
+    await setUserPinCode(pinCode);
+    await setFaceIdValue(faceId: faceId);
+    await setTouchIdValue(touchId: touchId);
   }
 
   Future<void> removeAllKeysInSharedPreferencesExceptLanguage() async {
