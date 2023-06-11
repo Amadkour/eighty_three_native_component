@@ -58,7 +58,7 @@ class DioInterceptor extends Interceptor {
       if (err.response?.data['code'] == 1106) {
         if(CustomNavigator.instance.currentScreenName!=RoutesName.changePassword){
           CustomNavigator.instance.pushNamedAndRemoveUntil(
-              RoutesName.changePassword, (Route<dynamic> route) => false);
+              RoutesName.forgetPassword, (Route<dynamic> route) => false);
         }
         else{
           MyToast("please, change your password");

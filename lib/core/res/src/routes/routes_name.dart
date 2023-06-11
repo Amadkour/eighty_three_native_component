@@ -25,17 +25,17 @@ class RoutesName {
   static const String qrCodeTransferMoneyPage = '/qrCode/qRCodeTransferMoney';
 
   static const String addRequest = '/addRequest';
-  static const String login = '/auth/login';
-  static const String register = '/auth/register';
+  static const String login = '/login';
+  static const String register = '/register';
   static const String home = '/home';
-  static const String otp = '/auth/otp';
-  static const String pinCode = '/auth/pin_code';
-  static const String pinCodeWithoutAnimation = '/auth/pin_code_without';
-  static const String setupPinCode = '/auth/setup_pin_code';
+  static const String otp = '/otp';
+  static const String pinCode = '/pin_code';
+  static const String pinCodeWithoutAnimation = '/pin_code_without';
+  static const String setupPinCode = '/setup_pin_code';
   static const String setupPinCodeWithRegister =
-      '/auth/setup_pin_code_with_register';
-  static const String forgetPassword = '/auth/forgetPassword';
-  static const String createNewPassword = '/auth/createNewPassword';
+      '/setup_pin_code_with_register';
+  static const String forgetPassword = '/forgetPassword';
+  static const String createNewPassword = '/createNewPassword';
   static const String changePassword = '/changePassword';
   static const String newDeposit = '/newDeposit';
   static const String depositVia = '/depositVia';
