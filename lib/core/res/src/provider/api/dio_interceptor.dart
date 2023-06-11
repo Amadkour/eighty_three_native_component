@@ -56,13 +56,11 @@ class DioInterceptor extends Interceptor {
         unverifiedOnResponse(err.response!, errorHandler: handler);
       }
       if (err.response?.data['code'] == 1106) {
-        if(CustomNavigator.instance.currentScreenName!=RoutesName.changePassword){
+        if(CustomNavigator.instance.currentScreenName!=RoutesName.forgetPassword){
           CustomNavigator.instance.pushNamedAndRemoveUntil(
               RoutesName.forgetPassword, (Route<dynamic> route) => false);
         }
-        else{
-          MyToast("please, change your password");
-        }
+        MyToast("please, change your password");
 
       }
       if (<DioErrorType>[DioErrorType.badResponse]
@@ -103,13 +101,11 @@ class DioInterceptor extends Interceptor {
     }
 
     if (response.data['code'] == 1106) {
-      if(CustomNavigator.instance.currentScreenName!=RoutesName.changePassword){
+      if(CustomNavigator.instance.currentScreenName!=RoutesName.forgetPassword){
         CustomNavigator.instance.pushNamedAndRemoveUntil(
             RoutesName.changePassword, (Route<dynamic> route) => false);
       }
-      else{
-        MyToast("please, change your password");
-      }
+      MyToast("please, change your password");
     }
 
     /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
