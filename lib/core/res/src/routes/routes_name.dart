@@ -34,7 +34,7 @@ class RoutesName {
   static const String setupPinCode = '/setup_pin_code';
   static const String setupPinCodeWithRegister =
       '/setup_pin_code_with_register';
-  static const String forgetPassword = '/forgetPassword';
+  static const String forgetPassword = '/forget';
   static const String createNewPassword = '/createNewPassword';
   static const String changePassword = '/changePassword';
   static const String newDeposit = '/newDeposit';
