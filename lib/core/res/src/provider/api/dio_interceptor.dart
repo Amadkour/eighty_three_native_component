@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
+import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
@@ -56,6 +57,7 @@ class DioInterceptor extends Interceptor {
         unverifiedOnResponse(err.response!, errorHandler: handler);
       }
       if (err.response?.data['code'] == 1106) {
+        print(ModalRoute.of(globalKey.currentContext!)?.settings.name);
         CustomNavigator.instance.pushNamedAndRemoveUntil(
             RoutesName.changePassword, (Route<dynamic> route) => false);
       }
