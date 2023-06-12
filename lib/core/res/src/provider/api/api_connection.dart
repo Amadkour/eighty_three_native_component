@@ -4,11 +4,15 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/provider/api/dio_interceptor.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/res/src/services/local_storage_service.dart';
+import 'package:eighty_three_native_component/core/utils/certificate_handle.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 
 enum BaseUrlModules {
   ecommerce,
@@ -44,12 +48,14 @@ class APIConnection {
   bool networkError = false;
   final Dio dio = Dio();
 
-  APIConnection({
-    String userRole = '',
-    String? baseUrl,
-    Future<void> Function()? resetCallback
-  }) {
+  APIConnection(
+      {String userRole = '',
+      String? baseUrl,
+      Client? client,
+      Future<void> Function()? resetCallback}) {
     {
+      // add ssl certificate
+      handleSSL(dio);
       //urlFromEnum(BaseUrlModules.authentication);
       // dio.options.baseUrl = "http://gfi.group/api";
       /// remove when new server is done
@@ -59,6 +65,14 @@ class APIConnection {
       dio.options.contentType = 'application/json';
       dio.options.connectTimeout = const Duration(seconds: 50);
       dio.options.receiveTimeout = const Duration(seconds: 50);
+      // //check bad certificate
+      // (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+      //     (HttpClient client) {
+      //   client.badCertificateCallback =
+      //       (X509Certificate cert, String host, int port) => true;
+      //   return client;
+      // };
+
       dio.options.validateStatus = (int? statusCode) {
         if (statusCode == null) {
           return false;
@@ -75,7 +89,8 @@ class APIConnection {
         networkError: networkError,
         onFetch: dio.fetch,
         setNetworkError: (value) => networkError = value,
-        onRemoveSession: resetCallback ?? sl<LocalStorageService>().removeSession,
+        onRemoveSession:
+            resetCallback ?? sl<LocalStorageService>().removeSession,
         readSecureKey: sl<LocalStorageService>().readSecureKey,
         writeSecureKey: sl<LocalStorageService>().writeSecureKey,
         userRole: userRole,
