@@ -53,54 +53,51 @@ class APIConnection {
       String? baseUrl,
       Client? client,
       Future<void> Function()? resetCallback}) {
-    {
-      // add ssl certificate
-      handleSSL(dio);
-      //urlFromEnum(BaseUrlModules.authentication);
-      // dio.options.baseUrl = "http://gfi.group/api";
-      /// remove when new server is done
-      dio.options.baseUrl =
-          baseUrl ?? (userOldServer ? "https:/" : "http://gfi.group/api");
-      dio.options.followRedirects = false;
-      dio.options.contentType = 'application/json';
-      dio.options.connectTimeout = const Duration(seconds: 50);
-      dio.options.receiveTimeout = const Duration(seconds: 50);
-      // //check bad certificate
-      // (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-      //     (HttpClient client) {
-      //   client.badCertificateCallback =
-      //       (X509Certificate cert, String host, int port) => true;
-      //   return client;
-      // };
+    //urlFromEnum(BaseUrlModules.authentication);
+    // dio.options.baseUrl = "http://gfi.group/api";
+    /// remove when new server is done
+    dio.options.baseUrl =
+        baseUrl ?? (userOldServer ? "https:/" : "http://gfi.group/api");
+    dio.options.followRedirects = false;
+    dio.options.contentType = 'application/json';
+    dio.options.connectTimeout = const Duration(seconds: 50);
+    dio.options.receiveTimeout = const Duration(seconds: 50);
+    // //check bad certificate
+    // (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+    //     (HttpClient client) {
+    //   client.badCertificateCallback =
+    //       (X509Certificate cert, String host, int port) => true;
+    //   return client;
+    // };
 
-      dio.options.validateStatus = (int? statusCode) {
-        if (statusCode == null) {
-          return false;
-        }
-        if (statusCode == 422) {
-          // your http status code
-          return false;
-        } else {
-          return statusCode >= 200 && statusCode < 300;
-        }
-      };
-      // dio.options.setRequestContentTypeWhenNoPayload = true;
-      dio.interceptors.add(DioInterceptor(
-        networkError: networkError,
-        onFetch: dio.fetch,
-        setNetworkError: (value) => networkError = value,
-        onRemoveSession:
-            resetCallback ?? sl<LocalStorageService>().removeSession,
-        readSecureKey: sl<LocalStorageService>().readSecureKey,
-        writeSecureKey: sl<LocalStorageService>().writeSecureKey,
-        userRole: userRole,
-      ));
-      dio.interceptors.add(LogInterceptor(
-        request: false,
-        requestHeader: false,
-        responseHeader: false,
-      ));
-    }
+    dio.options.validateStatus = (int? statusCode) {
+      if (statusCode == null) {
+        return false;
+      }
+      if (statusCode == 422) {
+        // your http status code
+        return false;
+      } else {
+        return statusCode >= 200 && statusCode < 300;
+      }
+    };
+    // dio.options.setRequestContentTypeWhenNoPayload = true;
+    dio.interceptors.add(DioInterceptor(
+      networkError: networkError,
+      onFetch: dio.fetch,
+      setNetworkError: (value) => networkError = value,
+      onRemoveSession: resetCallback ?? sl<LocalStorageService>().removeSession,
+      readSecureKey: sl<LocalStorageService>().readSecureKey,
+      writeSecureKey: sl<LocalStorageService>().writeSecureKey,
+      userRole: userRole,
+    ));
+    dio.interceptors.add(LogInterceptor(
+      request: false,
+      requestHeader: false,
+      responseHeader: false,
+    ));
+    // add ssl certificate
+    handleSSL(dio);
   }
 
 // Future<bool> checkConnection() async {
