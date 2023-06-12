@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class CustomNavigator {
   CustomNavigator._singleTone();
+  String currentScreenName="";
 
   static final CustomNavigator _instance = CustomNavigator._singleTone();
 
@@ -29,6 +30,7 @@ class CustomNavigator {
   }
 
   Future<T?> pushNamed<T>(String routeName, {Object? arguments}) async {
+    currentScreenName = routeName;
     return Navigator.pushNamed(globalKey.currentContext!, routeName,
         arguments: arguments);
   }
@@ -36,6 +38,7 @@ class CustomNavigator {
   void pushNamedAndRemoveUntil(
       String routeName, bool Function(Route<dynamic> route) callback,
       {Object? arguments}) {
+    currentScreenName = routeName;
     Navigator.pushNamedAndRemoveUntil(
         globalKey.currentContext!, routeName, callback,
         arguments: arguments);
@@ -53,12 +56,14 @@ class CustomNavigator {
   }
 
   void popAndPushNamed({required String routeName, Object? argument}) {
+    currentScreenName = routeName;
     Navigator.popAndPushNamed(globalKey.currentContext!, routeName,
         arguments: argument);
   }
 
   Future<void> pushReplacementNamed(String routeName,
       {Object? argument}) async {
+    currentScreenName = routeName;
     await Navigator.pushReplacementNamed(globalKey.currentContext!, routeName,
         arguments: argument);
   }

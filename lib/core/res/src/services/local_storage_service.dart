@@ -1,7 +1,9 @@
 library eighty_three_component;
 
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:crypto/crypto.dart';
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/guest_permission.dart';
@@ -76,7 +78,15 @@ class LocalStorageService {
   }
 
   Future<void> removeAllSecureKeys() async {
+    String pinCode = await getUserPinCode ??"";
+    bool faceId = getUserFaceId;
+    bool touchId = getUserTouchId;
+
     await _secureStorage.deleteAll();
+
+    await writeSecureKey(userPinCode, pinCode);
+    await setFaceIdValue(faceId: faceId);
+    await setTouchIdValue(touchId: touchId);
   }
 
   Future<void> removeAllKeysInSharedPreferencesExceptLanguage() async {
@@ -115,8 +125,11 @@ class LocalStorageService {
   }
 
   Future<void> setUserPinCode(String pinCode) async {
-    await writeSecureKey(userPinCode, pinCode);
-    currentUserPermission.pinCode = pinCode;
+    if(pinCode.isNotEmpty){
+      String hashed  = getHashedCode(pinCode);
+      await writeSecureKey(userPinCode, hashed);
+      currentUserPermission.pinCode = hashed;
+    }
   }
 
   Future<void> setTouchIdValue({required bool touchId}) async {
@@ -211,10 +224,10 @@ class LocalStorageService {
     await setUserToken(user.token.toString());
     await setUserUUID(user.userId.toString());
     await setUserPhone(user.phone.toString());
-    await setUserPinCode(user.pinCode.toString());
+    //await setUserPinCode(user.pinCode.toString());
     await setUserCountry(country: user.country.toString());
     await setUserCurrency(currency: user.currency.toString());
-    await setTouchIdValue(touchId: user.isTouchIdActive ?? false);
-    await setFaceIdValue(faceId: user.isFaceIdActive ?? false);
+    //await setTouchIdValue(touchId: user.isTouchIdActive ?? false);
+    //await setFaceIdValue(faceId: user.isFaceIdActive ?? false);
   }
 }

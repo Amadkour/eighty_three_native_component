@@ -1,9 +1,20 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
+import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/utils/parsing/from_map.dart';
 import 'package:eighty_three_native_component/core/utils/parsing/parent_model.dart';
 
 import 'guest_permission.dart';
 
 UserPermission currentUserPermission = GuestPermission();
+
+
+String getHashedCode(String plainText){
+  var bytes1 = utf8.encode(plainText);
+  print(sha256.convert(bytes1).toString());
+  return sha256.convert(bytes1).toString();
+}
 
 class UserPermission extends ParentModel {
   String? token;
@@ -47,6 +58,10 @@ class UserPermission extends ParentModel {
     this.username,
   });
 
+  bool comparePinCode(String code){
+    return getHashedCode(code) == pinCode;
+  }
+
   bool get isArabic => locale == 'ar';
 
   bool get isUsingLocalAuth =>
@@ -71,13 +86,10 @@ class UserPermission extends ParentModel {
           key: 'identity', defaultValue: json["identity_id"].toString()),
       phone: converter.convertToString(key: "phone_number"),
       isCompleted: converter.convertToBool(key: 'is_completed') ?? false,
-      isSetFaceId: converter.convertToBool(key: "face_id_activated"),
-      isSetTouchId: converter.convertToBool(key: "touch_id_activated"),
-      pinCode: converter.convertToString(key: "pincode"),
-      isFaceIdActive:
-          converter.convertToBool(key: "is_active", defaultValue: false),
-      isTouchIdActive:
-          converter.convertToBool(key: "touch_id_active", defaultValue: false),
+      //isSetFaceId: converter.convertToBool(key: "face_id_activated"),
+      //isSetTouchId: converter.convertToBool(key: "touch_id_activated"),
+      //isFaceIdActive: converter.convertToBool(key: "is_active", defaultValue: false),
+      //isTouchIdActive: converter.convertToBool(key: "touch_id_active", defaultValue: false),
       currency: converter.convertToString(key: "currency", defaultValue: ""),
     );
   }

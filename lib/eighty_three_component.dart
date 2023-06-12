@@ -7,6 +7,7 @@ import 'package:eighty_three_native_component/core/res/src/cubit/currency/provid
 import 'package:eighty_three_native_component/core/res/src/cubit/currency/provider/repo/currency_repo.dart';
 import 'package:eighty_three_native_component/core/res/src/errors/failures.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
+import 'package:eighty_three_native_component/core/res/src/widget/message.dart';
 import 'package:eighty_three_native_component/core/utils/currency_util.dart';
 import 'package:eighty_three_native_component/core/utils/parsing/parent_model.dart';
 
@@ -25,11 +26,15 @@ Map<String, dynamic> errorLocalization = <String, dynamic>{};
 
 Future<void> initEightyThreeComponent({String? suffixUrl}) async {
   ///country
-  await sl<CurrencyRepository>().getCountries().then((value) {
-    value.fold((Failure l) => null, (ParentModel r) {
-      appCountries = (r as CountryListModel).countries;
+  try {
+    await sl<CurrencyRepository>().getCountries().then((value) {
+      value.fold((Failure l) => null, (ParentModel r) {
+        appCountries = (r as CountryListModel).countries;
+      });
     });
-  });
+  } catch (e) {
+    MyToast('error in country API');
+  }
   await sl<CurrencyRepository>().getCurrencies().then((value) {
     value.fold((Failure l) => null, (ParentModel r) {
       appCurrencies = (r as CurrencyListModel).currencies;
