@@ -20,7 +20,8 @@ import 'package:flutter/services.dart';
 // }
 
 Future<void> handleSSL(Dio dio) async {
-  ByteData clientCertificate = await rootBundle.load("assets/res-app.pem");
+  ByteData clientCertificate =
+      await rootBundle.load("assets/certificates/res-app.pem");
 
   dio.httpClientAdapter = IOHttpClientAdapter()
     ..onHttpClientCreate = (_) {
