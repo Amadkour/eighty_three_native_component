@@ -33,8 +33,10 @@ Future<void> handleSSL(Dio dio) async {
     ..onHttpClientCreate = (_) {
       final SecurityContext context = SecurityContext(withTrustedRoots: false);
       if (userOldServer) {
+        print('userOldServer = $userOldServer');
         context.useCertificateChainBytes(mockaCertificate.buffer.asUint8List());
       } else {
+        print('userOldServer = $userOldServer');
         context
             .useCertificateChainBytes(clientCertificate.buffer.asUint8List());
       }
