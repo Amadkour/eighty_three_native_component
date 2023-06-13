@@ -3,6 +3,7 @@ import 'package:eighty_three_native_component/core/res/src/constant/shared_orefr
 import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.dart';
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
+import 'package:eighty_three_native_component/core/res/src/services/local_storage_service.dart';
 
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
@@ -81,6 +82,7 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
 
       ///--------------foreground
       if (state == AppLifecycleState.resumed) {
+        print(await sl<FlutterSecureStorage>().read(key: userToken));
         print(await sl<FlutterSecureStorage>().containsKey(key: userToken));
         print(DateTime.now().difference(_backgroundTime).inSeconds > 25);
         print( (currentUserPermission.pinCode??"").isNotEmpty);
