@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../permissions/permission.dart';
+
 class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
   final Widget scaffold;
   final Widget? floatingActionButton;
@@ -86,9 +88,7 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
                 DateTime.now().difference(_backgroundTime).inSeconds > 25 &&
 
                 /// To ensure secureCode configuration
-                await sl<FlutterSecureStorage>()
-                    .containsKey(key: userPinCode) &&
-                haveLocalAuth
+                (currentUserPermission.pinCode??"").isNotEmpty && haveLocalAuth
 
             /// To ensure in non configuration page
             ) {
