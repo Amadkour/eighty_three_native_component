@@ -25,6 +25,9 @@ Future<void> handleSSL(Dio dio) async {
       await rootBundle.load("assets/certificates/res-app.pem");
   ByteData mockaCertificate =
       await rootBundle.load("assets/certificates/res-mocka.pem");
+
+  print('clientCertificate = $clientCertificate');
+  print('mockaCertificate = $mockaCertificate');
   print('we are in ${userOldServer ? 'Mocka' : 'Alibaba'}');
   dio.httpClientAdapter = IOHttpClientAdapter()
     ..onHttpClientCreate = (_) {
