@@ -87,14 +87,14 @@ class PasswordTextField extends StatelessWidget {
           );
 
           PasswordCheck passwordCheck =
-              PasswordCheck(password: "MyPassword", passwordPolicy: passwordPolicy);
+              PasswordCheck(password: value??"", passwordPolicy: passwordPolicy);
 
           // errorMessage("Password score: ${passwordCheck.score}");
           // errorMessage("Password strength: ${passwordCheck.strength.name}");
           if (passwordCheck.isValid) {
             return null;
           } else {
-            return tr("Password must be 8 charachters and contains uppercase, lowercase, digits, and special charachtera") ?? '';
+            return tr("Password must be 8 characters and contains uppercase, lowercase, digits, and special characters") ?? '';
           }
         },
         focusNode: passwordFocusNode);
