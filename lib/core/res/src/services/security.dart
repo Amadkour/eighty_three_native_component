@@ -10,8 +10,6 @@ String getHashedCode(String plainText) {
 }
 
 String encryption(String keyName) {
-  print('ENCRYPT_KEY = ${dotenv.env['ENCRYPT_KEY']}');
-  print('ENCRYPT_IV_KEY = ${dotenv.env['ENCRYPT_IV_KEY']}');
   final key = enc.Key.fromUtf8(dotenv.env['ENCRYPT_KEY'] ?? "");
   final iv = enc.IV.fromUtf8(dotenv.env['ENCRYPT_IV_KEY'] ?? "");
 
