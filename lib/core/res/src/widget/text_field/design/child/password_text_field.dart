@@ -81,7 +81,7 @@ class PasswordTextField extends StatelessWidget {
               SpecialCharacterRule(isMandatory: true),
               DigitRule(isMandatory: true),
               // ask to not use spaces (including tabs, newlines, etc)
-              NoSpaceRule(),
+              // NoSpaceRule(),
             ],
           );
 
