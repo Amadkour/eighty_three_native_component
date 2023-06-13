@@ -4,6 +4,7 @@ import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 import 'package:password_policy/password_policy.dart';
+import 'package:queen_validators/queen_validators.dart';
 
 class PasswordTextField extends StatelessWidget {
   final FocusNode? passwordFocusNode;
@@ -75,13 +76,13 @@ class PasswordTextField extends StatelessWidget {
         validator: (String? value) {
           PasswordPolicy passwordPolicy = PasswordPolicy(
             validationRules: [
-              LengthRule(minimalLength: 8),
-              UpperCaseRule(isMandatory: true),
-              LowerCaseRule(isMandatory: true),
-              SpecialCharacterRule(isMandatory: true),
-              DigitRule(isMandatory: true),
+              LengthRule(minimalLength: 8,name:value),
+              UpperCaseRule(isMandatory: true,name: value),
+              LowerCaseRule(isMandatory: true,name: value),
+              SpecialCharacterRule(isMandatory: true,name: value),
+              DigitRule(isMandatory: true,name: value),
               // ask to not use spaces (including tabs, newlines, etc)
-              // NoSpaceRule(),
+               NoSpaceRule(isMandatory: false),
             ],
           );
 
