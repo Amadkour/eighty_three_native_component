@@ -76,13 +76,13 @@ class PasswordTextField extends StatelessWidget {
         validator: (String? value) {
           PasswordPolicy passwordPolicy = PasswordPolicy(
             validationRules: [
-              LengthRule(minimalLength: 8,name:value),
-              UpperCaseRule(isMandatory: true,name: value),
-              LowerCaseRule(isMandatory: true,name: value),
-              SpecialCharacterRule(isMandatory: true,name: value),
-              DigitRule(isMandatory: true,name: value),
+              LengthRule(minimalLength: 8,name:error),
+              UpperCaseRule(isMandatory: true,name: error),
+              LowerCaseRule(isMandatory: true,name: error),
+              SpecialCharacterRule(isMandatory: true,name: error),
+              DigitRule(isMandatory: true,name: error),
               // ask to not use spaces (including tabs, newlines, etc)
-               NoSpaceRule(isMandatory: false),
+              NoSpaceRule(isMandatory: false),
             ],
           );
 
@@ -94,10 +94,7 @@ class PasswordTextField extends StatelessWidget {
           if (passwordCheck.isValid) {
             return null;
           } else {
-            return tr(
-                    "You password does not apply to our PassordPolicy, please review the following "
-                    "rules: ") ??
-                '';
+            return tr("Password must be 8 charachters and contains uppercase, lowercase, digits, and special charachtera") ?? '';
           }
         },
         focusNode: passwordFocusNode);
