@@ -81,6 +81,11 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
 
       ///--------------foreground
       if (state == AppLifecycleState.resumed) {
+        print(await sl<FlutterSecureStorage>().containsKey(key: userToken));
+        print(DateTime.now().difference(_backgroundTime).inSeconds > 25);
+        print( (currentUserPermission.pinCode??"").isNotEmpty);
+        print(haveLocalAuth);
+        print(type);
         /// To ensure login
         if (await sl<FlutterSecureStorage>().containsKey(key: userToken) &&
 
