@@ -67,6 +67,9 @@ class AccountNumText extends StatelessWidget {
           if(!value.contains("*****")){
             correctValue = value.removeNonNumber;
           }
+          else{
+            correctValue = value;
+          }
           if(correctValue.isEmpty){
             return tr("account_number_empty");
           }
