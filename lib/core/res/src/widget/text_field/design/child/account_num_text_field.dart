@@ -47,11 +47,12 @@ class AccountNumText extends StatelessWidget {
         }
       },
       borderColor: borderColor,
-      textInputFormatter: <MaskedTextInputFormatter>[
+      textInputFormatter: <TextInputFormatter>[
         MaskedTextInputFormatter(
           mask: '****-****-****-****-****-****-****-****-****-****',
           separator: '-',
         ),
+        FilteringTextInputFormatter.allow(RegExp('[0-9]|-'))
       ],
       maxLength: 49,
       borderRadius: borderRadius,
