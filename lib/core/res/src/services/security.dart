@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
-import 'package:encrypt/encrypt.dart';
+import 'package:encrypt/encrypt.dart' as enc;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 String getHashedCode(String plainText) {
@@ -9,25 +9,28 @@ String getHashedCode(String plainText) {
   return sha256.convert(bytes1).toString();
 }
 
-Encrypted encryption(String plainText) {
-  print('decryp key = ${dotenv.env['ENCRYPT_KEY']}');
-  final key = Key.fromUtf8(dotenv.env['ENCRYPT_KEY'] ?? "");
-  final iv = IV.fromLength(16);
+String encryption(String keyName) {
+  print('ENCRYPT_KEY = ${dotenv.env['ENCRYPT_KEY']}');
+  print('ENCRYPT_IV_KEY = ${dotenv.env['ENCRYPT_IV_KEY']}');
+  final key = enc.Key.fromUtf8(dotenv.env['ENCRYPT_KEY'] ?? "");
+  final iv = enc.IV.fromUtf8(dotenv.env['ENCRYPT_IV_KEY'] ?? "");
 
-  final encrypter = Encrypter(AES(key));
+  final encrypter =
+      enc.Encrypter(enc.AES(key, mode: enc.AESMode.ctr, padding: null));
+  final encrypted = encrypter.encrypt(keyName, iv: iv);
+  final ciphertext = encrypted.base64;
 
-  Encrypted encrypted = encrypter.encrypt(plainText, iv: iv);
-
-  return encrypted;
+  return ciphertext;
 }
 
 String descryption(String encryptionText) {
-  final key = Key.fromUtf8(dotenv.env['ENCRYPT_KEY'] ?? "");
-  final iv = IV.fromLength(16);
+  final key = enc.Key.fromUtf8(dotenv.env['ENCRYPT_KEY'] ?? "");
+  final iv = enc.IV.fromUtf8(dotenv.env['ENCRYPT_IV_KEY'] ?? "");
+  final decrypter =
+      enc.Encrypter(enc.AES(key, mode: enc.AESMode.ctr, padding: null));
+  final decrypted =
+      decrypter.decryptBytes(enc.Encrypted.fromBase64(encryptionText), iv: iv);
+  final decryptedData = utf8.decode(decrypted);
 
-  final encrypter = Encrypter(AES(key));
-
-  String decryption =
-      encrypter.decrypt(Encrypted.fromUtf8(encryptionText), iv: iv);
-  return decryption;
+  return decryptedData;
 }
