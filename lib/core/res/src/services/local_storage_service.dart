@@ -8,9 +8,9 @@ import 'package:eighty_three_native_component/core/res/src/configuration/top_lev
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/guest_permission.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
+import 'package:eighty_three_native_component/core/res/src/services/security.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class LocalStorageService {
   late SharedPreferences _sharedPreferences;
@@ -55,7 +55,14 @@ class LocalStorageService {
       if (<String>['null', ''].contains(value)) {
         throw '$key is empty';
       }
-      await _secureStorage.write(key: key, value: value);
+
+      String encryptedKey = encryption(key);
+      String encryptedValue = encryption(value);
+      print('before encryptedKey = $key');
+      print('before encryptedKey = $value');
+      print('after encryptedKey = $encryptedKey');
+      print('after encryptedKey = $encryptedValue');
+      await _secureStorage.write(key: encryptedKey, value: encryptedValue);
     } catch (e) {
       log(e.toString());
     }
@@ -70,7 +77,16 @@ class LocalStorageService {
   }
 
   Future<String?> readSecureKey(String key, {String? defaultValue}) async {
-    return await _secureStorage.read(key: key) ?? defaultValue;
+    String encryptedKey = encryption(key);
+
+    String? value =
+        (await _secureStorage.read(key: encryptedKey)) ?? defaultValue;
+    print('before decryptedKey = $key');
+    print('after decryptedKey = $encryptedKey');
+    print('before decryptedValue = $value');
+    print('after decryptedValue = ${decryption(value ?? "")}');
+
+    return decryption(value ?? "");
   }
 
   Future<void> removeKey(String key) async {
@@ -78,7 +94,7 @@ class LocalStorageService {
   }
 
   Future<void> removeAllSecureKeys() async {
-    String pinCode = await getUserPinCode ??"";
+    String pinCode = await getUserPinCode ?? "";
     bool faceId = getUserFaceId;
     bool touchId = getUserTouchId;
 
@@ -111,7 +127,8 @@ class LocalStorageService {
     await writeSecureKey(userToken, token);
     currentUserPermission.token = token;
 
-    print('currentUserPermission.token = token = ${currentUserPermission.token}');
+    print(
+        'currentUserPermission.token = token = ${currentUserPermission.token}');
   }
 
   Future<void> setUserUUID(String uuid) async {
@@ -125,8 +142,8 @@ class LocalStorageService {
   }
 
   Future<void> setUserPinCode(String pinCode) async {
-    if(pinCode.isNotEmpty){
-      String hashed  = getHashedCode(pinCode);
+    if (pinCode.isNotEmpty) {
+      String hashed = getHashedCode(pinCode);
       await writeSecureKey(userPinCode, hashed);
       currentUserPermission.pinCode = hashed;
     }
@@ -138,7 +155,7 @@ class LocalStorageService {
   }
 
   Future<void> setUsername(String name) async {
-    await writeKey(userName, name);
+    await writeSecureKey(userName, name);
     currentUserPermission.name = name;
   }
 
@@ -204,6 +221,7 @@ class LocalStorageService {
   Future<String?> get getUserPinCode => readSecureKey(userPinCode);
 
   Future<String?> get getUserId => readSecureKey(userId);
+
   Future<String?> get getUserEmail => readSecureKey(userEmail);
 
   bool get getUserTouchId => readBool(userTouchId);
@@ -211,12 +229,16 @@ class LocalStorageService {
   bool get getUserFaceId => readBool(userFaceId);
 
   String? get getUserName => readString(userName);
+
   String? get getUserLanguage => readString('lang');
+
   bool get getIsProfileCompleted => readBool(profileCompleted);
+
   Future<String?> get getUserRole => readSecureKey(role);
 
   bool get isAppInstalled => readBool(appInstalled);
-  String? get getFullName => readString(fullName);
+
+  Future<String?> get getFullName => readSecureKey(fullName);
 
   Future<void> cacheCurrentUser(UserPermission user) async {
     await setUserId(user.identityId.toString());

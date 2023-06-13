@@ -3,6 +3,7 @@ import 'package:eighty_three_native_component/core/res/src/widget/text_field/val
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
+import 'package:password_policy/password_policy.dart';
 
 class PasswordTextField extends StatelessWidget {
   final FocusNode? passwordFocusNode;
@@ -20,6 +21,7 @@ class PasswordTextField extends StatelessWidget {
   final void Function(String?) onChanged;
   final Widget? prefix;
   final bool hasPrefix;
+
   const PasswordTextField({
     super.key,
     this.passwordFocusNode,
@@ -42,13 +44,13 @@ class PasswordTextField extends StatelessWidget {
     return ParentTextField(
         prefix: hasPrefix
             ? prefix ??
-            const Padding(
-              padding: EdgeInsets.all(5),
-              child: Icon(
-                Icons.lock_outline,
-                size: 30,
-              ),
-            )
+                const Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Icon(
+                    Icons.lock_outline,
+                    size: 30,
+                  ),
+                )
             : null,
         isPassword: securePasswordText,
         error: error,
@@ -61,9 +63,7 @@ class PasswordTextField extends StatelessWidget {
         suffix: IconButton(
             key: const Key("show_password_button"),
             icon: Icon(
-              securePasswordText
-                  ? Icons.visibility_off_outlined
-                  : Icons.visibility_outlined,
+              securePasswordText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
               color: AppColors.darkColor,
               size: 20,
             ),
@@ -72,8 +72,33 @@ class PasswordTextField extends StatelessWidget {
         hintFontSize: fullWidth == null ? null : fullWidth! / 30,
         title: tr(passTitle!),
         hint: tr(passHint!),
-        validator: PasswordValidator().getValidation(),
+        validator: (String? value) {
+          PasswordPolicy passwordPolicy = PasswordPolicy(
+            validationRules: [
+              LengthRule(minimalLength: 8),
+              UpperCaseRule(isMandatory: true),
+              LowerCaseRule(isMandatory: true),
+              SpecialCharacterRule(isMandatory: true),
+              DigitRule(isMandatory: true),
+              // ask to not use spaces (including tabs, newlines, etc)
+              // NoSpaceRule(),
+            ],
+          );
+
+          PasswordCheck passwordCheck =
+              PasswordCheck(password: "MyPassword", passwordPolicy: passwordPolicy);
+
+          // errorMessage("Password score: ${passwordCheck.score}");
+          // errorMessage("Password strength: ${passwordCheck.strength.name}");
+          if (passwordCheck.isValid) {
+            return null;
+          } else {
+            return tr(
+                    "You password does not apply to our PassordPolicy, please review the following "
+                    "rules: ") ??
+                '';
+          }
+        },
         focusNode: passwordFocusNode);
   }
 }
-
