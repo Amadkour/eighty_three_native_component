@@ -55,7 +55,14 @@ class LocalStorageService {
       if (<String>['null', ''].contains(value)) {
         throw '$key is empty';
       }
-      await _secureStorage.write(key: key, value: value);
+
+      String encryptedKey = encryption(key);
+      String encryptedValue = encryption(value);
+      print('before encryptedKey = $key');
+      print('before encryptedKey = $value');
+      print('after encryptedKey = $encryptedKey');
+      print('after encryptedKey = $encryptedValue');
+      await _secureStorage.write(key: encryptedKey, value: encryptedValue);
     } catch (e) {
       log(e.toString());
     }
@@ -70,7 +77,16 @@ class LocalStorageService {
   }
 
   Future<String?> readSecureKey(String key, {String? defaultValue}) async {
-    return await _secureStorage.read(key: key) ?? defaultValue;
+    String encryptedKey = encryption(key);
+
+    String? value =
+        (await _secureStorage.read(key: encryptedKey)) ?? defaultValue;
+    print('before decryptedKey = $key');
+    print('after decryptedKey = $encryptedKey');
+    print('before decryptedValue = $value');
+    print('after decryptedValue = ${decryption(value ?? "")}');
+
+    return decryption(value ?? "");
   }
 
   Future<void> removeKey(String key) async {
