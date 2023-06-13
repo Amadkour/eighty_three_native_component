@@ -92,7 +92,7 @@ class LocalStorageService {
 
     await _secureStorage.deleteAll();
 
-    await writeSecureKey(encryption(userPinCode), pinCode);
+    await writeSecureKey(userPinCode, pinCode);
     await setFaceIdValue(faceId: faceId);
     await setTouchIdValue(touchId: touchId);
   }
@@ -136,7 +136,7 @@ class LocalStorageService {
   Future<void> setUserPinCode(String pinCode) async {
     if (pinCode.isNotEmpty) {
       String hashed = getHashedCode(pinCode);
-      await writeSecureKey(encryption(userPinCode), hashed);
+      await writeSecureKey(userPinCode, hashed);
       currentUserPermission.pinCode = hashed;
     }
   }
