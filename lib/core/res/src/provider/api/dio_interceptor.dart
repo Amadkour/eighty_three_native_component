@@ -47,7 +47,6 @@ class DioInterceptor extends Interceptor {
       /// exceed number of hits
       if (err.response?.statusCode == 429) {
         MyToast("please, try again after one hour or contact us");
-        return;
       }
 
       /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
