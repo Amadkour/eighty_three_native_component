@@ -8,9 +8,9 @@ import 'package:eighty_three_native_component/core/res/src/configuration/top_lev
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/guest_permission.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
+import 'package:eighty_three_native_component/core/res/src/services/security.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class LocalStorageService {
   late SharedPreferences _sharedPreferences;
@@ -78,7 +78,7 @@ class LocalStorageService {
   }
 
   Future<void> removeAllSecureKeys() async {
-    String pinCode = await getUserPinCode ??"";
+    String pinCode = await getUserPinCode ?? "";
     bool faceId = getUserFaceId;
     bool touchId = getUserTouchId;
 
@@ -111,7 +111,8 @@ class LocalStorageService {
     await writeSecureKey(userToken, token);
     currentUserPermission.token = token;
 
-    print('currentUserPermission.token = token = ${currentUserPermission.token}');
+    print(
+        'currentUserPermission.token = token = ${currentUserPermission.token}');
   }
 
   Future<void> setUserUUID(String uuid) async {
@@ -125,8 +126,8 @@ class LocalStorageService {
   }
 
   Future<void> setUserPinCode(String pinCode) async {
-    if(pinCode.isNotEmpty){
-      String hashed  = getHashedCode(pinCode);
+    if (pinCode.isNotEmpty) {
+      String hashed = getHashedCode(pinCode);
       await writeSecureKey(userPinCode, hashed);
       currentUserPermission.pinCode = hashed;
     }

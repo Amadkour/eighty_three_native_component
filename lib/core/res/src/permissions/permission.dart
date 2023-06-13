@@ -2,19 +2,13 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
+import 'package:eighty_three_native_component/core/res/src/services/security.dart';
 import 'package:eighty_three_native_component/core/utils/parsing/from_map.dart';
 import 'package:eighty_three_native_component/core/utils/parsing/parent_model.dart';
 
 import 'guest_permission.dart';
 
 UserPermission currentUserPermission = GuestPermission();
-
-
-String getHashedCode(String plainText){
-  var bytes1 = utf8.encode(plainText);
-  print(sha256.convert(bytes1).toString());
-  return sha256.convert(bytes1).toString();
-}
 
 class UserPermission extends ParentModel {
   String? token;
@@ -58,7 +52,7 @@ class UserPermission extends ParentModel {
     this.username,
   });
 
-  bool comparePinCode(String code){
+  bool comparePinCode(String code) {
     return getHashedCode(code) == pinCode;
   }
 
