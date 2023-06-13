@@ -78,7 +78,7 @@ class LocalStorageService {
   }
 
   Future<void> removeAllSecureKeys() async {
-    String pinCode = await getUserPinCode ??"";
+    String pinCode = await getUserPinCode ?? "";
     bool faceId = getUserFaceId;
     bool touchId = getUserTouchId;
 
@@ -125,8 +125,8 @@ class LocalStorageService {
   }
 
   Future<void> setUserPinCode(String pinCode) async {
-    if(pinCode.isNotEmpty){
-      String hashed  = getHashedCode(pinCode);
+    if (pinCode.isNotEmpty) {
+      String hashed = getHashedCode(pinCode);
       await writeSecureKey(userPinCode, hashed);
       currentUserPermission.pinCode = hashed;
     }
@@ -138,7 +138,7 @@ class LocalStorageService {
   }
 
   Future<void> setUsername(String name) async {
-    await writeKey(userName, name);
+    await writeSecureKey(userName, name);
     currentUserPermission.name = name;
   }
 
@@ -204,6 +204,7 @@ class LocalStorageService {
   Future<String?> get getUserPinCode => readSecureKey(userPinCode);
 
   Future<String?> get getUserId => readSecureKey(userId);
+
   Future<String?> get getUserEmail => readSecureKey(userEmail);
 
   bool get getUserTouchId => readBool(userTouchId);
@@ -211,12 +212,16 @@ class LocalStorageService {
   bool get getUserFaceId => readBool(userFaceId);
 
   String? get getUserName => readString(userName);
+
   String? get getUserLanguage => readString('lang');
+
   bool get getIsProfileCompleted => readBool(profileCompleted);
+
   Future<String?> get getUserRole => readSecureKey(role);
 
   bool get isAppInstalled => readBool(appInstalled);
-  String? get getFullName => readString(fullName);
+
+  Future<String?> get getFullName => readSecureKey(fullName);
 
   Future<void> cacheCurrentUser(UserPermission user) async {
     await setUserId(user.identityId.toString());
