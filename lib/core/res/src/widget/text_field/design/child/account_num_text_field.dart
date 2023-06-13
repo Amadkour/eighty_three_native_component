@@ -71,6 +71,7 @@ class AccountNumText extends StatelessWidget {
             return tr("account_number_lower");
           }
         }
+        return null;
       },
       title: haveTitle ? title ?? tr("Account Number") : null,
       focusNode: focusNode,
