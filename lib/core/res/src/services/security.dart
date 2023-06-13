@@ -8,20 +8,24 @@ String getHashedCode(String plainText) {
   return sha256.convert(bytes1).toString();
 }
 
-void encryption(String plainText, String newKey) {
+Encrypted encryption(String plainText, String newKey) {
   final key = Key.fromUtf8(newKey);
   final iv = IV.fromLength(16);
 
   final encrypter = Encrypter(AES(key));
 
-  encrypter.encrypt(plainText, iv: iv);
+  Encrypted encrypted = encrypter.encrypt(plainText, iv: iv);
+
+  return encrypted;
 }
 
-void descryption(String encryptionText, String newKey) {
+String descryption(String encryptionText, String newKey) {
   final key = Key.fromUtf8(newKey);
   final iv = IV.fromLength(16);
 
   final encrypter = Encrypter(AES(key));
 
-  encrypter.decrypt(Encrypted.fromUtf8(encryptionText), iv: iv);
+  String decryption =
+      encrypter.decrypt(Encrypted.fromUtf8(encryptionText), iv: iv);
+  return decryption;
 }
