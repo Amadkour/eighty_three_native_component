@@ -1,5 +1,6 @@
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/design/parent/parent.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/validator/child/account_validator.dart';
+import 'package:eighty_three_native_component/core/utils/extenstions.dart';
 import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -60,8 +61,18 @@ class AccountNumText extends StatelessWidget {
       titleFontSize: titleFontSize,
       keyboardType: TextInputType.number,
       hint: hint ?? "0000-0000-0000-0000-0000-00000",
-      validator: AccountNumberValidator().validation(),
-      title: haveTitle ? title ?? tr("Account Number/Address") : null,
+      validator: (value) {
+        if(value!=null){
+          String correctValue = value.removeNonNumber;
+          if(correctValue.isEmpty){
+            return tr("account_number_empty");
+          }
+          else if(correctValue.length<7){
+            return tr("account_number_lower");
+          }
+        }
+      },
+      title: haveTitle ? title ?? tr("Account Number") : null,
       focusNode: focusNode,
       readOnly: readOnly,
       error: error,
