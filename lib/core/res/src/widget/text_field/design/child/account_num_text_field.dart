@@ -63,7 +63,10 @@ class AccountNumText extends StatelessWidget {
       hint: hint ?? "0000-0000-0000-0000-0000-00000",
       validator: (value) {
         if(value!=null){
-          String correctValue = value.removeNonNumber;
+          String correctValue="";
+          if(!value.contains("*****")){
+            correctValue = value.removeNonNumber;
+          }
           if(correctValue.isEmpty){
             return tr("account_number_empty");
           }
@@ -71,6 +74,7 @@ class AccountNumText extends StatelessWidget {
             return tr("account_number_lower");
           }
         }
+        return null;
       },
       title: haveTitle ? title ?? tr("Account Number") : null,
       focusNode: focusNode,
