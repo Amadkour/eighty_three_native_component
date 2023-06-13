@@ -76,11 +76,12 @@ class PasswordTextField extends StatelessWidget {
         validator: (String? value) {
           PasswordPolicy passwordPolicy = PasswordPolicy(
             validationRules: [
-              LengthRule(minimalLength: 8,name:error),
-              UpperCaseRule(isMandatory: true,name: error),
-              LowerCaseRule(isMandatory: true,name: error),
-              SpecialCharacterRule(isMandatory: true,name: error),
-              DigitRule(isMandatory: true,name: error),
+              LengthRule(minimalLength: 8,name:"Your password should be at least 8 characters long!"),
+              UpperCaseRule(isMandatory: true,name: "Your password should contain one upper case character!"),
+              LowerCaseRule(isMandatory: true,name: "Your password should contain one lower case character!"),
+              SpecialCharacterRule(isMandatory: true,name: "Your password should contain one "
+                  "special character!"),
+              DigitRule(isMandatory: true,name: "Your password should contain one digit!"),
               // ask to not use spaces (including tabs, newlines, etc)
               NoSpaceRule(isMandatory: false),
             ],
