@@ -32,14 +32,14 @@ Future<void> handleSSL(Dio dio) async {
   dio.httpClientAdapter = IOHttpClientAdapter()
     ..onHttpClientCreate = (_) {
       final SecurityContext context = SecurityContext(withTrustedRoots: false);
-      if (userOldServer) {
-        print('userOldServer = $userOldServer');
-        context.useCertificateChainBytes(mockaCertificate.buffer.asUint8List());
-      } else {
+      // if (userOldServer) {
+      //   print('userOldServer = $userOldServer');
+      //   context.useCertificateChainBytes(mockaCertificate.buffer.asUint8List());
+      // } else {
         print('userOldServer = $userOldServer');
         context
             .useCertificateChainBytes(clientCertificate.buffer.asUint8List());
-      }
+      // }
       HttpClient httpClient = HttpClient(context: context);
       httpClient.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
