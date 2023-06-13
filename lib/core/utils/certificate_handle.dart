@@ -25,12 +25,15 @@ Future<void> handleSSL(Dio dio) async {
       await rootBundle.load("assets/certificates/res-app.pem");
   ByteData mockaCertificate =
       await rootBundle.load("assets/certificates/res-mocka.pem");
+  ByteData mockaCertificate2 =
+      await rootBundle.load("assets/certificates/res-mocka2.pem");
 
   dio.httpClientAdapter = IOHttpClientAdapter()
     ..onHttpClientCreate = (_) {
       final SecurityContext context = SecurityContext(withTrustedRoots: false);
       if (userOldServer) {
         context.useCertificateChainBytes(mockaCertificate.buffer.asUint8List());
+        context.useCertificateChainBytes(mockaCertificate2.buffer.asUint8List());
       } else {
         context
             .useCertificateChainBytes(clientCertificate.buffer.asUint8List());
