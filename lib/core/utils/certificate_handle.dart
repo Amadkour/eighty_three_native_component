@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -23,13 +24,20 @@ import 'package:flutter/services.dart';
 Future<void> handleSSL(Dio dio) async {
   final SecurityContext context = SecurityContext.defaultContext;
 
-  Uint8List clientCertificate =
-      File("assets/certificates/res-app.pem").readAsBytesSync();
-  Uint8List mockaCertificate =
-      File("assets/certificates/res-mocka.pem").readAsBytesSync();
+  ByteData clientCertificate =
+      await rootBundle.load("assets/certificates/res-app.pem");
+  final buffer1 = clientCertificate.buffer;
+  var list1 = buffer1.asUint8List(
+      clientCertificate.offsetInBytes, clientCertificate.lengthInBytes);
 
-  context.setTrustedCertificatesBytes(clientCertificate);
-  context.setTrustedCertificatesBytes(mockaCertificate);
+  ByteData mockaCertificate =
+      await rootBundle.load("assets/certificates/res-mocka.pem");
+  final buffer2 = mockaCertificate.buffer;
+  var list2 = buffer2.asUint8List(
+      mockaCertificate.offsetInBytes, mockaCertificate.lengthInBytes);
+
+  context.setTrustedCertificates(utf8.decode(list1));
+  context.setTrustedCertificates(utf8.decode(list2));
   dio.httpClientAdapter = IOHttpClientAdapter()
     ..onHttpClientCreate = (_) {
       final SecurityContext context = SecurityContext(withTrustedRoots: false);
