@@ -76,26 +76,27 @@ class PasswordTextField extends StatelessWidget {
         validator: (String? value) {
           PasswordPolicy passwordPolicy = PasswordPolicy(
             validationRules: [
-              LengthRule(minimalLength: 8,name:"Your password should be at least 8 characters long!"),
-              UpperCaseRule(isMandatory: true,name: "Your password should contain one upper case character!"),
-              LowerCaseRule(isMandatory: true,name: "Your password should contain one lower case character!"),
-              SpecialCharacterRule(isMandatory: true,name: "Your password should contain one "
-                  "special character!"),
-              DigitRule(isMandatory: true,name: "Your password should contain one digit!"),
+              LengthRule(minimalLength: 8,name:tr('min_length')),
+              UpperCaseRule(isMandatory: true,name: tr('upper_case')),
+              LowerCaseRule(isMandatory: true,name: tr('lower_case')),
+              SpecialCharacterRule(isMandatory: true,name: tr('special_char')),
+              DigitRule(isMandatory: true,name:tr('digit_rule')),
               // ask to not use spaces (including tabs, newlines, etc)
               NoSpaceRule(isMandatory: false),
             ],
           );
 
-          PasswordCheck passwordCheck =
-              PasswordCheck(password: value??"", passwordPolicy: passwordPolicy);
+          PasswordCheck passwordCheck = PasswordCheck(password:value??'', passwordPolicy: passwordPolicy);
 
           // errorMessage("Password score: ${passwordCheck.score}");
           // errorMessage("Password strength: ${passwordCheck.strength.name}");
           if (passwordCheck.isValid) {
             return null;
           } else {
-            return tr("Password must be 8 characters and contains uppercase, lowercase, digits, and special characters") ?? '';
+            return passwordCheck.notRespectedMandatoryRules
+                .map<String?>((rule) => rule.name)
+                .join("\n");
+
           }
         },
         focusNode: passwordFocusNode);
