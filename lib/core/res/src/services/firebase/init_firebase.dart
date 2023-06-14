@@ -12,6 +12,5 @@ class InitFirebase {
     await sl<FirebaseCrashlyticsService>().init();
     // notifications
     await sl<FirebaseNotificationsService>().initNotificationService();
-
   }
 }
