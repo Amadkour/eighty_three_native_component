@@ -46,7 +46,8 @@ class DioInterceptor extends Interceptor {
     try {
       /// exceed number of hits
       if (err.response?.statusCode == 429) {
-        MyToast("please, try again after one hour or contact us");
+        MyToast((err.response?.data['errors'] as Map<String,dynamic>).values.first.toString());
+        handler.resolve(err.response!);
         return;
       }
 

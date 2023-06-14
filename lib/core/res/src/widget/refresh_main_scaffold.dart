@@ -2,6 +2,7 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.dart';
+import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
@@ -87,15 +88,13 @@ class RefreshMainScaffold<T extends BaseCubit> extends StatelessWidget
       ///--------------foreground
       if (state == AppLifecycleState.resumed) {
         /// To ensure login
-        if (await sl<FlutterSecureStorage>().containsKey(key: userToken) &&
+        if ( (currentUserPermission.token??"").isNotEmpty &&
 
                 /// To ensure threshold 25s
                 DateTime.now().difference(_backgroundTime).inSeconds > 25 &&
 
                 /// To ensure secureCode configuration
-                await sl<FlutterSecureStorage>()
-                    .containsKey(key: userPinCode) &&
-                haveLocalAuth
+                (currentUserPermission.pinCode??"").isNotEmpty && haveLocalAuth
 
             /// To ensure in non configuration page
             ) {
