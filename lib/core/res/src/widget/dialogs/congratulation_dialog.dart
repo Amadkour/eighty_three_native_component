@@ -11,10 +11,10 @@ import 'package:flutter/material.dart';
 class CongratulationDialog {
   final String? dialogSupTitle;
 
-  CongratulationDialog({this.dialogSupTitle}) {
+  CongratulationDialog({this.dialogSupTitle, required BuildContext context}) {
     showDialog(
         useRootNavigator: false,
-        context: globalKey.currentContext!,
+        context: context,
         builder: (BuildContext context) {
           return WillPopScope(
             onWillPop: () async => false,
