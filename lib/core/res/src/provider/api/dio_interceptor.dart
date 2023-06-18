@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
+import 'package:eighty_three_native_component/core/res/src/provider/api/status_codes.dart';
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/res/src/services/firebase/firbase_performance_service.dart';
@@ -45,7 +46,7 @@ class DioInterceptor extends Interceptor {
 
     try {
       /// exceed number of hits
-      if (err.response?.statusCode == 429) {
+      if (err.response?.statusCode == exceedsRequestsCode) {
         MyToast((err.response?.data['errors'] as Map<String,dynamic>).values.first.toString());
         handler.resolve(err.response!);
         return;
@@ -53,10 +54,10 @@ class DioInterceptor extends Interceptor {
 
       /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
       /// unverified account and expire otp
-      if ([1062, 1076].contains(err.response?.data['code'])) {
+      if ([unverifiedAccountOnErrorCode, expireOtpCode].contains(err.response?.data['code'])) {
         otpScenario(err.response!, errorHandler: handler);
       }
-      if (err.response?.data['code'] == 1106) {
+      if (err.response?.data['code'] == expiredPasswordCode) {
         if(CustomNavigator.instance.currentScreenName!=RoutesName.forgetPassword){
           CustomNavigator.instance.pushNamedAndRemoveUntil(
               RoutesName.forgetPassword, (Route<dynamic> route) => false);
@@ -96,12 +97,12 @@ class DioInterceptor extends Interceptor {
     final Map<String, dynamic> data = response.data as Map<String, dynamic>;
 
     /// exceed number of hits
-    if (response.statusCode == 429) {
+    if (response.statusCode == exceedsRequestsCode) {
       MyToast("please, try again after one hour or contact us");
       return;
     }
 
-    if (response.data['code'] == 1106) {
+    if (response.data['code'] == expiredPasswordCode) {
       if(CustomNavigator.instance.currentScreenName!=RoutesName.forgetPassword){
         CustomNavigator.instance.pushNamedAndRemoveUntil(
             RoutesName.forgetPassword, (Route<dynamic> route) => false);
@@ -111,7 +112,7 @@ class DioInterceptor extends Interceptor {
 
     /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
     /// unverified account and expire otp
-    if ([1110, 1076].contains(data['code'])) {
+    if ([unverifiedAccountOnResponseCode, expireOtpCode].contains(data['code'])) {
       otpScenario(response, responseHandler: handler);
       return;
     }
@@ -180,21 +181,21 @@ class DioInterceptor extends Interceptor {
       log(outerCode.toString());
       log(error.response.toString());
       final int? innerCode = data?['code'] as int?;
-      if (outerCode == 400) {
+      if (outerCode == unauthorizedUserOuterCode) {
         switch (innerCode) {
-          case 1062:
+          case unverifiedAccountOnErrorCode:
             unverifiedOnError(error.requestOptions, handler);
             break;
           case 1061:
-          case 1082:
+          case unauthorizedUserInnerCode:
             if (error.response?.realUri.toString().contains('login') == false) {
               unauthorizedDialog(error, onRemoveSession: onRemoveSession);
             }
             break;
-          case 1065:
+          case noEnoughMoneyCode:
             MyToast("don't have enough balanced");
             break;
-          case 1442:
+          case imageExceededAllowedSizeCode:
             MyToast('image exceeded the allowed size');
             break;
           // default:
@@ -208,7 +209,7 @@ class DioInterceptor extends Interceptor {
 
       /// 401 : login from another app
       /// 429 : request limit
-      else if ([429, 401].contains(outerCode)) {
+      else if ([exceedsRequestsCode, loginFromAnotherAppCode].contains(outerCode)) {
         unauthorizedDialog(error, onRemoveSession: onRemoveSession);
       }
     } catch (e) {
