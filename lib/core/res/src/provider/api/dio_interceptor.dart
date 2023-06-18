@@ -186,7 +186,7 @@ class DioInterceptor extends Interceptor {
           case unverifiedAccountOnErrorCode:
             unverifiedOnError(error.requestOptions, handler);
             break;
-          case 1061:
+          case unauthorizedUserInnerCode2:
           case unauthorizedUserInnerCode:
             if (error.response?.realUri.toString().contains('login') == false) {
               unauthorizedDialog(error, onRemoveSession: onRemoveSession);
