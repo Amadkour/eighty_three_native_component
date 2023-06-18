@@ -15,7 +15,6 @@ bool haveLocalAuth = true;
 bool userOldServer = true;
 
 bool isLocalAuth = false;
-bool isSecure = false;
 bool showDevicePreview = false;
 bool showLocalBeneficiaryInRequestAndGift = true;
 // late APIConnection globalApiConnection;
