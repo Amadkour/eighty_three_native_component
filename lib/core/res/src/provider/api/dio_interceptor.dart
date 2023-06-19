@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
+import 'package:eighty_three_native_component/core/res/src/provider/api/status_codes.dart';
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/res/src/services/firebase/firbase_performance_service.dart';
@@ -45,7 +46,7 @@ class DioInterceptor extends Interceptor {
 
     try {
       /// exceed number of hits
-      if (err.response?.statusCode == 429) {
+      if (err.response?.statusCode == exceedsRequestsCode) {
         MyToast((err.response?.data['errors'] as Map<String,dynamic>).values.first.toString());
         handler.resolve(err.response!);
         return;
@@ -53,10 +54,10 @@ class DioInterceptor extends Interceptor {
 
       /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
       /// unverified account and expire otp
-      if ([1062, 1067].contains(err.response?.data['code'])) {
-        unverifiedOnResponse(err.response!, errorHandler: handler);
+      if ([unverifiedAccountOnErrorCode, expireOtpCode].contains(err.response?.data['code'])) {
+        otpScenario(err.response!, errorHandler: handler);
       }
-      if (err.response?.data['code'] == 1106) {
+      if (err.response?.data['code'] == expiredPasswordCode) {
         if(CustomNavigator.instance.currentScreenName!=RoutesName.forgetPassword){
           CustomNavigator.instance.pushNamedAndRemoveUntil(
               RoutesName.forgetPassword, (Route<dynamic> route) => false);
@@ -96,12 +97,12 @@ class DioInterceptor extends Interceptor {
     final Map<String, dynamic> data = response.data as Map<String, dynamic>;
 
     /// exceed number of hits
-    if (response.statusCode == 429) {
+    if (response.statusCode == exceedsRequestsCode) {
       MyToast("please, try again after one hour or contact us");
       return;
     }
 
-    if (response.data['code'] == 1106) {
+    if (response.data['code'] == expiredPasswordCode) {
       if(CustomNavigator.instance.currentScreenName!=RoutesName.forgetPassword){
         CustomNavigator.instance.pushNamedAndRemoveUntil(
             RoutesName.forgetPassword, (Route<dynamic> route) => false);
@@ -111,14 +112,8 @@ class DioInterceptor extends Interceptor {
 
     /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
     /// unverified account and expire otp
-    if ([1062, 1067].contains(data['code'])) {
-      unverifiedOnResponse(response, responseHandler: handler);
-    }
-    if (data['data'] is Map<String, dynamic> &&
-        (data['data'] as Map<String, dynamic>)
-            .containsKey('confirmation_code')) {
-      otpScenario(response, handler);
-
+    if ([unverifiedAccountOnResponseCode, expireOtpCode].contains(data['code'])) {
+      otpScenario(response, responseHandler: handler);
       return;
     }
     super.onResponse(response, handler);
@@ -142,15 +137,9 @@ class DioInterceptor extends Interceptor {
     return handler.next(options);
   }
 
-  Future<void> unverifiedOnResponse(Response response,
+  Future<void> otpScenario(Response response,
       {ResponseInterceptorHandler? responseHandler,
       ErrorInterceptorHandler? errorHandler}) async {
-    MyToast(((response.data['data'] as Map<String, dynamic>)['otp'] as int)
-        .toString());
-    writeSecureKey(
-        "verify_account_pin_code",
-        ((response.data['data'] as Map<String, dynamic>)['otp'] as int)
-            .toString());
     final String? alreadyOpened = await isOtpScreenAlreadyOpened();
     if (alreadyOpened == "false") {
       CustomNavigator.instance.pushNamed(RoutesName.otp,
@@ -192,21 +181,21 @@ class DioInterceptor extends Interceptor {
       log(outerCode.toString());
       log(error.response.toString());
       final int? innerCode = data?['code'] as int?;
-      if (outerCode == 400) {
+      if (outerCode == unauthorizedUserOuterCode) {
         switch (innerCode) {
-          case 1062:
+          case unverifiedAccountOnErrorCode:
             unverifiedOnError(error.requestOptions, handler);
             break;
-          case 1061:
-          case 1082:
+          case unauthorizedUserInnerCode2:
+          case unauthorizedUserInnerCode:
             if (error.response?.realUri.toString().contains('login') == false) {
               unauthorizedDialog(error, onRemoveSession: onRemoveSession);
             }
             break;
-          case 1065:
+          case noEnoughMoneyCode:
             MyToast("don't have enough balanced");
             break;
-          case 1442:
+          case imageExceededAllowedSizeCode:
             MyToast('image exceeded the allowed size');
             break;
           // default:
@@ -220,7 +209,7 @@ class DioInterceptor extends Interceptor {
 
       /// 401 : login from another app
       /// 429 : request limit
-      else if ([429, 401].contains(outerCode)) {
+      else if ([exceedsRequestsCode, loginFromAnotherAppCode].contains(outerCode)) {
         unauthorizedDialog(error, onRemoveSession: onRemoveSession);
       }
     } catch (e) {
@@ -305,31 +294,6 @@ class DioInterceptor extends Interceptor {
   }
 
   Future<String?> isOtpScreenAlreadyOpened() => readSecureKey("already_opened");
-
-  void otpScenario(Response response, ResponseInterceptorHandler handler) {
-    final String otp = (response.data['data']
-        as Map<String, dynamic>)['confirmation_code'] as String;
-
-    /// used in testing only and removed when get production
-    writeSecureKey("verify_confirmation_code", otp);
-    MyToast(otp);
-
-    CustomNavigator.instance.pushNamed(
-      verificationMethodPath,
-      arguments: (String? confirmationCode) async {
-        await _repeatOnResponse(
-          handler,
-          response.requestOptions.copyWith(
-            data: (response.requestOptions.data as FormData)
-              ..fields.add(
-                MapEntry<String, String>(
-                    'confirmation_code', confirmationCode ?? ""),
-              ),
-          ),
-        );
-      },
-    );
-  }
 
   void respayConfig(RequestOptions options) {
     if (options.method == 'GET') {
