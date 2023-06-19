@@ -113,8 +113,9 @@ class DioInterceptor extends Interceptor {
     /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
     /// unverified account and expire otp
     print("--------------------------------");
-    print(data);
+    print(data['code']);
     if ([unverifiedAccountOnResponseCode, expireOtpCode].contains(data['code'])) {
+      print("--------------------------------here---------------------------------");
       otpScenario(response, responseHandler: handler);
       return;
     }
