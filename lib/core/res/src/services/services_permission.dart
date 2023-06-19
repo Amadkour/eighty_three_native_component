@@ -16,7 +16,7 @@ class ServicesPermissions {
       required ImageSource source,
       required String title,
       required String subTitle}) async {
-    PermissionStatus status = await permission.status;
+    PermissionStatus status = await permission.request();
     if (status.isGranted) {
       return await ImagePicker().pickImage(
         source: source,
