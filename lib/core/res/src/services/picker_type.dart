@@ -1,11 +1,13 @@
 // import 'package:file_picker/file_picker.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
+import 'package:eighty_three_native_component/core/res/src/services/services_permission.dart';
 import 'package:eighty_three_native_component/core/utils/extenstions.dart';
 import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class PickerType {
   Future<XFile?> showPickerTypeDialog({bool isFolder = true}) async {
@@ -147,11 +149,28 @@ class PickerType {
         //     .first
         //     .path!);
       } else {
-        result = await ImagePicker().pickImage(
-          source: type == 1 ? ImageSource.gallery : ImageSource.camera,
-          maxHeight: 1000,
-          maxWidth: 1000,
-        );
+        // result = await ImagePicker().pickImage(
+        //   source: type == 1 ? ImageSource.gallery : ImageSource.camera,
+        //   maxHeight: 1000,
+        //   maxWidth: 1000,
+        // );
+        ServicesPermissions servicesPermissions = ServicesPermissions();
+        if(type == 0){
+          result = await servicesPermissions.cameraAndGalleryRequestPermission(
+            title: tr("camera_permission_request"),
+            subTitle: tr("camera_description"),
+            permission: Permission.camera,
+            source: ImageSource.camera
+          );
+        }
+        else{
+          result = await servicesPermissions.cameraAndGalleryRequestPermission(
+              title: tr("gallery_permission_request"),
+              subTitle: tr("gallery_description"),
+              permission: Permission.photos,
+              source: ImageSource.gallery
+          );
+        }
       }
       if (result != null && (type == 1 || type == 0)) {
         result = XFile(((await ImageCropper().cropImage(

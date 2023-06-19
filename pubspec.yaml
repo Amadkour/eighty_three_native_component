@@ -33,7 +33,8 @@ dependencies:
   font_awesome_flutter: ^10.3.0
   http: any
   logger: ^1.4.0
-
+  permission_handler: ^10.3.0
+  app_settings: ^4.2.0
   image_cropper: ^4.0.1
 
   easy_refresh: ^3.3.1
