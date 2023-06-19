@@ -141,9 +141,7 @@ class DioInterceptor extends Interceptor {
       {ResponseInterceptorHandler? responseHandler,
       ErrorInterceptorHandler? errorHandler}) async {
     final String? alreadyOpened = await isOtpScreenAlreadyOpened();
-    print("-------------===================-------------------");
-    print(alreadyOpened);
-    if (alreadyOpened == "false"||alreadyOpened==null) {
+    if (alreadyOpened == "false"||alreadyOpened==null||alreadyOpened=="") {
       CustomNavigator.instance.pushNamed(RoutesName.otp,
           arguments: (String? code) async {
         CustomNavigator.instance.pop();
