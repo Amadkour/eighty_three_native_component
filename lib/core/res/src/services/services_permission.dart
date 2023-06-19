@@ -12,11 +12,13 @@ import 'package:permission_handler/permission_handler.dart';
 
 class ServicesPermissions {
 
-  Future<XFile?> cameraAndGalleryRequestPermission(
-      {required Permission permission,
-      required ImageSource source,
-      required String title,
-      required String subTitle}) async {
+  Future<XFile?> cameraAndGalleryRequestPermission({
+    required Permission permission,
+    required ImageSource source,
+    required String title,
+    required String subTitle
+  }) async {
+
     PermissionStatus status = await permission.status;
     if (status.isGranted) {
       return await ImagePicker().pickImage(
@@ -24,48 +26,68 @@ class ServicesPermissions {
         maxHeight: 1000,
         maxWidth: 1000,
       );
-    } else if (status.isDenied || status.isPermanentlyDenied) {
-      final PermissionStatus permissionStatus = await permission.request();
-      if(permissionStatus==PermissionStatus.granted){
-        return await ImagePicker().pickImage(
-          source: source,
-          maxHeight: 1000,
-          maxWidth: 1000,
-        );
-      }
-      else{
-        showDialog(
-          context: globalKey.currentContext!,
-          builder: (BuildContext context) => Directionality(
-            textDirection:isArabic ? TextDirection.rtl:TextDirection.ltr,
-            child: AlertDialog(
-              title: Text(title),
-              content: Text(
-                subTitle,
-              ),
-              actions: <Widget>[
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  width: 150,
-                  height: 50,
-                  child: LoadingButton(
-                    hasBottomSaveArea: false,
-                    topPadding: 0,
-                    onTap: () async {
-                      CustomNavigator.instance.pop();
-                      await AppSettings.openAppSettings();
-                      await openAppSettings();
-                    },
-                    title: tr("open_settings"),
-                    isLoading: false,
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
-      }
+    }
+    if(Platform.isIOS){
+      await handleIOS(status, title, subTitle, permission);
+    }
+    else{
+      await handleAndroid(permission, title, subTitle);
     }
     return null;
   }
+
+
+
+  Future<void> handleAndroid(Permission permission, String title, String subTitle) async {
+    if(await permission.shouldShowRequestRationale){
+      showPermissionDialog(title: title,subTitle: subTitle);
+    }
+    else{
+      await permission.request();
+    }
+  }
+
+  Future<void> handleIOS(PermissionStatus status, String title, String subTitle, Permission permission) async {
+    if(status.isPermanentlyDenied){
+      showPermissionDialog(title: title,subTitle: subTitle);
+    }
+    else{
+      await permission.request();
+    }
+  }
+
+  void showPermissionDialog({required String title,required String subTitle}){
+    showDialog(
+      context: globalKey.currentContext!,
+      builder: (BuildContext context) => Directionality(
+        textDirection:isArabic ? TextDirection.rtl:TextDirection.ltr,
+        child: AlertDialog(
+          title: Text(title),
+          content: Text(
+            subTitle,
+          ),
+          actions: <Widget>[
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              width: 150,
+              height: 50,
+              child: LoadingButton(
+                hasBottomSaveArea: false,
+                topPadding: 0,
+                onTap: () async {
+                  CustomNavigator.instance.pop();
+                  await AppSettings.openAppSettings();
+                  await openAppSettings();
+                },
+                title: tr("open_settings"),
+                isLoading: false,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
 }
+
