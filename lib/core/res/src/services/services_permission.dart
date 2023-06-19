@@ -29,7 +29,7 @@ class ServicesPermissions {
         builder: (BuildContext context) => AlertDialog(
           title: Text(title),
           content: Text(
-            title,
+            subTitle,
           ),
           actions: <Widget>[
             Container(
