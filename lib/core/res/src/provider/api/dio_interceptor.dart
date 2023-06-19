@@ -112,10 +112,7 @@ class DioInterceptor extends Interceptor {
 
     /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
     /// unverified account and expire otp
-    print("--------------------------------");
-    print(data['code']);
     if ([unverifiedAccountOnResponseCode, expireOtpCode].contains(data['code'])) {
-      print("--------------------------------here---------------------------------");
       otpScenario(response, responseHandler: handler);
       return;
     }
@@ -144,7 +141,9 @@ class DioInterceptor extends Interceptor {
       {ResponseInterceptorHandler? responseHandler,
       ErrorInterceptorHandler? errorHandler}) async {
     final String? alreadyOpened = await isOtpScreenAlreadyOpened();
-    if (alreadyOpened == "false") {
+    print("-------------===================-------------------");
+    print(alreadyOpened);
+    if (alreadyOpened == "false"||alreadyOpened==null) {
       CustomNavigator.instance.pushNamed(RoutesName.otp,
           arguments: (String? code) async {
         CustomNavigator.instance.pop();
