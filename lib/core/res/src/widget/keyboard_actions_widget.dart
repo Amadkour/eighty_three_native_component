@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
@@ -15,21 +18,24 @@ class KeyboardActionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return KeyboardActions(
-      bottomAvoiderScrollPhysics: const ClampingScrollPhysics(),
-      config: KeyboardActionsConfig(
-        keyboardBarColor: Colors.grey[200],
-        actions: <KeyboardActionsItem>[
-          ...List<KeyboardActionsItem>.generate(
-            focusNodeModels.length,
-            (int index) => KeyboardActionsItem(
-              focusNode: focusNodeModels[index].focusNode,
-              onTapAction: focusNodeModels[index].onTap,
-            ),
-          )
-        ],
+    return SizedBox(
+      height: 20,
+      child: KeyboardActions(
+        bottomAvoiderScrollPhysics: const ClampingScrollPhysics(),
+        config: KeyboardActionsConfig(
+          keyboardBarColor: Colors.grey[200],
+          actions: <KeyboardActionsItem>[
+            ...List<KeyboardActionsItem>.generate(
+              focusNodeModels.length,
+              (int index) => KeyboardActionsItem(
+                focusNode: focusNodeModels[index].focusNode,
+                onTapAction: focusNodeModels[index].onTap,
+              ),
+            )
+          ],
+        ),
+        child: child,
       ),
-      child: child,
     );
   }
 }

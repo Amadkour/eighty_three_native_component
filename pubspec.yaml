@@ -32,6 +32,7 @@ dependencies:
   image_picker: ^0.8.6+1
   font_awesome_flutter: ^10.3.0
   http: any
+  logger: ^1.4.0
 
   image_cropper: ^4.0.1
 
@@ -50,7 +51,6 @@ dependencies:
   encrypt: ^5.0.1
   password_policy: ^1.2.0
   flutter_dotenv: ^5.1.0
-
 
 #  multi_select_flutter:
 #    git:

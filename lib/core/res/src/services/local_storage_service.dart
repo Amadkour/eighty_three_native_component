@@ -1,9 +1,7 @@
 library eighty_three_component;
 
-import 'dart:convert';
 import 'dart:developer';
 
-import 'package:crypto/crypto.dart';
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/guest_permission.dart';
@@ -11,12 +9,16 @@ import 'package:eighty_three_native_component/core/res/src/permissions/permissio
 import 'package:eighty_three_native_component/core/res/src/services/security.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:logger/logger.dart';
 
 class LocalStorageService {
   late SharedPreferences _sharedPreferences;
   final FlutterSecureStorage _secureStorage;
 
   LocalStorageService(this._secureStorage);
+  var logger = Logger(
+    printer: PrettyPrinter(),
+  );
 
   Future<LocalStorageService> init() async {
     _sharedPreferences = await SharedPreferences.getInstance();
@@ -58,6 +60,8 @@ class LocalStorageService {
 
       String encryptedKey = encryption(key);
       String encryptedValue = encryption(value);
+
+
       await _secureStorage.write(key: encryptedKey, value: encryptedValue);
     } catch (e) {
       log(e.toString());

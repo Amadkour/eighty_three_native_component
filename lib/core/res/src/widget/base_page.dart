@@ -58,7 +58,7 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
                     bottomNavigationBar: bottomNavigationBar,
                     extendBodyBehindAppBar: extendBodyBehindAppBar,
                     floatingActionButton: floatingActionButton,
-                    resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+                    resizeToAvoidBottomInset: resizeToAvoidBottomInset ?? false,
                     appBar: appBarWidget,
                     body: scaffold,
                     backgroundColor: backgroundColor,

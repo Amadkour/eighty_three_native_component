@@ -2,7 +2,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 
 class FirebaseCrashlyticsService {
-  Future<void> init() async {
+  void init() {
     // await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
     // Pass all uncaught errors from the framework to Crashlytics.
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
