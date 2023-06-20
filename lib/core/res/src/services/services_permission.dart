@@ -16,7 +16,7 @@ class ServicesPermissions {
   }) async {
     if(isAlreadyOpened){
       PermissionStatus status = await permission.status;
-      if (![PermissionStatus.denied ,PermissionStatus.permanentlyDenied].contains(status)) {
+      if (![PermissionStatus.denied ,PermissionStatus.permanentlyDenied,PermissionStatus.restricted].contains(status)) {
         return await ImagePicker().pickImage(
           source: source,
           maxHeight: 1000,
