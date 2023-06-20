@@ -39,16 +39,7 @@ class ServicesPermissions {
 
 
   Future<void> handleAndroid(Permission permission, String title, String subTitle) async {
-    if(await permission.shouldShowRequestRationale){
-      showPermissionDialog(title: title,subTitle: subTitle);
-    }
-    else{
-      await permission.request();
-    }
-  }
-
-  Future<void> handleIOS(PermissionStatus status, String title, String subTitle, Permission permission) async {
-    if(status.isPermanentlyDenied){
+    if(await permission.isPermanentlyDenied){
       showPermissionDialog(title: title,subTitle: subTitle);
     }
     else{
@@ -89,5 +80,13 @@ class ServicesPermissions {
     );
   }
 
+  Future<void> handleIOS(PermissionStatus status, String title, String subTitle, Permission permission) async {
+    if(status.isPermanentlyDenied){
+      showPermissionDialog(title: title,subTitle: subTitle);
+    }
+    else{
+      await permission.request();
+    }
+  }
 }
 
