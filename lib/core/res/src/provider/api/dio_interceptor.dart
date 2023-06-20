@@ -55,7 +55,9 @@ class DioInterceptor extends Interceptor {
       /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
       /// unverified account and expire otp
       if ([unverifiedAccountOnErrorCode, expireOtpCode].contains(err.response?.data['code'])) {
-        otpScenario(err.response!, errorHandler: handler);
+        if(CustomNavigator.instance.currentScreenName!=verificationMethodPath){
+          otpScenario(err.response!, errorHandler: handler);
+        }
       }
       if (err.response?.data['code'] == expiredPasswordCode) {
         if(CustomNavigator.instance.currentScreenName!=RoutesName.forgetPassword){
@@ -113,7 +115,9 @@ class DioInterceptor extends Interceptor {
     /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
     /// unverified account and expire otp
     if ([unverifiedAccountOnResponseCode, expireOtpCode].contains(data['code'])) {
-      otpScenario(response, responseHandler: handler);
+      if(CustomNavigator.instance.currentScreenName!=verificationMethodPath){
+        otpScenario(response, responseHandler: handler);
+      }
       return;
     }
     super.onResponse(response, handler);
@@ -179,8 +183,8 @@ class DioInterceptor extends Interceptor {
       RequestOptions requestOptions, ErrorInterceptorHandler handler) async {
     final String? alreadyOpened = await isOtpScreenAlreadyOpened();
     if (alreadyOpened == "false") {
-      CustomNavigator.instance.pushNamed(RoutesName.otp,
-          arguments: (String? value) async {
+      CustomNavigator.instance.pushReplacementNamed(RoutesName.otp,
+          argument: (String? value) async {
         CustomNavigator.instance.pop();
 
         /// repeat last request with fresh token

@@ -1,4 +1,5 @@
 // import 'package:file_picker/file_picker.dart';
+import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
 import 'package:eighty_three_native_component/core/res/src/services/services_permission.dart';
@@ -157,6 +158,7 @@ class PickerType {
         ServicesPermissions servicesPermissions = ServicesPermissions();
         if(type == 0){
           result = await servicesPermissions.cameraAndGalleryRequestPermission(
+            isAlreadyOpened: cameraPermissionIsAlreadyOpened,
             title: tr("camera_permission_request"),
             subTitle: tr("camera_description"),
             permission: Permission.camera,
@@ -165,6 +167,7 @@ class PickerType {
         }
         else{
           result = await servicesPermissions.cameraAndGalleryRequestPermission(
+              isAlreadyOpened: galleryPermissionIsAlreadyOpened,
               title: tr("gallery_permission_request"),
               subTitle: tr("gallery_description"),
               permission: Permission.photos,

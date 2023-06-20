@@ -6,6 +6,8 @@ String userName = 'name';
 String fullName = 'full_name';
 String userCountry = 'country';
 String serverKey = 'server';
+String cameraPermission = 'camera_permission';
+String galleryPermission = 'gallery_permission';
 
 String userCurrency = 'currency';
 String userId = 'identity_id';

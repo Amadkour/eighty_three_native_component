@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:app_settings/app_settings.dart';
+import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.dart';
+import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
+import 'package:eighty_three_native_component/core/res/src/services/local_storage_service.dart';
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/button/loading_button.dart';
 import 'package:eighty_three_native_component/eighty_three_component.dart';
@@ -16,10 +19,11 @@ class ServicesPermissions {
     required Permission permission,
     required ImageSource source,
     required String title,
+    required bool isAlreadyOpened,
     required String subTitle
   }) async {
 
-    PermissionStatus status = await permission.status;
+    PermissionStatus status = await permission.request();
     if (status.isGranted) {
       return await ImagePicker().pickImage(
         source: source,
@@ -27,12 +31,26 @@ class ServicesPermissions {
         maxWidth: 1000,
       );
     }
-    if(Platform.isIOS){
-      await handleIOS(status, title, subTitle, permission);
+    if(isAlreadyOpened){
+      showPermissionDialog(title: title,subTitle: subTitle);
     }
     else{
-      await handleAndroid(permission, title, subTitle);
+      await permission.request();
+      if(source == ImageSource.camera){
+        cameraPermissionIsAlreadyOpened = true;
+        sl<LocalStorageService>().writeKey(cameraPermission, cameraPermissionIsAlreadyOpened);
+      }
+      else{
+        galleryPermissionIsAlreadyOpened = true;
+        sl<LocalStorageService>().writeKey(galleryPermission, galleryPermissionIsAlreadyOpened);
+      }
     }
+    // if(Platform.isIOS){
+    //   await handleIOS(status, title, subTitle, permission);
+    // }
+    // else{
+    //   await handleAndroid(permission, title, subTitle);
+    // }
     return null;
   }
 
@@ -40,7 +58,7 @@ class ServicesPermissions {
 
   Future<void> handleAndroid(Permission permission, String title, String subTitle) async {
     if(await permission.isPermanentlyDenied){
-      showPermissionDialog(title: title,subTitle: subTitle);
+
     }
     else{
       await permission.request();

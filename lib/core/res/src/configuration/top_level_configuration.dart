@@ -13,7 +13,8 @@ String type = 'test';
 // ///if user open face id and wait for 25 seconds
 bool haveLocalAuth = true;
 bool userOldServer = true;
-
+bool cameraPermissionIsAlreadyOpened = false;
+bool galleryPermissionIsAlreadyOpened = false;
 bool isLocalAuth = false;
 // bool isSecure = false;
 // bool showDevicePreview = false;
