@@ -15,7 +15,16 @@ class ServicesPermissions {
     required String subTitle
   }) async {
     if(isAlreadyOpened){
-      showPermissionDialog(subTitle: subTitle);
+      if (await permission.isGranted) {
+        return await ImagePicker().pickImage(
+          source: source,
+          maxHeight: 1000,
+          maxWidth: 1000,
+        );
+      }
+      else{
+        showPermissionDialog(subTitle: subTitle);
+      }
     }
     else{
       if(source == ImageSource.camera){
