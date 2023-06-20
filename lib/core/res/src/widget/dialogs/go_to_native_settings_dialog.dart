@@ -1,12 +1,15 @@
 import 'dart:io';
 
+import 'package:app_settings/app_settings.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.dart';
+import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/button/loading_button.dart';
 import 'package:eighty_three_native_component/core/res/theme/font_styles.dart';
 import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 // ignore: avoid_classes_with_only_static_members
@@ -39,12 +42,10 @@ class GoToNativeSettingsDialog {
                             isLoading: false,
                             title: "open_settings",
                             topPadding: 0,
-                            onTap: () {
-                              if (Platform.isAndroid) {
-                                SystemNavigator.pop();
-                              } else if (Platform.isIOS) {
-                                exit(0);
-                              }
+                            onTap: () async{
+                              CustomNavigator.instance.pop();
+                              await AppSettings.openAppSettings();
+                              await openAppSettings();
                             }
                         ),
                       )
