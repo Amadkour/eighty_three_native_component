@@ -58,6 +58,9 @@ class DioInterceptor extends Interceptor {
         if(CustomNavigator.instance.currentScreenName!=verificationMethodPath){
           otpScenario(err.response!, errorHandler: handler);
         }
+        else{
+          MyToast("invalid otp, try again");
+        }
       }
       if (err.response?.data['code'] == expiredPasswordCode) {
         if(CustomNavigator.instance.currentScreenName!=RoutesName.forgetPassword){
@@ -117,6 +120,9 @@ class DioInterceptor extends Interceptor {
     if ([unverifiedAccountOnResponseCode, expireOtpCode].contains(data['code'])) {
       if(CustomNavigator.instance.currentScreenName!=verificationMethodPath){
         otpScenario(response, responseHandler: handler);
+      }
+      else{
+        MyToast("invalid otp, try again");
       }
       return;
     }
