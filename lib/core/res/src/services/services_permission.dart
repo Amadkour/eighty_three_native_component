@@ -27,7 +27,6 @@ class ServicesPermissions {
       showPermissionDialog(subTitle: subTitle);
     }
     else{
-      await permission.request();
       if(source == ImageSource.camera){
         cameraPermissionIsAlreadyOpened = true;
         sl<LocalStorageService>().writeKey(cameraPermission, cameraPermissionIsAlreadyOpened);
