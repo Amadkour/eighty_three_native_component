@@ -142,17 +142,35 @@ class DioInterceptor extends Interceptor {
       ErrorInterceptorHandler? errorHandler}) async {
     final String? alreadyOpened = await isOtpScreenAlreadyOpened();
     if (alreadyOpened == "false"||alreadyOpened==null||alreadyOpened=="") {
-      CustomNavigator.instance.pushNamed(RoutesName.otp,
-          arguments: (String? code) async {
-        CustomNavigator.instance.pop();
+      CustomNavigator.instance.pushNamed(
+        verificationMethodPath,
+        arguments: (String? confirmationCode) async {
+          if(errorHandler==null){
+            await _repeatOnResponse(
+              responseHandler!,
+              response.requestOptions.copyWith(
+                data: (response.requestOptions.data as FormData)
+                  ..fields.add(
+                    MapEntry<String, String>(
+                        'confirmation_code', confirmationCode ?? ""),
+                  ),
+              ),
+            );
+          }
+          else{
+            await _repeatOnError(
+              errorHandler,
+              response.requestOptions.copyWith(
+                  data: (response.requestOptions.data as FormData)
+                      ..fields.add(
+                        MapEntry<String, String>(
+                          'confirmation_code', confirmationCode ?? ""),
+                        ),
+              ),);
+          }
 
-        /// repeat last request with fresh token
-        if (errorHandler == null) {
-          await _repeatOnResponse(responseHandler!, response.requestOptions);
-        } else {
-          await _repeatOnError(errorHandler, response.requestOptions);
-        }
-      });
+        },
+      );
     }
   }
 
