@@ -159,7 +159,6 @@ class PickerType {
         if(type == 0){
           result = await servicesPermissions.cameraAndGalleryRequestPermission(
             isAlreadyOpened: cameraPermissionIsAlreadyOpened,
-            title: tr("camera_permission_request"),
             subTitle: tr("camera_description"),
             permission: Permission.camera,
             source: ImageSource.camera
@@ -168,7 +167,6 @@ class PickerType {
         else{
           result = await servicesPermissions.cameraAndGalleryRequestPermission(
               isAlreadyOpened: galleryPermissionIsAlreadyOpened,
-              title: tr("gallery_permission_request"),
               subTitle: tr("gallery_description"),
               permission: Permission.photos,
               source: ImageSource.gallery
