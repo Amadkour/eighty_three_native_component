@@ -14,15 +14,6 @@ class ServicesPermissions {
     required bool isAlreadyOpened,
     required String subTitle
   }) async {
-
-    PermissionStatus status = await permission.request();
-    if (status.isGranted) {
-      return await ImagePicker().pickImage(
-        source: source,
-        maxHeight: 1000,
-        maxWidth: 1000,
-      );
-    }
     if(isAlreadyOpened){
       showPermissionDialog(subTitle: subTitle);
     }
@@ -34,6 +25,14 @@ class ServicesPermissions {
       else{
         galleryPermissionIsAlreadyOpened = true;
         sl<LocalStorageService>().writeKey(galleryPermission, galleryPermissionIsAlreadyOpened);
+      }
+      PermissionStatus status = await permission.request();
+      if (status.isGranted) {
+        return await ImagePicker().pickImage(
+          source: source,
+          maxHeight: 1000,
+          maxWidth: 1000,
+        );
       }
     }
     return null;
