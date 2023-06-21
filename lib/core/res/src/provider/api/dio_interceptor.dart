@@ -185,26 +185,7 @@ class DioInterceptor extends Interceptor {
   }
 
   ///login,forget
-  Future<void> unverifiedOnError(
-      RequestOptions requestOptions, ErrorInterceptorHandler handler) async {
-    final String? alreadyOpened = await isOtpScreenAlreadyOpened();
-    if (alreadyOpened == "false"||alreadyOpened==null||alreadyOpened=="") {
-      CustomNavigator.instance.pushNamed(
-        verificationMethodPath,
-        arguments: (String? confirmationCode) async {
-          await _repeatOnError(
-            handler,
-            response.requestOptions.copyWith(
-              data: (response.requestOptions.data as FormData)
-                ..fields.add(
-                  MapEntry<String, String>(
-                      'confirmation_code', confirmationCode ?? ""),
-                ),
-            ),);
-        },
-      );
-    }
-  }
+
 
   Future<void> _handleDialogError(
       DioError error, ErrorInterceptorHandler handler) async {
