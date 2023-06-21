@@ -80,6 +80,7 @@ class CustomNavigator {
   }
 
   void maybePop() {
+    currentScreenName="";
     Navigator.maybePop(globalKey.currentContext!);
   }
 
