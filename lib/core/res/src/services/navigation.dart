@@ -10,12 +10,14 @@ class CustomNavigator {
   static CustomNavigator get instance => _instance;
 
   Future<void> pop({int numberOfPop = 1, dynamic result}) async {
+    currentScreenName ="";
     for (int i = 0; i < numberOfPop; i++) {
       Navigator.pop(globalKey.currentContext!, result);
     }
   }
 
   void popWithoutAnimation({int numberOfPop = 1, required Widget routeWidget}) {
+    currentScreenName ="";
     for (int i = 0; i < numberOfPop; i++) {
       Navigator.pop(
           globalKey.currentContext!,
