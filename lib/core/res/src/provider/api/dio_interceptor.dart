@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
+import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 import 'package:eighty_three_native_component/core/res/src/provider/api/status_codes.dart';
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
@@ -59,9 +60,15 @@ class DioInterceptor extends Interceptor {
           otpScenario(err.response!, errorHandler: handler);
         }
         else{
-          MyToast("invalid otp, try again");
+          Map<String,dynamic> errros = err.response!.data["errors"];
+          print(errros);
+          if(!(errros).containsKey("error")){
+            CustomNavigator.instance.beforePop?.call();
+            CustomNavigator.instance.pop();
+          }
+          MyToast(errros.toString());
         }
-        handler.resolve(err.response!);
+        sl<GlobalCubit>().onLoaded();
         return;
       }
       if (err.response?.data['code'] == expiredPasswordCode) {
@@ -162,7 +169,7 @@ class DioInterceptor extends Interceptor {
               responseHandler!,
               response.requestOptions.copyWith(
                 data: (response.requestOptions.data as FormData)
-                  ..fields.add(
+                  ..fields.removeWhere((element) => element.key=="confirmation_code")..fields.add(
                     MapEntry<String, String>(
                         'confirmation_code', confirmationCode ?? ""),
                   ),
@@ -173,11 +180,11 @@ class DioInterceptor extends Interceptor {
             await _repeatOnError(
               errorHandler,
               response.requestOptions.copyWith(
-                  data: (response.requestOptions.data as FormData)
-                      ..fields.add(
-                        MapEntry<String, String>(
-                          'confirmation_code', confirmationCode ?? ""),
-                        ),
+                data: (response.requestOptions.data as FormData)
+                  ..fields.removeWhere((element) => element.key=="confirmation_code")..fields.add(
+                    MapEntry<String, String>(
+                        'confirmation_code', confirmationCode ?? ""),
+                  ),
               ),);
           }
 
@@ -229,6 +236,13 @@ class DioInterceptor extends Interceptor {
       /// 429 : request limit
       else if ([exceedsRequestsCode, loginFromAnotherAppCode].contains(outerCode)) {
         unauthorizedDialog(error, onRemoveSession: onRemoveSession);
+      }
+      else{
+        if(CustomNavigator.instance.currentScreenName==verificationMethodPath){
+          CustomNavigator.instance.beforePop?.call();
+          CustomNavigator.instance.pop();
+        }
+        MyToast(error.response?.data['errors'].toString()??"invalid data");
       }
     } catch (e) {
       rethrow;

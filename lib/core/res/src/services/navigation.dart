@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class CustomNavigator {
   CustomNavigator._singleTone();
   String currentScreenName="";
+  VoidCallback? beforePop;
 
   static final CustomNavigator _instance = CustomNavigator._singleTone();
 
