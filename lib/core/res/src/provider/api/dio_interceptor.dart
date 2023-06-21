@@ -61,6 +61,7 @@ class DioInterceptor extends Interceptor {
         else{
           MyToast("invalid otp, try again");
         }
+        return;
       }
       if (err.response?.data['code'] == expiredPasswordCode) {
         if(CustomNavigator.instance.currentScreenName!=RoutesName.forgetPassword){
