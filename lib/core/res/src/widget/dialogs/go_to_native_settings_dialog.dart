@@ -20,7 +20,7 @@ class GoToNativeSettingsDialog {
         barrierDismissible: true,
         builder: (_) {
           return Directionality(
-            textDirection:!isArabic ? TextDirection.rtl:TextDirection.ltr,
+            textDirection:isArabic ? TextDirection.rtl:TextDirection.ltr,
             child: AlertDialog(
               title: Column(
                 children: <Widget>[
