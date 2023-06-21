@@ -188,14 +188,21 @@ class DioInterceptor extends Interceptor {
   Future<void> unverifiedOnError(
       RequestOptions requestOptions, ErrorInterceptorHandler handler) async {
     final String? alreadyOpened = await isOtpScreenAlreadyOpened();
-    if (alreadyOpened == "false") {
-      CustomNavigator.instance.pushReplacementNamed(RoutesName.otp,
-          argument: (String? value) async {
-        CustomNavigator.instance.pop();
-
-        /// repeat last request with fresh token
-        await _repeatOnError(handler, requestOptions);
-      });
+    if (alreadyOpened == "false"||alreadyOpened==null||alreadyOpened=="") {
+      CustomNavigator.instance.pushNamed(
+        verificationMethodPath,
+        arguments: (String? confirmationCode) async {
+          await _repeatOnError(
+            handler,
+            response.requestOptions.copyWith(
+              data: (response.requestOptions.data as FormData)
+                ..fields.add(
+                  MapEntry<String, String>(
+                      'confirmation_code', confirmationCode ?? ""),
+                ),
+            ),);
+        },
+      );
     }
   }
 
@@ -212,7 +219,7 @@ class DioInterceptor extends Interceptor {
       if (outerCode == unauthorizedUserOuterCode) {
         switch (innerCode) {
           case unverifiedAccountOnErrorCode:
-            unverifiedOnError(error.requestOptions, handler);
+            otpScenario(response!, errorHandler: handler);
             break;
           case unauthorizedUserInnerCode2:
           case unauthorizedUserInnerCode:
