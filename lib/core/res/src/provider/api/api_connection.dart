@@ -2,7 +2,7 @@ library eighty_three_component;
 
 import 'package:dio/dio.dart';
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
-import 'package:eighty_three_native_component/core/res/src/provider/api/dio_interceptor.dart';
+import 'package:eighty_three_native_component/core/res/src/provider/api/interceptor/dio_interceptor.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/res/src/services/local_storage_service.dart';
 import 'package:eighty_three_native_component/core/utils/certificate_handle.dart';
