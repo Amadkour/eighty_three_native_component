@@ -23,8 +23,6 @@ class UserPermission extends ParentModel {
   String? image;
   bool? isCompleted;
 
-  bool get isLoggedIn => token != null;
-
   bool? isSetFaceId;
   bool? isSetTouchId;
   String? currency;
