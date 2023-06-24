@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
+import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 import 'package:eighty_three_native_component/core/res/src/provider/api/status_codes.dart';
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
@@ -55,7 +56,20 @@ class DioInterceptor extends Interceptor {
       /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
       /// unverified account and expire otp
       if ([unverifiedAccountOnErrorCode, expireOtpCode].contains(err.response?.data['code'])) {
-        otpScenario(err.response!, errorHandler: handler);
+        if(CustomNavigator.instance.currentScreenName!=verificationMethodPath){
+          otpScenario(err.response!, errorHandler: handler);
+        }
+        else{
+          Map<String,dynamic> errros = err.response!.data["errors"];
+          print(errros);
+          if(!(errros).containsKey("error")){
+            CustomNavigator.instance.beforePop?.call();
+            CustomNavigator.instance.pop();
+          }
+          MyToast(errros.toString());
+        }
+        sl<GlobalCubit>().onLoaded();
+        return;
       }
       if (err.response?.data['code'] == expiredPasswordCode) {
         if(CustomNavigator.instance.currentScreenName!=RoutesName.forgetPassword){
@@ -113,7 +127,12 @@ class DioInterceptor extends Interceptor {
     /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
     /// unverified account and expire otp
     if ([unverifiedAccountOnResponseCode, expireOtpCode].contains(data['code'])) {
-      otpScenario(response, responseHandler: handler);
+      if(CustomNavigator.instance.currentScreenName!=verificationMethodPath){
+        otpScenario(response, responseHandler: handler);
+      }
+      else{
+        MyToast("invalid otp, try again");
+      }
       return;
     }
     super.onResponse(response, handler);
@@ -150,7 +169,7 @@ class DioInterceptor extends Interceptor {
               responseHandler!,
               response.requestOptions.copyWith(
                 data: (response.requestOptions.data as FormData)
-                  ..fields.add(
+                  ..fields.removeWhere((element) => element.key=="confirmation_code")..fields.add(
                     MapEntry<String, String>(
                         'confirmation_code', confirmationCode ?? ""),
                   ),
@@ -161,11 +180,11 @@ class DioInterceptor extends Interceptor {
             await _repeatOnError(
               errorHandler,
               response.requestOptions.copyWith(
-                  data: (response.requestOptions.data as FormData)
-                      ..fields.add(
-                        MapEntry<String, String>(
-                          'confirmation_code', confirmationCode ?? ""),
-                        ),
+                data: (response.requestOptions.data as FormData)
+                  ..fields.removeWhere((element) => element.key=="confirmation_code")..fields.add(
+                    MapEntry<String, String>(
+                        'confirmation_code', confirmationCode ?? ""),
+                  ),
               ),);
           }
 
@@ -175,19 +194,7 @@ class DioInterceptor extends Interceptor {
   }
 
   ///login,forget
-  Future<void> unverifiedOnError(
-      RequestOptions requestOptions, ErrorInterceptorHandler handler) async {
-    final String? alreadyOpened = await isOtpScreenAlreadyOpened();
-    if (alreadyOpened == "false") {
-      CustomNavigator.instance.pushNamed(RoutesName.otp,
-          arguments: (String? value) async {
-        CustomNavigator.instance.pop();
 
-        /// repeat last request with fresh token
-        await _repeatOnError(handler, requestOptions);
-      });
-    }
-  }
 
   Future<void> _handleDialogError(
       DioError error, ErrorInterceptorHandler handler) async {
@@ -202,7 +209,7 @@ class DioInterceptor extends Interceptor {
       if (outerCode == unauthorizedUserOuterCode) {
         switch (innerCode) {
           case unverifiedAccountOnErrorCode:
-            unverifiedOnError(error.requestOptions, handler);
+            otpScenario(response!, errorHandler: handler);
             break;
           case unauthorizedUserInnerCode2:
           case unauthorizedUserInnerCode:
@@ -229,6 +236,13 @@ class DioInterceptor extends Interceptor {
       /// 429 : request limit
       else if ([exceedsRequestsCode, loginFromAnotherAppCode].contains(outerCode)) {
         unauthorizedDialog(error, onRemoveSession: onRemoveSession);
+      }
+      else{
+        if(CustomNavigator.instance.currentScreenName==verificationMethodPath){
+          CustomNavigator.instance.beforePop?.call();
+          CustomNavigator.instance.pop();
+        }
+        MyToast(error.response?.data['errors'].toString()??"invalid data");
       }
     } catch (e) {
       rethrow;

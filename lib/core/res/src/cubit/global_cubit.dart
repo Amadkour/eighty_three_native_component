@@ -38,6 +38,14 @@ class GlobalCubit extends Cubit<GlobalState> {
     emit(TextFieldChanged());
   }
 
+  void onLoading(){
+    emit(GlobalOtpLoading());
+  }
+
+  void onLoaded(){
+    emit(GlobalOtpLoaded());
+  }
+
   Future<void> validateLanguage(String apiLanguage) async {
     if (apiLanguage != Platform.localeName.split(".").first.split('_').first) {
       await loadLanguage(apiLanguage);

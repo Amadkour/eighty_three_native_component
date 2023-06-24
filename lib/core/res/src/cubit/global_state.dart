@@ -13,3 +13,8 @@ class GlobalInitial extends GlobalState {}
 class GlobalButtonLoading extends GlobalState {}
 
 class GlobalButtonLoaded extends GlobalState {}
+
+
+class GlobalOtpLoading extends GlobalState {}
+
+class GlobalOtpLoaded extends GlobalState {}

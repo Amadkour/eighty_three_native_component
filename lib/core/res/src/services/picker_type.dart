@@ -1,4 +1,8 @@
 // import 'package:file_picker/file_picker.dart';
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
 import 'package:eighty_three_native_component/core/res/src/services/services_permission.dart';
@@ -157,17 +161,31 @@ class PickerType {
         ServicesPermissions servicesPermissions = ServicesPermissions();
         if(type == 0){
           result = await servicesPermissions.cameraAndGalleryRequestPermission(
-            title: tr("camera_permission_request"),
+            isAlreadyOpened: cameraPermissionIsAlreadyOpened,
             subTitle: tr("camera_description"),
             permission: Permission.camera,
             source: ImageSource.camera
           );
         }
         else{
+          Permission? permission;
+          if(Platform.isIOS){
+            permission = Permission.photos;
+          }
+          else{
+            final deviceInfoPlugin = DeviceInfoPlugin();
+            final deviceInfo = await deviceInfoPlugin.deviceInfo;
+            if(deviceInfo.data["version"]["sdkInt"]>32){
+              permission = Permission.photos;
+            }
+            else {
+              permission = Permission.storage;
+            }
+          }
           result = await servicesPermissions.cameraAndGalleryRequestPermission(
-              title: tr("gallery_permission_request"),
+              isAlreadyOpened: galleryPermissionIsAlreadyOpened,
               subTitle: tr("gallery_description"),
-              permission: Permission.photos,
+              permission: permission,
               source: ImageSource.gallery
           );
         }
