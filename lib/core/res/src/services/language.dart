@@ -19,6 +19,7 @@ Future<void> loadLanguage(
       await rootBundle.loadString('assets/localization/$langFileName.json');
   errorTranslation =
       await rootBundle.loadString('assets/errors/$langFileName.json');
+
   localization = jsonDecode(translation) as Map<String, dynamic>;
   errorLocalization = jsonDecode(errorTranslation) as Map<String, dynamic>;
 

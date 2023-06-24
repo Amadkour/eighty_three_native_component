@@ -9,16 +9,12 @@ import 'package:eighty_three_native_component/core/res/src/permissions/permissio
 import 'package:eighty_three_native_component/core/res/src/services/security.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:logger/logger.dart';
 
 class LocalStorageService {
   late SharedPreferences _sharedPreferences;
   final FlutterSecureStorage _secureStorage;
 
   LocalStorageService(this._secureStorage);
-  var logger = Logger(
-    printer: PrettyPrinter(),
-  );
 
   Future<LocalStorageService> init() async {
     _sharedPreferences = await SharedPreferences.getInstance();
