@@ -13,7 +13,6 @@ class CustomNavigator {
 
   Future<void> pop({int numberOfPop = 1, dynamic result,BaseController? nextController}) async {
     nextController?.stopLoading();
-  Future<void> pop({int numberOfPop = 1, dynamic result}) async {
     currentScreenName ="";
     for (int i = 0; i < numberOfPop; i++) {
       Navigator.pop(globalKey.currentContext!, result);
@@ -23,7 +22,6 @@ class CustomNavigator {
   void popWithoutAnimation({int numberOfPop = 1, required Widget routeWidget,
     BaseController?popAnimationController}) {
     popAnimationController?.stopLoading();
-  void popWithoutAnimation({int numberOfPop = 1, required Widget routeWidget}) {
     currentScreenName ="";
     for (int i = 0; i < numberOfPop; i++) {
       Navigator.pop(
@@ -96,7 +94,7 @@ class CustomNavigator {
 
   void maybePop({BaseController? maybePopController}) {
     maybePopController?.stopLoading();
-  void maybePop() {
+
     currentScreenName="";
     Navigator.maybePop(globalKey.currentContext!);
   }
