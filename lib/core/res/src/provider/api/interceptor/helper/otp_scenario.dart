@@ -15,6 +15,7 @@ Future<void> otpScenario(
   if (alreadyOpened == "false" ||
       alreadyOpened == null ||
       alreadyOpened == "") {
+    CustomNavigator.instance.currentController?.stopLoading();
     CustomNavigator.instance.pushNamed(
       verificationMethodPath,
       arguments: (String? confirmationCode) async {

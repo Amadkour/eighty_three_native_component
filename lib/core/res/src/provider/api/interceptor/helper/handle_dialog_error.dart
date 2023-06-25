@@ -73,7 +73,6 @@ void _navigateToPreviousScreenIfExist(
   DioException error,
 ) {
   if (CustomNavigator.instance.currentScreenName == verificationMethodPath) {
-    CustomNavigator.instance.beforePop?.call();
     CustomNavigator.instance.pop();
   }
   MyToast(error.response?.data['errors'].toString() ?? "invalid data");

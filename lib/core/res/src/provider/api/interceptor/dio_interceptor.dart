@@ -36,11 +36,9 @@ class DioInterceptor extends Interceptor {
   @override
   void onResponse(
       Response<dynamic> response, ResponseInterceptorHandler handler) {
-    onResponseHandler(response, onFetch, handler, readSecureKey,
-        responseHandler: handler);
-
-    print('print = ${response.data}');
-    super.onResponse(response, handler);
+    onResponseHandler(response, onFetch, handler, readSecureKey, responseHandler: handler,onEnd: (){
+      super.onResponse(response, handler);
+    });
   }
 
   @override

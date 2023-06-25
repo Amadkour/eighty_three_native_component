@@ -41,6 +41,7 @@ Future<void> errorBody({
         handler: handler,
         onFetch: onFetch,
         readSecureKey: readSecureKey);
+    return;
   }
 
   /// ----------------------------------------------------------------------------------------------------------------------------------- ///
@@ -89,13 +90,11 @@ void _verifyExpiredOTP({
   } else {
     Map<String, dynamic> errros = err.response!.data["errors"];
     if (!(errros).containsKey("error")) {
-      CustomNavigator.instance.beforePop?.call();
       CustomNavigator.instance.pop();
     }
     MyToast(errros.toString());
   }
   sl<GlobalCubit>().onLoaded();
-  return;
 }
 
 void _timeOut(
