@@ -7,6 +7,7 @@ import 'package:eighty_three_native_component/core/res/src/services/dependency_j
 import 'package:eighty_three_native_component/core/res/src/services/firebase/firbase_performance_service.dart';
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/message.dart';
+import 'package:flutter/cupertino.dart';
 
 void onResponseHandler(
   Response<dynamic> response,
@@ -15,6 +16,7 @@ void onResponseHandler(
   Future<String?> Function(String) readSecureKey, {
   ResponseInterceptorHandler? responseHandler,
   ErrorInterceptorHandler? errorHandler,
+  required VoidCallback onEnd
 }) {
   ///stop performance trace to claculate request time
   sl<FirebasePerformancesService>().stopTrace();
@@ -39,9 +41,11 @@ void onResponseHandler(
   /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
   /// unverified account and expire otp
   if ([unverifiedAccountOnResponseCode, expireOtpCode].contains(data['code'])) {
-    return _verifyExpriedOtp(response, onFetch, readSecureKey,
+     _verifyExpriedOtp(response, onFetch, readSecureKey,
         handler: handler, errorHandler: errorHandler);
+      return;
   }
+  onEnd.call();
 }
 
 /// --------------------------------------------------------------------------------------------------------------------- ///
@@ -63,5 +67,4 @@ void _verifyExpriedOtp(
   } else {
     MyToast("invalid otp, try again");
   }
-  return;
 }
