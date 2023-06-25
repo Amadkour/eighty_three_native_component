@@ -38,6 +38,8 @@ class DioInterceptor extends Interceptor {
       Response<dynamic> response, ResponseInterceptorHandler handler) {
     onResponseHandler(response, onFetch, handler, readSecureKey,
         responseHandler: handler);
+
+    print('print = ${response.data}');
     super.onResponse(response, handler);
   }
 

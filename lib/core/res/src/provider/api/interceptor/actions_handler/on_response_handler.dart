@@ -39,7 +39,7 @@ void onResponseHandler(
   /// :todo must be test in RESPay and merchant [changed from 1022 to 1062]
   /// unverified account and expire otp
   if ([unverifiedAccountOnResponseCode, expireOtpCode].contains(data['code'])) {
-    return _verifyExpriedOtp(response, onFetch, readSecureKey,
+    _verifyExpriedOtp(response, onFetch, readSecureKey,
         handler: handler, errorHandler: errorHandler);
   }
 }
