@@ -92,7 +92,7 @@ class PasswordTextField extends StatelessWidget {
           // errorMessage("Password strength: ${passwordCheck.strength.name}");
           if (passwordCheck.isValid) {
             return null;
-          } else {
+          }else {
             return passwordCheck.notRespectedMandatoryRules
                 .map<String?>((rule) => rule.name)
                 .join("\n");
