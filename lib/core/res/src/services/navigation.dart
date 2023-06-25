@@ -4,25 +4,26 @@ import 'package:flutter/material.dart';
 
 class CustomNavigator {
   CustomNavigator._singleTone();
-  String currentScreenName="";
+
+  String currentScreenName = "";
   VoidCallback? beforePop;
 
   static final CustomNavigator _instance = CustomNavigator._singleTone();
 
   static CustomNavigator get instance => _instance;
 
-  Future<void> pop({int numberOfPop = 1, dynamic result,BaseController? nextController}) async {
+  Future<void> pop({int numberOfPop = 1, dynamic result, BaseController? nextController}) async {
     nextController?.stopLoading();
-    currentScreenName ="";
+    currentScreenName = "";
     for (int i = 0; i < numberOfPop; i++) {
       Navigator.pop(globalKey.currentContext!, result);
     }
   }
 
-  void popWithoutAnimation({int numberOfPop = 1, required Widget routeWidget,
-    BaseController?popAnimationController}) {
-    popAnimationController?.stopLoading();
-    currentScreenName ="";
+  void popWithoutAnimation(
+      {int numberOfPop = 1, required Widget routeWidget, BaseController? previousController}) {
+    previousController?.stopLoading();
+    currentScreenName = "";
     for (int i = 0; i < numberOfPop; i++) {
       Navigator.pop(
           globalKey.currentContext!,
@@ -36,29 +37,26 @@ class CustomNavigator {
     }
   }
 
-  Future<T?> pushNamed<T>(String routeName, {Object? arguments,BaseController? previousController})
-  async {
-      previousController?.stopLoading();
+  Future<T?> pushNamed<T>(String routeName,
+      {Object? arguments, BaseController? previousController}) async {
+    previousController?.stopLoading();
     currentScreenName = routeName;
-    return Navigator.pushNamed(globalKey.currentContext!, routeName,
+    return Navigator.pushNamed(globalKey.currentContext!, routeName, arguments: arguments);
+  }
+
+  void pushNamedAndRemoveUntil(String routeName, bool Function(Route<dynamic> route) callback,
+      {Object? arguments, BaseController? previousController}) {
+    previousController?.stopLoading();
+    currentScreenName = routeName;
+    Navigator.pushNamedAndRemoveUntil(globalKey.currentContext!, routeName, callback,
         arguments: arguments);
   }
 
-  void pushNamedAndRemoveUntil(
-      String routeName, bool Function(Route<dynamic> route) callback,
-      {Object? arguments,BaseController? previousAndRemoveUntilController}) {
-    previousAndRemoveUntilController?.stopLoading();
-    currentScreenName = routeName;
-    Navigator.pushNamedAndRemoveUntil(
-        globalKey.currentContext!, routeName, callback,
-        arguments: arguments);
-  }
-
-  void pushAndRemoveUntil({
-    required Widget routeWidget,
-    required bool Function(Route<dynamic> route) callback,BaseController? previousAndRemoveController
-  }) {
-    previousAndRemoveController?.stopLoading();
+  void pushAndRemoveUntil(
+      {required Widget routeWidget,
+      required bool Function(Route<dynamic> route) callback,
+      BaseController? previousController}) {
+    previousController?.stopLoading();
     Navigator.pushAndRemoveUntil(
       globalKey.currentContext!,
       MaterialPageRoute<dynamic>(builder: (_) => routeWidget),
@@ -66,54 +64,50 @@ class CustomNavigator {
     );
   }
 
-  void popAndPushNamed({required String routeName, Object? argument,BaseController?
-  popAndPushController}) {
-    popAndPushController?.stopLoading();
+  void popAndPushNamed(
+      {required String routeName, Object? argument, BaseController? previousController}) {
+    previousController?.stopLoading();
     currentScreenName = routeName;
-    Navigator.popAndPushNamed(globalKey.currentContext!, routeName,
-        arguments: argument);
+    Navigator.popAndPushNamed(globalKey.currentContext!, routeName, arguments: argument);
   }
 
   Future<void> pushReplacementNamed(String routeName,
-      {Object? argument,BaseController? previousReplacementController}) async {
-    previousReplacementController?.stopLoading();
+      {Object? argument, BaseController? previousController}) async {
+    previousController?.stopLoading();
     currentScreenName = routeName;
-    await Navigator.pushReplacementNamed(globalKey.currentContext!, routeName,
-        arguments: argument);
+    await Navigator.pushReplacementNamed(globalKey.currentContext!, routeName, arguments: argument);
   }
 
-  Future<T?> push<T>({
-    required Widget routeWidget,BaseController? pushController
-  }) {
-    pushController?.stopLoading();
+  Future<T?> push<T>({required Widget routeWidget, BaseController? previousController}) {
+    previousController?.stopLoading();
     return Navigator.push<T>(
       globalKey.currentContext!,
       MaterialPageRoute<T>(builder: (_) => routeWidget),
     );
   }
 
-  void maybePop({BaseController? maybePopController}) {
-    maybePopController?.stopLoading();
+  void maybePop({BaseController? previousController}) {
+    previousController?.stopLoading();
 
-    currentScreenName="";
+    currentScreenName = "";
     Navigator.maybePop(globalKey.currentContext!);
   }
 
-  void popUntil(bool Function(Route<dynamic> route) callback,BaseController? popUntilController) {
-   popUntilController?.stopLoading();
+  void popUntil(bool Function(Route<dynamic> route) callback,
+      {BaseController? previousController}) {
+    previousController?.stopLoading();
     Navigator.popUntil(globalKey.currentContext!, callback);
   }
 
-  void pushReplacementWithoutAnimations({
-    required Widget routeWidget,BaseController?  pushReplacementWithoutAnimationsController
-  }) {
-    pushReplacementWithoutAnimationsController?.stopLoading();
+  void pushReplacementWithoutAnimations(
+      {required Widget routeWidget, BaseController? previousController}) {
+    previousController?.stopLoading();
     Navigator.pushReplacement(
         globalKey.currentContext!,
         PageRouteBuilder<dynamic>(
-          pageBuilder: (BuildContext context, Animation<double> animation1,
-                  Animation<double> animation2) =>
-              routeWidget,
+          pageBuilder:
+              (BuildContext context, Animation<double> animation1, Animation<double> animation2) =>
+                  routeWidget,
           transitionDuration: Duration.zero,
           reverseTransitionDuration: Duration.zero,
         ));
