@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
+import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.dart';
 import 'package:eighty_three_native_component/core/res/src/provider/api/interceptor/helper/otp_scenario.dart';
 import 'package:eighty_three_native_component/core/res/src/provider/api/interceptor/helper/reset_password_scenario.dart';
 import 'package:eighty_three_native_component/core/res/src/provider/api/status_codes.dart';
@@ -67,4 +68,5 @@ void _verifyExpriedOtp(
   } else {
     MyToast("invalid otp, try again");
   }
+  sl<GlobalCubit>().onLoaded();
 }
