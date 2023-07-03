@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 
 class FirebaseCrashlyticsService {
   void init() {
-    if (kReleaseMode) {
       // await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
       // Pass all uncaught errors from the framework to Crashlytics.
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
@@ -15,7 +14,6 @@ class FirebaseCrashlyticsService {
         }
         return true;
       };
-    }
 
     // Isolate.current.addErrorListener(RawReceivePort((List<dynamic> pair) async {
     //   final List<dynamic> errorAndStacktrace = pair;

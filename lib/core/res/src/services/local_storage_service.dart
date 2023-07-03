@@ -120,7 +120,7 @@ class LocalStorageService {
     currentUserPermission.token = token;
 
     print(
-        'currentUserPermission.token = token = ${currentUserPermission.token}');
+        'token = ${currentUserPermission.token}');
   }
 
   Future<void> setUserUUID(String uuid) async {
