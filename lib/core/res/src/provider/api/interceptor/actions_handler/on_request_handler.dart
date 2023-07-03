@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:eighty_three_native_component/core/res/src/permissions/authorized_permission.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 import 'package:eighty_three_native_component/core/res/src/provider/api/interceptor/helper/request_configuration.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';

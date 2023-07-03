@@ -8,13 +8,11 @@ ThemeData lightTheme = ThemeData(
       brightness: Brightness.light,
     ),
     primaryColor: AppColors.primaryColor,
-    backgroundColor: AppColors.blackColor,
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: AppColors.primaryColor,
     ),
     scaffoldBackgroundColor: AppColors.backgroundColor,
     fontFamily: "Plain",
-    primarySwatch: Colors.green,
     dividerColor: AppColors.systemBodyColor,
     dividerTheme: const DividerThemeData(
       space: 1,
@@ -45,4 +43,6 @@ ThemeData lightTheme = ThemeData(
       unselectedItemColor: AppColors.otpBorderColor,
       selectedItemColor: AppColors.blackColor,
     ),
-    bottomAppBarColor: Colors.black);
+    bottomAppBarTheme: const BottomAppBarTheme(color: Colors.black),
+    colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green)
+        .copyWith(background: AppColors.blackColor));

@@ -58,7 +58,7 @@ class RoutesName {
   static const String transactionSearch = '/transactionSearch';
 
   static const String privacy = '/privacy';
-  static const String QrCodeTransferMoney = '/QrCodeTransferMoney';
+  static const String qrCodeTransferMoney = '/QrCodeTransferMoney';
   static const String terms = '/terms';
   static const String about = '/about';
   static const String shippingLocation = '/shippingLocation';
@@ -86,7 +86,7 @@ class RoutesName {
   static const String transactionOtp = '/transactionOtp';
   static const String productSearch = '/productSearch';
   static const String salaryTransfer = '/salaryTransfer';
-  static const String SelectedBeneficiariesDetails =
+  static const String selectedBeneficiariesDetails =
       '/SelectedBeneficiariesDetails';
 
   static const String transactionsAnalytics = '/transactionsAnalytics';

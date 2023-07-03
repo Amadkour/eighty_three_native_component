@@ -51,22 +51,6 @@ class _NetworkImage extends MyImage {
     );
   }
 
-  StatelessWidget _defaultImage() {
-    if (defaultUrl.isEmpty) {
-      return ResAppImage(
-        width: width,
-        height: height,
-        borderRadius: borderRadius,
-      );
-    } else {
-      return MyImage.assets(
-        url: defaultUrl,
-        height: height ?? 100,
-        width: width ?? 100,
-        fit: fit ?? BoxFit.cover,
-      );
-    }
-  }
 }
 
 class _SvgImageNetwork extends MyImage {

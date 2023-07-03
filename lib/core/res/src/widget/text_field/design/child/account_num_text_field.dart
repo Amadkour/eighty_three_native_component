@@ -1,5 +1,4 @@
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/design/parent/parent.dart';
-import 'package:eighty_three_native_component/core/res/src/widget/text_field/validator/child/account_validator.dart';
 import 'package:eighty_three_native_component/core/utils/extenstions.dart';
 import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';

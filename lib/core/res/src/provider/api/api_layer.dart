@@ -23,7 +23,7 @@ class APILayer { Future<Option<Failure>> apiOption(
       return some(
         NetworkFailure(),
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return some(ApiFailure(
         errors: <String, String>{'': e.message??""},
       ));
@@ -52,7 +52,7 @@ class APILayer { Future<Option<Failure>> apiOption(
       return left(
         NetworkFailure(),
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return left(ApiFailure(
         errors: <String, String>{'': e.message??""},
       ));

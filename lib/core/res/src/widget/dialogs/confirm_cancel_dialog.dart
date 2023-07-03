@@ -50,7 +50,7 @@ class ConfirmCancelDialog {
                       tr('cancel'),
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle1!
+                          .titleMedium!
                           .copyWith(color: AppColors.blackColor, fontSize: 14),
                     ),
                   ),
@@ -70,7 +70,7 @@ class ConfirmCancelDialog {
                     },
                     child: AutoSizeText(
                       tr('confirm'),
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: Colors.white,
                           fontSize: 14,
                           fontWeight: FontWeight.w500),
