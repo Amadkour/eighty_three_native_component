@@ -84,7 +84,7 @@ class StaggerAnimation extends StatelessWidget {
         child: buttonSqueezeAnimation.value > 75.0
             ? Text(
           tr(titleButton!),
-          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
               color: fontColor ?? Colors.white,
               fontWeight: fontWeight ?? FontWeight.w500,
               fontFamily: 'SemiBold'),
