@@ -10,14 +10,24 @@ class BackgroundPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainScaffold(
         backgroundColor: const Color(0xff4EC89E),
-        scaffold: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            MyImage.assets(url: 'assets/images/splash_screen_image.png'),
-            const SizedBox(height: 20,),
-            const Text('Secure Mode'),
-          ],
+        scaffold: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              MyImage.svgAssets(
+                url: 'assets/icons/about_logo.svg',
+                color: CupertinoColors.white,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                'Secure Mode',
+                style: TextStyle(color: CupertinoColors.white, fontFamily: 'Bold', fontSize: 18),
+              ),
+            ],
+          ),
         ));
   }
 }
