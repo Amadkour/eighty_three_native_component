@@ -83,7 +83,7 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
 
       ///--------------foreground
       if (state == AppLifecycleState.resumed) {
-        CustomNavigator.instance.maybePop();
+        // CustomNavigator.instance.maybePop();
 
         /// To ensure login
         if ((currentUserPermission.token ?? "").isNotEmpty &&
