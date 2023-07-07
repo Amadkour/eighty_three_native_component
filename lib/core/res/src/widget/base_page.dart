@@ -6,6 +6,7 @@ import 'package:eighty_three_native_component/core/res/src/services/dependency_j
 import 'package:eighty_three_native_component/core/res/src/services/local_storage_service.dart';
 
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
+import 'package:eighty_three_native_component/core/res/src/widget/background_page.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -82,17 +83,22 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
 
       ///--------------foreground
       if (state == AppLifecycleState.resumed) {
+        CustomNavigator.instance.maybePop();
+
         /// To ensure login
-        if ( (currentUserPermission.token??"").isNotEmpty &&
+        if ((currentUserPermission.token ?? "").isNotEmpty &&
 
-                /// To ensure threshold 25s
-                DateTime.now().difference(_backgroundTime).inSeconds > 25 &&
+            /// To ensure threshold 25s
+            DateTime
+                .now()
+                .difference(_backgroundTime)
+                .inSeconds > 25 &&
 
-                /// To ensure secureCode configuration
-                (currentUserPermission.pinCode??"").isNotEmpty && haveLocalAuth
+            /// To ensure secureCode configuration
+            (currentUserPermission.pinCode ?? "").isNotEmpty && haveLocalAuth
 
-            /// To ensure in non configuration page
-            ) {
+        /// To ensure in non configuration page
+        ) {
           if (type != 'integration test') {
             CustomNavigator.instance
                 .pushNamed(RoutesName.pinCodeWithoutAnimation);
@@ -102,6 +108,7 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
         ///--------------background
         _backgroundTime = DateTime.now();
       } else if (state == AppLifecycleState.paused) {
+        CustomNavigator.instance.pushWithoutAnimations(routeWidget: const BackgroundPage());
         _backgroundTime = DateTime.now();
       }
       super.didChangeAppLifecycleState(state);

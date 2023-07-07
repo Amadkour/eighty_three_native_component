@@ -86,6 +86,19 @@ class CustomNavigator {
     );
   }
 
+  void pushWithoutAnimations({required Widget routeWidget, BaseController? previousController}) {
+    previousController?.stopLoading();
+    Navigator.push(
+        globalKey.currentContext!,
+        PageRouteBuilder<dynamic>(
+          pageBuilder:
+              (BuildContext context, Animation<double> animation1, Animation<double> animation2) =>
+                  routeWidget,
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ));
+  }
+
   void maybePop({BaseController? previousController}) {
     previousController?.stopLoading();
 
