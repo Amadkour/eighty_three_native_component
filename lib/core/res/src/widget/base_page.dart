@@ -77,32 +77,33 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     if (_state != state) {
       _state = state;
-     ///secure Screen
-      if(state== AppLifecycleState.inactive){
-        CustomNavigator.instance.pushWithoutAnimations(routeWidget: const BackgroundPage());
+
+      ///secure Screen
+      if (state == AppLifecycleState.inactive) {
+        CustomNavigator.instance
+            .pushWithoutAnimations(routeWidget: const BackgroundPage(), name: 'background_page');
       }
+
+      ///secure Screen
+
       ///--------------foreground
       if (state == AppLifecycleState.resumed) {
-        CustomNavigator.instance.maybePop();
+        CustomNavigator.instance.popUntil((route) => route.settings.name != 'background_page');
 
         /// To ensure login
         if ((currentUserPermission.token ?? "").isNotEmpty &&
 
-            /// To ensure threshold 25s
-            DateTime
-                .now()
-                .difference(_backgroundTime)
-                .inSeconds > 25 &&
+                /// To ensure threshold 25s
+                DateTime.now().difference(_backgroundTime).inSeconds > 25 &&
 
                 /// To ensure secureCode configuration
                 (currentUserPermission.pinCode ?? "").isNotEmpty &&
                 haveLocalAuth
 
-        /// To ensure in non configuration page
-        ) {
+            /// To ensure in non configuration page
+            ) {
           if (type != 'integration test') {
-            CustomNavigator.instance
-                .pushNamed(RoutesName.pinCodeWithoutAnimation);
+            CustomNavigator.instance.pushNamed(RoutesName.pinCodeWithoutAnimation);
           }
         }
 
