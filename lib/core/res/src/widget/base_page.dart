@@ -75,10 +75,12 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    print(state);
     if (_state != state) {
       _state = state;
-
+     ///secure Screen
+      if(state== AppLifecycleState.inactive){
+        CustomNavigator.instance.pushWithoutAnimations(routeWidget: const BackgroundPage());
+      }
       ///--------------foreground
       if (state == AppLifecycleState.resumed) {
         CustomNavigator.instance.maybePop();
@@ -107,8 +109,6 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
         ///--------------background
         _backgroundTime = DateTime.now();
       } else if (state == AppLifecycleState.paused) {
-        CustomNavigator.instance.pushWithoutAnimations(routeWidget: const BackgroundPage());
-
         _backgroundTime = DateTime.now();
       }
       super.didChangeAppLifecycleState(state);

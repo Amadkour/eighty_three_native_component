@@ -9,10 +9,12 @@ class BackgroundPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: const Color(0xff4EC89E),
         scaffold: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MyImage.assets(url: ''),
+            MyImage.assets(url: 'assets/images/store/appstore.png'),
+            const SizedBox(height: 20,),
             const Text('Secure Mode'),
           ],
         ));
