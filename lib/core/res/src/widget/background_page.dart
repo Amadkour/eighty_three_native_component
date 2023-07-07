@@ -12,6 +12,7 @@ class BackgroundPage extends StatelessWidget {
         backgroundColor: const Color(0xff4EC89E),
         scaffold: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             MyImage.assets(url: 'assets/images/store/appstore.png'),
             const SizedBox(height: 20,),

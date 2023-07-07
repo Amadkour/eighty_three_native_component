@@ -5,15 +5,17 @@ class ResAppImage extends StatelessWidget {
     super.key,
     this.height,
     this.width,
-    this.isEditableImage=false,
+    this.isEditableImage = false,
     this.borderRadius,
     this.withBackground = true,
   });
+
   final double? height;
   final double? width;
   final double? borderRadius;
   final bool withBackground;
   final bool isEditableImage;
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -28,7 +30,7 @@ class ResAppImage extends StatelessWidget {
         height: height,
         padding: const EdgeInsets.all(10),
         child: Image.asset(
-          "assets/icons/res_logo.webp",
+          "assets/images/splash_screen_image.png",
           fit: BoxFit.fill,
         ),
       ),
