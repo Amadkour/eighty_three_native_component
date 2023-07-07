@@ -1,10 +1,8 @@
 import 'package:eighty_three_native_component/core/res/src/widget/text_field/design/parent/parent.dart';
-import 'package:eighty_three_native_component/core/res/src/widget/text_field/validator/child/password_validator.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 import 'package:password_policy/password_policy.dart';
-import 'package:queen_validators/queen_validators.dart';
 
 class PasswordTextField extends StatelessWidget {
   final FocusNode? passwordFocusNode;

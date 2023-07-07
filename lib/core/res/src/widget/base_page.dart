@@ -1,16 +1,13 @@
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
-import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.dart';
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
-import 'package:eighty_three_native_component/core/res/src/services/local_storage_service.dart';
 
 import 'package:eighty_three_native_component/core/res/src/services/navigation.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/background_page.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../permissions/permission.dart';
 
@@ -94,8 +91,9 @@ class MainScaffold extends StatelessWidget with WidgetsBindingObserver {
                 .difference(_backgroundTime)
                 .inSeconds > 25 &&
 
-            /// To ensure secureCode configuration
-            (currentUserPermission.pinCode ?? "").isNotEmpty && haveLocalAuth
+                /// To ensure secureCode configuration
+                (currentUserPermission.pinCode ?? "").isNotEmpty &&
+                haveLocalAuth
 
         /// To ensure in non configuration page
         ) {

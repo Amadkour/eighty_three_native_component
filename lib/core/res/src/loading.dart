@@ -6,7 +6,7 @@ class NativeLoading2 extends StatefulWidget {
   const NativeLoading2({super.key});
 
   @override
-  _NativeLoadingState createState() => _NativeLoadingState();
+  State<NativeLoading2> createState() => _NativeLoadingState();
 }
 
 class _NativeLoadingState extends State<NativeLoading2>

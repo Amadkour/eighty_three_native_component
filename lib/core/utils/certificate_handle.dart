@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
-import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
 import 'package:flutter/services.dart';
 
 // Future<SecurityContext> get globalContext async {
@@ -20,22 +19,21 @@ import 'package:flutter/services.dart';
 //   return ioClient;
 // }
 
-Future<void> handleSSL(Dio dio) async {
-  ByteData clientCertificate =
-      await rootBundle.load("assets/certificates/res-app.pem");
+// Future<void> handleSSL(Dio dio) async {
+//   ByteData clientCertificate =
+//       await rootBundle.load("assets/certificates/res-app.pem");
 
-
-  dio.httpClientAdapter = IOHttpClientAdapter()
-    ..onHttpClientCreate = (_) {
-      final SecurityContext context = SecurityContext(withTrustedRoots: false);
-        context
-            .useCertificateChainBytes(clientCertificate.buffer.asUint8List());
-      HttpClient httpClient = HttpClient(context: context);
-      httpClient.badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-      return httpClient;
-    };
-}
+//   dio.httpClientAdapter = IOHttpClientAdapter()
+//     // ignore: deprecated_member_use
+//     ..onHttpClientCreate = (_) {
+//       final SecurityContext context = SecurityContext(withTrustedRoots: false);
+//       context.useCertificateChainBytes(clientCertificate.buffer.asUint8List());
+//       HttpClient httpClient = HttpClient(context: context);
+//       httpClient.badCertificateCallback =
+//           (X509Certificate cert, String host, int port) => true;
+//       return httpClient;
+//     };
+// }
 
 
 /**

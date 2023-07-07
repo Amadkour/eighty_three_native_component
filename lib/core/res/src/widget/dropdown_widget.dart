@@ -79,7 +79,7 @@ class CustomDropdown<T> extends StatelessWidget {
                   ? itemBuilder!(e)
                   : Text(
                       (e != null) ? itemToString?.call(e) ?? "$e" : "",
-                      style: textTheme.subtitle1,
+                      style: textTheme.titleMedium,
                     ),
             );
           }).toList(),

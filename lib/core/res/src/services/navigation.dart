@@ -6,7 +6,7 @@ class CustomNavigator {
   CustomNavigator._singleTone();
 
   String currentScreenName = "";
-  VoidCallback? beforePop;
+  BaseController? currentController;
 
   static final CustomNavigator _instance = CustomNavigator._singleTone();
 

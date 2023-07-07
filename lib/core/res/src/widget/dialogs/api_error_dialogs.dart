@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
 
@@ -12,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'custom_success_dialog.dart';
 import 'error_dialog.dart';
 
-void show400Dialog(DioError error, {required APIConnection apiConnection}) {
+void show400Dialog(DioException error, {required APIConnection apiConnection}) {
   CustomAlertDialog(
       alertIcon: Icon(
         Icons.logout,
@@ -31,7 +30,7 @@ void show400Dialog(DioError error, {required APIConnection apiConnection}) {
       });
 }
 
-void show500Dialog(DioError error, {required APIConnection apiConnection}) {
+void show500Dialog(DioException error, {required APIConnection apiConnection}) {
   final String url = error.requestOptions.path
       .substring(error.requestOptions.baseUrl.length + 1);
   final Map<dynamic, dynamic> headers =
@@ -107,7 +106,8 @@ void show404Dialog({String? title}) {
   }
 }
 
-void showTimeOutDialog(DioError error, {required APIConnection apiConnection}) {
+void showTimeOutDialog(DioException error,
+    {required APIConnection apiConnection}) {
   CustomAlertDialog(
       alertIcon: Icon(
         Icons.logout,
@@ -126,7 +126,7 @@ void showTimeOutDialog(DioError error, {required APIConnection apiConnection}) {
       });
 }
 
-void unauthorizedDialog(DioError error,
+void unauthorizedDialog(DioException error,
     {required Future<void> Function() onRemoveSession}) {
   CustomSuccessDialog.instance.show(
     context: globalKey.currentContext,

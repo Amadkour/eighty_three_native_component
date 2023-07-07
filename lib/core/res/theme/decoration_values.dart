@@ -15,7 +15,7 @@ final BoxShadow defaultShadow = BoxShadow(
 
 final shadow = [
   BoxShadow(
-    offset: Offset(0, 5),
+    offset: const Offset(0, 5),
     color: AppColors.secondaryColor.withOpacity(0.08),
     blurRadius: 18,
   ),

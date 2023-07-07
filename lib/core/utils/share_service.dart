@@ -12,10 +12,10 @@ class ShareService {
     String filePath = '';
     if (save) {
       if (Platform.isAndroid) {
-        filePath = await "${(await getExternalStorageDirectory())!.path}/$name";
+        filePath = "${(await getExternalStorageDirectory())!.path}/$name";
       } else {
         filePath =
-            await "${(await getApplicationDocumentsDirectory()).path}/$name";
+            "${(await getApplicationDocumentsDirectory()).path}/$name";
       }
     } else {
       filePath = "${(await getTemporaryDirectory()).path}/$name";

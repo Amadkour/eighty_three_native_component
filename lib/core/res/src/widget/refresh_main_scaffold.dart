@@ -1,6 +1,5 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
-import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.dart';
 import 'package:eighty_three_native_component/core/res/src/permissions/permission.dart';
 import 'package:eighty_three_native_component/core/res/src/routes/routes_name.dart';
@@ -9,8 +8,6 @@ import 'package:eighty_three_native_component/core/res/src/services/navigation.d
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 class RefreshMainScaffold<T extends BaseCubit> extends StatelessWidget
     with WidgetsBindingObserver {
   final Widget scaffold;
@@ -65,6 +62,7 @@ class RefreshMainScaffold<T extends BaseCubit> extends StatelessWidget
                             },
                             child: scaffold,
                           )
+                        // ignore: dead_code
                         : scaffold,
                     backgroundColor: backgroundColor,
                   ),

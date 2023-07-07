@@ -47,11 +47,12 @@ class CustomDependencyInjection {
     final localStorageService = await LocalStorageService(sl()).init();
     registerSingleton(() => localStorageService);
     registerSingleton(() => ShareService());
-    registerSingleton(() => ImagePickerService(sl()));
+    registerSingleton(() => ImagePickerService());
     registerSingleton(() => AnalyticsService());
 
     //! api connections
-    registerSingleton(() => APIConnection(baseUrl: apiBaseUrl,resetCallback: resetCallback));
+    registerSingleton(
+        () => APIConnection(baseUrl: apiBaseUrl, resetCallback: resetCallback));
 
     registerSingleton(() => GlobalCubit());
 

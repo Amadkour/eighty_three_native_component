@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:app_settings/app_settings.dart';
 import 'package:eighty_three_native_component/core/res/src/constant/shared_orefrences_keys.dart';
 import 'package:eighty_three_native_component/core/res/src/cubit/global_cubit.dart';
@@ -8,19 +6,17 @@ import 'package:eighty_three_native_component/core/res/src/widget/button/loading
 import 'package:eighty_three_native_component/core/res/theme/font_styles.dart';
 import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 
 // ignore: avoid_classes_with_only_static_members
 class GoToNativeSettingsDialog {
-  static void dialog(BuildContext context,String description) {
+  static void dialog(BuildContext context, String description) {
     showDialog(
         context: globalKey.currentContext!,
         barrierDismissible: true,
         builder: (_) {
           return Directionality(
-            textDirection:isArabic ? TextDirection.rtl:TextDirection.ltr,
+            textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
             child: AlertDialog(
               title: Column(
                 children: <Widget>[
@@ -42,12 +38,11 @@ class GoToNativeSettingsDialog {
                             isLoading: false,
                             title: "open_settings",
                             topPadding: 0,
-                            onTap: () async{
+                            onTap: () async {
                               CustomNavigator.instance.pop();
                               await AppSettings.openAppSettings();
                               await openAppSettings();
-                            }
-                        ),
+                            }),
                       )
                     ],
                   ),
@@ -55,7 +50,6 @@ class GoToNativeSettingsDialog {
               ),
             ),
           );
-        }
-    );
+        });
   }
 }

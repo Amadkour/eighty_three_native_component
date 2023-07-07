@@ -1,12 +1,8 @@
-import 'package:image_picker/image_picker.dart';
 import 'package:lecle_flutter_absolute_path/lecle_flutter_absolute_path.dart';
 import 'package:multiple_images_picker/multiple_images_picker.dart';
 
 class ImagePickerService {
-
-  final ImagePicker _picker;
-
-  ImagePickerService(this._picker);
+  ImagePickerService();
 
   Future<List<String>> pickMultipleImages(int maxLength) async {
     //!Note

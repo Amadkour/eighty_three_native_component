@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyBlocObserver extends BlocObserver {
   @override
@@ -9,7 +9,7 @@ class MyBlocObserver extends BlocObserver {
   }
 
   @override
-  void onEvent(Bloc<dynamic,dynamic> bloc, Object? event) {
+  void onEvent(Bloc<dynamic, dynamic> bloc, Object? event) {
     super.onEvent(bloc, event);
     debugPrint('onEvent -- ${bloc.runtimeType}, $event');
   }
@@ -21,7 +21,8 @@ class MyBlocObserver extends BlocObserver {
   }
 
   @override
-  void onTransition(Bloc<dynamic,dynamic> bloc, Transition<dynamic,dynamic> transition) {
+  void onTransition(
+      Bloc<dynamic, dynamic> bloc, Transition<dynamic, dynamic> transition) {
     super.onTransition(bloc, transition);
     debugPrint('onTransition -- ${bloc.runtimeType}, $transition');
   }

@@ -57,7 +57,6 @@ class LocalStorageService {
       String encryptedKey = encryption(key);
       String encryptedValue = encryption(value);
 
-
       await _secureStorage.write(key: encryptedKey, value: encryptedValue);
     } catch (e) {
       log(e.toString());
@@ -118,9 +117,6 @@ class LocalStorageService {
   Future<void> setUserToken(String token) async {
     await writeSecureKey(userToken, token);
     currentUserPermission.token = token;
-
-    print(
-        'currentUserPermission.token = token = ${currentUserPermission.token}');
   }
 
   Future<void> setUserUUID(String uuid) async {

@@ -159,26 +159,22 @@ class PickerType {
         //   maxWidth: 1000,
         // );
         ServicesPermissions servicesPermissions = ServicesPermissions();
-        if(type == 0){
+        if (type == 0) {
           result = await servicesPermissions.cameraAndGalleryRequestPermission(
-            isAlreadyOpened: cameraPermissionIsAlreadyOpened,
-            subTitle: tr("camera_description"),
-            permission: Permission.camera,
-            source: ImageSource.camera
-          );
-        }
-        else{
+              isAlreadyOpened: cameraPermissionIsAlreadyOpened,
+              subTitle: tr("camera_description"),
+              permission: Permission.camera,
+              source: ImageSource.camera);
+        } else {
           Permission? permission;
-          if(Platform.isIOS){
+          if (Platform.isIOS) {
             permission = Permission.photos;
-          }
-          else{
+          } else {
             final deviceInfoPlugin = DeviceInfoPlugin();
             final deviceInfo = await deviceInfoPlugin.deviceInfo;
-            if(deviceInfo.data["version"]["sdkInt"]>32){
+            if (deviceInfo.data["version"]["sdkInt"] > 32) {
               permission = Permission.photos;
-            }
-            else {
+            } else {
               permission = Permission.storage;
             }
           }
@@ -186,34 +182,33 @@ class PickerType {
               isAlreadyOpened: galleryPermissionIsAlreadyOpened,
               subTitle: tr("gallery_description"),
               permission: permission,
-              source: ImageSource.gallery
-          );
+              source: ImageSource.gallery);
         }
       }
+      CroppedFile? xFile = (await ImageCropper().cropImage(
+        sourcePath: result?.path ?? "",
+        aspectRatioPresets: <CropAspectRatioPreset>[
+          CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio3x2,
+          CropAspectRatioPreset.original,
+          CropAspectRatioPreset.ratio4x3,
+          CropAspectRatioPreset.ratio16x9
+        ],
+        uiSettings: <PlatformUiSettings>[
+          AndroidUiSettings(
+              toolbarTitle: 'Cropper',
+              toolbarColor: globalKey.currentContext!.theme.primaryColor,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          IOSUiSettings(
+              minimumAspectRatio: 1.0,
+              aspectRatioLockEnabled: true,
+              aspectRatioLockDimensionSwapEnabled: true)
+        ],
+      ));
       if (result != null && (type == 1 || type == 0)) {
-        result = XFile(((await ImageCropper().cropImage(
-          sourcePath: result.path,
-          aspectRatioPresets: <CropAspectRatioPreset>[
-            CropAspectRatioPreset.square,
-            CropAspectRatioPreset.ratio3x2,
-            CropAspectRatioPreset.original,
-            CropAspectRatioPreset.ratio4x3,
-            CropAspectRatioPreset.ratio16x9
-          ],
-          uiSettings: <PlatformUiSettings>[
-            AndroidUiSettings(
-                toolbarTitle: 'Cropper',
-                toolbarColor: globalKey.currentContext!.theme.primaryColor,
-                toolbarWidgetColor: Colors.white,
-                initAspectRatio: CropAspectRatioPreset.original,
-                lockAspectRatio: false),
-            IOSUiSettings(
-                minimumAspectRatio: 1.0,
-                aspectRatioLockEnabled: true,
-                aspectRatioLockDimensionSwapEnabled: true)
-          ],
-        ))!
-            .path));
+        result = XFile((xFile?.path ?? ""));
       }
     }
 

@@ -33,7 +33,7 @@ class CurrencyRemoteApi extends CurrencyBaseApi {
       }
     } on SocketException {
       return left(NetworkFailure());
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return left(ApiFailure(
         errors: <String, String>{'': e.message ?? ""},
       ));
@@ -59,7 +59,7 @@ class CurrencyRemoteApi extends CurrencyBaseApi {
       }
     } on SocketException {
       return left(NetworkFailure());
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       return left(ApiFailure(
         errors: <String, String>{'': e.message ?? ""},
       ));
