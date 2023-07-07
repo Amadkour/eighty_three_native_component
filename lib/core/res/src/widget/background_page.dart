@@ -14,7 +14,7 @@ class BackgroundPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            MyImage.assets(url: 'assets/images/store/appstore.png'),
+            MyImage.assets(url: 'assets/images/splash_screen_image.png'),
             const SizedBox(height: 20,),
             const Text('Secure Mode'),
           ],
