@@ -1,8 +1,6 @@
 library eighty_three_component;
 
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
+import 'dart:convert';import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
@@ -99,15 +97,15 @@ class APIConnection {
 
         /// ------ without SHA256 ------ ///
 
-        final String sslKey = remoteConfig.getString("ssl");
-        final String mockaSSLKey = remoteConfig.getString("ssl_mocka");
-        await handleSSLUsingNormalCertificate(sslKey, mockaSSLKey);
+        // final String sslKey = remoteConfig.getString("ssl");
+        // final String mockaSSLKey = remoteConfig.getString("ssl_mocka");
+        // await handleSSLUsingNormalCertificate(sslKey, mockaSSLKey);
 
         /// ------ using sha256 ------ ///
 
-        // final String sha256AliBaba = remoteConfig.getString("sha256_ali_baba");
-        // final String sha256AliMocka = remoteConfig.getString("sha256_mocka");
-        // handleSSLUsingSHA256(sha256AliBaba,sha256AliMocka);
+        final String sha256AliBaba = remoteConfig.getString("sha256_ali_baba");
+        final String sha256AliMocka = remoteConfig.getString("sha256_mocka");
+        handleSSLUsingSHA256(sha256AliBaba,sha256AliMocka);
 
       });
     });
@@ -130,8 +128,8 @@ class APIConnection {
       final Uint8List certBytes = base64Decode(sslKey);
       final Uint8List mockaCertBytes = base64Decode(mockaSSL);
       final SecurityContext context = SecurityContext();
-      context.setTrustedCertificatesBytes(certBytes);
-      context.setTrustedCertificatesBytes(mockaCertBytes);
+      // context.setTrustedCertificatesBytes(certBytes);
+      // context.setTrustedCertificatesBytes(mockaCertBytes);
       HttpClient httpClient = HttpClient(context: context);
       httpClient.findProxy = (uri) => "PROXY 192.168.1.2:8080";
 
