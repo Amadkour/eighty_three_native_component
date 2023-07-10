@@ -56,7 +56,6 @@ dependencies:
   password_policy: ^1.2.0
   flutter_dotenv: ^5.1.0
   # pinning certificate
-  http_certificate_pinning: 2.0.7
 
 #  multi_select_flutter:
 #    git:
