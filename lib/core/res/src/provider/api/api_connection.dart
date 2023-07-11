@@ -12,8 +12,8 @@ import 'package:eighty_three_native_component/core/res/src/provider/api/intercep
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/res/src/services/local_storage_service.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
+import 'package:http_certificate_pinning/http_certificate_pinning.dart';
 
 enum BaseUrlModules {
   ecommerce,
@@ -86,8 +86,10 @@ class APIConnection {
       requestHeader: false,
       responseHeader: false,
     ));
+
     //------------ Fetch ssl cetificate value from firebase -------------------- ///
     final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+
     remoteConfig.fetchAndActivate().then((value) {
       remoteConfig
           .setConfigSettings(RemoteConfigSettings(
@@ -97,12 +99,20 @@ class APIConnection {
           .then((value) async {
         final String sslKey = remoteConfig.getString("ssl");
         final String mockaSSLKey = remoteConfig.getString("ssl_mocka");
+        final String sha256AliBaba = remoteConfig.getString("sha256_ali_baba");
+        final String sha256AliMocka = remoteConfig.getString("sha256_mocka");
         handleSSL(sslKey, mockaSSLKey);
+        handleSHA256(sha256AliBaba, sha256AliMocka);
       });
     });
 
     /// -------------------------------------------------------------------------- ///
   }
+  handleSHA256(String sha256AliBaba, String sha256AliMocka) {
+    dio.interceptors.add(CertificatePinningInterceptor(
+        allowedSHAFingerprints: [sha256AliBaba, sha256AliMocka]));
+  }
+
   handleSSL(String sslKey, String mockaSSL) async {
     // add ssl certificate
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
@@ -114,7 +124,7 @@ class APIConnection {
       final Uint8List mockaCertBytes = base64Decode(mockaSSL);
       // log('certBytes = ${certBytes}');
       final SecurityContext context = SecurityContext();
-      client.badCertificateCallback = (cert, host, port) => false;
+      client.badCertificateCallback = (cert, host, port) => true;
       context.setTrustedCertificatesBytes(certBytes);
       context.setTrustedCertificatesBytes(mockaCertBytes);
       return HttpClient(context: context);
@@ -152,4 +162,3 @@ class APIConnection {
 //   }
 //   return connectionStatus;
 // }
-
