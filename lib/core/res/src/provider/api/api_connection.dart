@@ -148,7 +148,7 @@ class APIConnection {
       final Uint8List mockaCertBytes = base64Decode(mockaSSL);
       final SecurityContext context = SecurityContext();
       context.setTrustedCertificatesBytes(certBytes);
-      context.setTrustedCertificatesBytes(mockaCertBytes);
+      //context.setTrustedCertificatesBytes(mockaCertBytes);
       HttpClient httpClient = HttpClient(context: context);
       //httpClient.findProxy = (uri) => "PROXY 192.168.1.2:9090";
 
