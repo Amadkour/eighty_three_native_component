@@ -150,7 +150,7 @@ class APIConnection {
       context.setTrustedCertificatesBytes(certBytes);
       context.setTrustedCertificatesBytes(mockaCertBytes);
       HttpClient httpClient = HttpClient(context: context);
-      httpClient.findProxy = (uri) => "PROXY 192.168.1.2:9090";
+      //httpClient.findProxy = (uri) => "PROXY 192.168.1.2:9090";
 
       /// badCertificateCallback should return false;
       httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) => false;
@@ -188,5 +188,4 @@ class APIConnection {
 //     connectionStatus = false;
 //   }
 //   return connectionStatus;
-// }
-
+// }
