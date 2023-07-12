@@ -98,15 +98,15 @@ class APIConnection {
 
         /// ------ without SHA256 ------ ///
 
-        // final String sslKey = remoteConfig.getString("ssl");
-        // final String mockaSSLKey = remoteConfig.getString("ssl_mocka");
-        // await handleSSLUsingNormalCertificate(sslKey, mockaSSLKey);
+        final String sslKey = remoteConfig.getString("ssl");
+        final String mockaSSLKey = remoteConfig.getString("ssl_mocka");
+        await handleSSLUsingNormalCertificate(sslKey, mockaSSLKey);
 
         /// ------ using sha256 ------ ///
 
-        final String sha256AliBaba = remoteConfig.getString("sha256_ali_baba");
-        final String sha256AliMocka = remoteConfig.getString("sha256_mocka");
-        handleSSLUsingSHA256(sha256AliBaba,sha256AliMocka);
+        // final String sha256AliBaba = remoteConfig.getString("sha256_ali_baba");
+        // final String sha256AliMocka = remoteConfig.getString("sha256_mocka");
+        // handleSSLUsingSHA256(sha256AliBaba,sha256AliMocka);
 
       });
     });
@@ -129,12 +129,12 @@ class APIConnection {
       final Uint8List certBytes = base64Decode(sslKey);
       final Uint8List mockaCertBytes = base64Decode(mockaSSL);
       final SecurityContext context = SecurityContext();
-      // context.setTrustedCertificatesBytes(certBytes);
-      // context.setTrustedCertificatesBytes(mockaCertBytes);
+      context.setTrustedCertificatesBytes(certBytes);
+      context.setTrustedCertificatesBytes(mockaCertBytes);
       HttpClient httpClient = HttpClient(context: context);
       // httpClient.findProxy = (uri) => "PROXY 192.168.1.2:8080";
       ///of madkour's macOS
-      httpClient.findProxy = (uri) => "PROXY 127.0.0.1:8080";
+      // httpClient.findProxy = (uri) => "PROXY 127.0.0.1:8080";
 
       /// badCertificateCallback should return false;
       httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
