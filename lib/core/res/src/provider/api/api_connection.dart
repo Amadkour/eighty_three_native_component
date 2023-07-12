@@ -188,5 +188,4 @@ class APIConnection {
 //     connectionStatus = false;
 //   }
 //   return connectionStatus;
-// }
-
+// }
