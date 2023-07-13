@@ -9,12 +9,25 @@ class BackgroundPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
-        backgroundColor: AppColors.primaryColor,
-        scaffold: Column(
-          children: [
-            MyImage.assets(url: ''),
-            const Text('Secure Mode'),
-          ],
+        backgroundColor: const Color(0xff4EC89E),
+        scaffold: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              MyImage.svgAssets(
+                url: 'assets/icons/about_logo.svg',
+                color: CupertinoColors.white,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text(
+                'Secure Mode',
+                style: TextStyle(color: CupertinoColors.white, fontFamily: 'Bold', fontSize: 18),
+              ),
+            ],
+          ),
         ));
   }
 }

@@ -226,7 +226,7 @@ class LocalStorageService {
 
   bool get isAppInstalled => readBool(appInstalled);
 
-  Future<String?> get getFullName => readSecureKey(fullName);
+  String? get getFullName => readString(fullName);
 
   Future<void> cacheCurrentUser(UserPermission user) async {
     await setUserId(user.identityId.toString());
