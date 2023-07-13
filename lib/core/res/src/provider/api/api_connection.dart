@@ -163,7 +163,7 @@ class APIConnection {
         // Don't trust any certificate just because their root cert is trusted.
         final HttpClient client = HttpClient(context: SecurityContext(withTrustedRoots: false));
         // You can test the intermediate / root cert here. We just ignore it.
-        client.badCertificateCallback = (cert, host, port) => false;
+        client.badCertificateCallback = (cert, host, port) => true;
         return client;
       },
       validateCertificate: (cert, host, port) {
@@ -184,7 +184,7 @@ class APIConnection {
 String myCerString = '''MIIDtDCCAzqgAwIBAgISBMchF3fQyGzlqSriELCKZdTqMAoGCCqGSM49BAMDMDIx
 CzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQswCQYDVQQDEwJF
 MTAeFw0yMzA1MjEwNTI4MjBaFw0yMzA4MTkwNTI4MTlaMBIxEDAOBgNVBAMTB3Jl
-cy5pbmMwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATUEip8SZffR2ApD1mK+6Yr
+cy5pbmMwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATUEip8SZffR2ApD1mK+6YX
 PDFbEcyxxbteNx9mTndwBDVp4otoQVkbuISr/8vptv2h0MpSeSEg5geTUWIBgLHM
 o4ICTjCCAkowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggr
 BgEFBQcDAjAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBSb0d3TaVMh6ytt7RjbCAEq
