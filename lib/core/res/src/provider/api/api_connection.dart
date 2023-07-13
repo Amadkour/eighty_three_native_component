@@ -126,7 +126,8 @@ class APIConnection {
   }
 
   Future<void> handleSSLUsingFile() async {
-    final certificates = await rootBundle.load('assets/certificates/res.inc.cer');
+    // final certificates = await rootBundle.load('assets/certificates/res.inc.cer');
+    final certificates = await rootBundle.load('assets/certificates/_.google.com.cer');
     (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
       final securityContext = SecurityContext(); //1
       securityContext.setTrustedCertificatesBytes(certificates.buffer.asUint8List());
