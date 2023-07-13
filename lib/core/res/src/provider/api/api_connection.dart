@@ -178,13 +178,13 @@ class APIConnection {
         // Check that the cert fingerprint matches the one we expect.
         // We definitely require _some_ certificate.
         if (cert == null) {
+          print("Invalid fingerprint================================");
           return false;
         }
         // Validate it any way you want. Here we only check that
         // the fingerprint matches the OpenSSL SHA256.
 
         Uint8List newCer = base64Decode(myCerString.replaceAll("\n", ""));
-        return true;
         return sha256.convert(newCer).toString() == sha256.convert(cert.der).toString();
       },
     );
