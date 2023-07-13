@@ -127,10 +127,11 @@ class APIConnection {
 
   Future<void> handleSSLUsingFile() async {
     final certificates = await rootBundle.load('assets/certificates/res.inc.cer');
-    (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate = (client) {
+    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
       final securityContext = SecurityContext(); //1
       securityContext.setTrustedCertificatesBytes(certificates.buffer.asUint8List());
-      return HttpClient(context: securityContext);
+      return HttpClient(context: securityContext)
+        ..badCertificateCallback = (X509Certificate cert, String host, int port) => false;
     };
   }
 
