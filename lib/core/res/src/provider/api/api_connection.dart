@@ -11,6 +11,7 @@ import 'package:eighty_three_native_component/core/res/src/provider/api/intercep
 import 'package:eighty_three_native_component/core/res/src/services/dependency_jnjection.dart';
 import 'package:eighty_three_native_component/core/res/src/services/local_storage_service.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:http_certificate_pinning/http_certificate_pinning.dart';
 
@@ -97,9 +98,10 @@ class APIConnection {
           .then((value) async {
         /// ------ without SHA256 ------ ///
 
-        final String sslKey = remoteConfig.getString("ssl");
-        final String mockaSSLKey = remoteConfig.getString("ssl_mocka");
-        await handleSSLUsingNormalCertificate(sslKey, mockaSSLKey);
+        // final String sslKey = remoteConfig.getString("ssl");
+        // final String mockaSSLKey = remoteConfig.getString("ssl_mocka");
+        // await handleSSLUsingNormalCertificate(sslKey, mockaSSLKey);
+        await handleSSLUsingFile();
 
         /// ------ using sha256 ------ ///
 
@@ -121,6 +123,15 @@ class APIConnection {
     };
     dio.interceptors.add(
         CertificatePinningInterceptor(allowedSHAFingerprints: [sha256AliBaba, sha256AliMocka]));
+  }
+
+  Future<void> handleSSLUsingFile() async {
+    final certificates = await rootBundle.load('assets/certificates/res.inc.cer');
+    (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate = (client) {
+      final securityContext = SecurityContext(); //1
+      securityContext.setTrustedCertificatesBytes(certificates.buffer.asUint8List());
+      return HttpClient(context: securityContext);
+    };
   }
 
   Future<void> handleSSLUsingNormalCertificate(String sslKey, String mockaSSL) async {
