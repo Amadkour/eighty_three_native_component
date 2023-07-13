@@ -51,9 +51,9 @@ class APIConnection {
 
   APIConnection(
       {String userRole = '',
-      String? baseUrl,
-      Client? client,
-      Future<void> Function()? resetCallback}) {
+        String? baseUrl,
+        Client? client,
+        Future<void> Function()? resetCallback}) {
     dio.options.baseUrl =
         baseUrl ?? (userOldServer ? "https:/" : "http://gfi.group/api");
     dio.options.followRedirects = false;
