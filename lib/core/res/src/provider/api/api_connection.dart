@@ -3,6 +3,7 @@ library eighty_three_component;
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:eighty_three_native_component/core/res/src/configuration/top_level_configuration.dart';
@@ -112,7 +113,6 @@ class APIConnection {
       });
     });
   }
-
   handleSSL(String sslKey,String mockaSSL) async {
     // add ssl certificate
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
@@ -144,22 +144,64 @@ class APIConnection {
   }
 
   Future<void> handleSSLUsingNormalCertificate(String sslKey, String mockaSSL) async {
-    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = (){
-      final Uint8List certBytes = base64Decode(sslKey);
-      final Uint8List mockaCertBytes = base64Decode(mockaSSL);
-      final SecurityContext context = SecurityContext();
+    // (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = (){
+    final Uint8List certBytes = base64Decode(sslKey);
+    final Uint8List mockaCertBytes = base64Decode(mockaSSL);
+    final SecurityContext context = SecurityContext();
 
-      context.setTrustedCertificatesBytes(certBytes);
-      //context.setTrustedCertificatesBytes(mockaCertBytes);
-      HttpClient httpClient = HttpClient(context: context);
-      //httpClient.findProxy = (uri) => "PROXY 192.168.1.2:8080";
+    //context.setTrustedCertificatesBytes(certBytes);
+    //context.setTrustedCertificatesBytes(mockaCertBytes);
+    //   HttpClient httpClient = HttpClient(context: context);
+    //   //httpClient.findProxy = (uri) => "PROXY 192.168.1.2:8080";
+    //
+    //   /// badCertificateCallback should return false;
+    //   httpClient.badCertificateCallback = (cert, String host, int port) => false;
+    //   return httpClient;
+    // };
+    const String fingerprint = '';
+    dio.httpClientAdapter = IOHttpClientAdapter(
+      createHttpClient: () {
+        // Don't trust any certificate just because their root cert is trusted.
+        final HttpClient client = HttpClient(context: SecurityContext(withTrustedRoots: false));
+        // You can test the intermediate / root cert here. We just ignore it.
+        client.badCertificateCallback = (cert, host, port) => true;
+        return client;
+      },
+      validateCertificate: (cert, host, port) {
+        // Check that the cert fingerprint matches the one we expect.
+        // We definitely require _some_ certificate.
+        if (cert == null) {
+          return false;
+        }
+        // Validate it any way you want. Here we only check that
+        // the fingerprint matches the OpenSSL SHA256.
 
-      /// badCertificateCallback should return false;
-      httpClient.badCertificateCallback = (cert, String host, int port) => false;
-      return httpClient;
-    };
+        Uint8List newCer = base64Decode(myCerString.replaceAll("\n", ""));
+        return sha256.convert(newCer).toString() == sha256.convert(cert.der).toString();
+      },
+    );
   }
 }
+String myCerString = '''MIIDtDCCAzqgAwIBAgISBMchF3fQyGzlqSriELCKZdTqMAoGCCqGSM49BAMDMDIx
+CzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQswCQYDVQQDEwJF
+MTAeFw0yMzA1MjEwNTI4MjBaFw0yMzA4MTkwNTI4MTlaMBIxEDAOBgNVBAMTB3Jl
+cy5pbmMwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATUEip8SZffR2ApD1mK+6YX
+PDFbEcyxxbteNx9mTndwBDVp4otoQVkbuISr/8vptv2h0MpSeSEg5geTUWIBgLHM
+o4ICTjCCAkowDgYDVR0PAQH/BAQDAgeAMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggr
+BgEFBQcDAjAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBSb0d3TaVMh6ytt7RjbCAEq
+pAT/9DAfBgNVHSMEGDAWgBRa8+0r/DbCN3m5UjDqVG/PVcsurDBVBggrBgEFBQcB
+AQRJMEcwIQYIKwYBBQUHMAGGFWh0dHA6Ly9lMS5vLmxlbmNyLm9yZzAiBggrBgEF
+BQcwAoYWaHR0cDovL2UxLmkubGVuY3Iub3JnLzAdBgNVHREEFjAUggkqLnJlcy5p
+bmOCB3Jlcy5pbmMwTAYDVR0gBEUwQzAIBgZngQwBAgEwNwYLKwYBBAGC3xMBAQEw
+KDAmBggrBgEFBQcCARYaaHR0cDovL2Nwcy5sZXRzZW5jcnlwdC5vcmcwggEFBgor
+BgEEAdZ5AgQCBIH2BIHzAPEAdgB6MoxU2LcttiDqOOBSHumEFnAyE4VNO9IrwTpX
+o1LrUgAAAYg8/qL/AAAEAwBHMEUCIEh6R4jUtTWVoXW/C+5kxLK8OxFYc9EuquoO
+cAblqmq4AiEA6U43osf9uW8587bCl0ibmKZoliYelXckqyQpilVx4JkAdwDoPtDa
+PvUGNTLnVyi8iWvJA9PL0RFr7Otp4Xd9bQa9bgAAAYg8/qLmAAAEAwBIMEYCIQCs
+SW0Xp2gzSSkIaZoQlOHamuio1bXYiZJmqbo/wv1EJgIhANqqD0WQOOmQYjib7Y3D
+QPzyt0iSx0reUl9nnPEpAXfBMAoGCCqGSM49BAMDA2gAMGUCMDVxULGNLFBNlu3O
++3q+K4fU21LGgS6L+un8LnHzxE6JqW0QYl58Wz3YL3seblN+3QIxAK69xwMWTCFB
+wGAu7ia9x/2hxxSBLYXVk7uYU1ROWDz8tR1AMR6HGYyPegRkNgjecw==''';
 // Future<bool> checkConnection() async {
 //   bool connectionStatus = true;
 //   try {
