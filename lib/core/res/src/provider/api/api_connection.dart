@@ -1,6 +1,7 @@
 library eighty_three_component;
 
-import 'dart:convert';import 'dart:io';
+import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
@@ -52,8 +53,7 @@ class APIConnection {
       String? baseUrl,
       Client? client,
       Future<void> Function()? resetCallback}) {
-    dio.options.baseUrl =
-        baseUrl ?? (userOldServer ? "https:/" : "http://gfi.group/api");
+    dio.options.baseUrl = baseUrl ?? (userOldServer ? "https:/" : "http://gfi.group/api");
     dio.options.followRedirects = false;
     dio.options.contentType = 'application/json';
     dio.options.connectTimeout = const Duration(seconds: 50);
@@ -95,7 +95,6 @@ class APIConnection {
         minimumFetchInterval: const Duration(hours: 1),
       ))
           .then((value) async {
-
         /// ------ without SHA256 ------ ///
 
         final String sslKey = remoteConfig.getString("ssl");
@@ -107,12 +106,11 @@ class APIConnection {
         // final String sha256AliBaba = remoteConfig.getString("sha256_ali_baba");
         // final String sha256AliMocka = remoteConfig.getString("sha256_mocka");
         // handleSSLUsingSHA256(sha256AliBaba,sha256AliMocka);
-
       });
     });
   }
 
-  void handleSSLUsingSHA256(String sha256AliBaba, String sha256AliMocka){
+  void handleSSLUsingSHA256(String sha256AliBaba, String sha256AliMocka) {
     (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
       HttpClient httpClient = HttpClient();
       httpClient.findProxy = (uri) => "PROXY 192.168.1.2:8080";
@@ -121,11 +119,12 @@ class APIConnection {
       httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
       return httpClient;
     };
-    dio.interceptors.add(CertificatePinningInterceptor(allowedSHAFingerprints: [sha256AliBaba, sha256AliMocka]));
+    dio.interceptors.add(
+        CertificatePinningInterceptor(allowedSHAFingerprints: [sha256AliBaba, sha256AliMocka]));
   }
 
   Future<void> handleSSLUsingNormalCertificate(String sslKey, String mockaSSL) async {
-    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = (){
+    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
       final Uint8List certBytes = base64Decode(sslKey);
       final Uint8List mockaCertBytes = base64Decode(mockaSSL);
       final SecurityContext context = SecurityContext();
@@ -137,7 +136,7 @@ class APIConnection {
       // httpClient.findProxy = (uri) => "PROXY 127.0.0.1:8080";
 
       /// badCertificateCallback should return false;
-      httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+      httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) => false;
       return httpClient;
     };
   }
