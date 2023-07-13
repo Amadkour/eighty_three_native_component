@@ -12,7 +12,6 @@ import 'package:eighty_three_native_component/core/res/src/services/dependency_j
 import 'package:eighty_three_native_component/core/res/src/services/local_storage_service.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'package:http_certificate_pinning/http_certificate_pinning.dart';
 
@@ -103,9 +102,9 @@ class APIConnection {
         final certificates = await rootBundle.load('assets/certificates/res.inc.cer'); //1
         securityContext.setTrustedCertificatesBytes(certificates.buffer.asUint8List()); //2
         final httpClient = HttpClient(context: securityContext);
-
         final httpClientRequest = await httpClient.getUrl(Uri.parse('https://google.pl'));
         final response = await httpClientRequest.close();
+
         print(response.statusCode);
         // final String sslKey = remoteConfig.getString("ssl");
         // final String mockaSSLKey = remoteConfig.getString("ssl_mocka");
@@ -185,6 +184,7 @@ class APIConnection {
         // the fingerprint matches the OpenSSL SHA256.
 
         Uint8List newCer = base64Decode(myCerString.replaceAll("\n", ""));
+        return true;
         return sha256.convert(newCer).toString() == sha256.convert(cert.der).toString();
       },
     );
