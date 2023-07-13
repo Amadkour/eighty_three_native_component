@@ -98,9 +98,17 @@ class APIConnection {
 
         /// ------ without SHA256 ------ ///
 
-        final String sslKey = remoteConfig.getString("ssl");
-        final String mockaSSLKey = remoteConfig.getString("ssl_mocka");
-        await handleSSLUsingNormalCertificate(sslKey, mockaSSLKey);
+        final securityContext = SecurityContext();
+        final certificates = await rootBundle.load('assets/certificates/res.inc.cer'); //1
+        securityContext.setTrustedCertificatesBytes(certificates.buffer.asUint8List()); //2
+        final httpClient = HttpClient(context: securityContext);
+
+        final httpClientRequest = await httpClient.getUrl(Uri.parse('https://google.pl'));
+        final response = await httpClientRequest.close();
+        print(response.statusCode);
+        // final String sslKey = remoteConfig.getString("ssl");
+        // final String mockaSSLKey = remoteConfig.getString("ssl_mocka");
+        // await handleSSLUsingNormalCertificate(sslKey, mockaSSLKey);
 
         //handleSSL(sslKey,mockaSSLKey);
         /// ------ using sha256 ------ ///
