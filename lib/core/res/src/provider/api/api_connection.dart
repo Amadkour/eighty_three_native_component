@@ -144,31 +144,18 @@ class APIConnection {
   }
 
   Future<void> handleSSLUsingNormalCertificate(String sslKey, String mockaSSL) async {
-    // (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = (){
-    final Uint8List certBytes = base64Decode(sslKey);
-    final Uint8List mockaCertBytes = base64Decode(mockaSSL);
-    final SecurityContext context = SecurityContext();
 
-    //context.setTrustedCertificatesBytes(certBytes);
-    //context.setTrustedCertificatesBytes(mockaCertBytes);
-    //   HttpClient httpClient = HttpClient(context: context);
-    //   //httpClient.findProxy = (uri) => "PROXY 192.168.1.2:8080";
-    //
-    //   /// badCertificateCallback should return false;
-    //   httpClient.badCertificateCallback = (cert, String host, int port) => false;
-    //   return httpClient;
-    // };
+
     dio.httpClientAdapter = IOHttpClientAdapter(
       createHttpClient: () {
         // Don't trust any certificate just because their root cert is trusted.
-        final HttpClient client = HttpClient(context: SecurityContext(withTrustedRoots: false));
+        final HttpClient client = HttpClient(context: SecurityContext(withTrustedRoots: true));
         // You can test the intermediate / root cert here. We just ignore it.
         client.badCertificateCallback = (cert, host, port) => true;
         return client;
       },
       validateCertificate: (cert, host, port) {
-        // Check that the cert fingerprint matches the one we expect.
-        // We definitely require some certificate.
+
         if (cert == null) {
           return false;
         }
@@ -232,3 +219,4 @@ wGAu7ia9x/2hxxSBLYXVk7uYU1ROWDz8tR1AMR6HGYyPegRkNgjecw==''';
 //   }
 //   return connectionStatus;
 // }
+
