@@ -88,6 +88,7 @@ class CustomNavigator {
 
   void pushWithoutAnimations(
       {required Widget routeWidget, BaseController? previousController, String? name}) {
+    currentScreenName = name ?? "";
     previousController?.stopLoading();
     Navigator.push(
         globalKey.currentContext!,
