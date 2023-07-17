@@ -30,11 +30,11 @@ class ServicesPermissions {
     else{
       if(source == ImageSource.camera){
         cameraPermissionIsAlreadyOpened = true;
-        sl<LocalStorageService>().writeKey(cameraPermission, cameraPermissionIsAlreadyOpened);
+        sl<LocalStorageService>().writeKey('camera_permission', cameraPermissionIsAlreadyOpened);
       }
       else{
         galleryPermissionIsAlreadyOpened = true;
-        sl<LocalStorageService>().writeKey(galleryPermission, galleryPermissionIsAlreadyOpened);
+        sl<LocalStorageService>().writeKey('gallery_permission', galleryPermissionIsAlreadyOpened);
       }
       PermissionStatus status = await permission.request();
       if (status.isGranted) {
