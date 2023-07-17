@@ -115,7 +115,7 @@ class LocalStorageService {
   /// setters and getters
   ///-----setters
   Future<void> setUserToken(String token) async {
-    await writeSecureKey(userToken, token);
+    await writeSecureKey('token', token);
     currentUserPermission.token = token;
   }
 
@@ -194,7 +194,7 @@ class LocalStorageService {
 
   ///---- getters
   Future<String?> get getUserToken async {
-    final token = await readSecureKey(userToken);
+    final token = await readSecureKey('token');
     return token;
   }
 

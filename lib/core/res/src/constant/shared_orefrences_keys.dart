@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 final GlobalKey<NavigatorState> globalKey = GlobalKey<NavigatorState>();
-String userToken = 'token';
+// String userToken = 'token';
 String userName = 'name';
 String fullName = 'full_name';
 String userCountry = 'country';
