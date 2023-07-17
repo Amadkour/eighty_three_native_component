@@ -34,12 +34,12 @@ Future<dynamic> onErrorHandler(
         readSecureKey: readSecureKey,
         onRemoveSession: onRemoveSession);
   } on SocketException catch (e) {
-    MyToast(e.message);
+    //MyToast(e.message);
     log(e.message);
     onResumeNetworkError(
         handler, err, repeating, setNetworkError, networkError, onFetch);
   } catch (e) {
-    MyToast(e.toString());
+    //MyToast(e.toString());
     rethrow;
   }
 }
