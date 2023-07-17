@@ -22,7 +22,7 @@ class LocalStorageService {
   }
 
   Future<void> toggleServer() async {
-    await writeKey(serverKey, !userOldServer);
+    await writeKey('server', !userOldServer);
     userOldServer = !userOldServer;
   }
 
@@ -68,7 +68,7 @@ class LocalStorageService {
     await removeAllKeysInSharedPreferencesExceptLanguage();
 
     currentUserPermission = GuestPermission();
-    writeKey(appInstalled, true);
+    writeKey('install', true);
   }
 
   Future<String?> readSecureKey(String key, {String? defaultValue}) async {
@@ -91,7 +91,7 @@ class LocalStorageService {
 
     await _secureStorage.deleteAll();
 
-    await writeSecureKey(userPinCode, pinCode);
+    await writeSecureKey('pin_code', pinCode);
     await setFaceIdValue(faceId: faceId);
     await setTouchIdValue(touchId: touchId);
   }
@@ -115,65 +115,65 @@ class LocalStorageService {
   /// setters and getters
   ///-----setters
   Future<void> setUserToken(String token) async {
-    await writeSecureKey(userToken, token);
+    await writeSecureKey('token', token);
     currentUserPermission.token = token;
   }
 
   Future<void> setUserUUID(String uuid) async {
-    await writeSecureKey(userUUID, uuid);
+    await writeSecureKey('uuid', uuid);
     currentUserPermission.userId = uuid;
   }
 
   Future<void> setUserPhone(String phone) async {
-    await writeSecureKey(userPhone, phone);
+    await writeSecureKey('phone_number', phone);
     currentUserPermission.phone = phone;
   }
 
   Future<void> setUserPinCode(String pinCode) async {
     if (pinCode.isNotEmpty) {
       String hashed = getHashedCode(pinCode);
-      await writeSecureKey(userPinCode, hashed);
+      await writeSecureKey('pin_code', hashed);
       currentUserPermission.pinCode = hashed;
     }
   }
 
   Future<void> setTouchIdValue({required bool touchId}) async {
-    await writeKey(userTouchId, touchId);
+    await writeKey('touch_id_active', touchId);
     currentUserPermission.isTouchIdActive = touchId;
   }
 
   Future<void> setUsername(String name) async {
-    await writeSecureKey(userName, name);
+    await writeSecureKey('name', name);
     currentUserPermission.name = name;
   }
 
   Future<void> setFullName(String name) async {
-    await writeKey(fullName, name);
+    await writeKey('full_name', name);
     currentUserPermission.name = name;
   }
 
   Future<void> setFaceIdValue({required bool faceId}) async {
-    await writeKey(userFaceId, faceId);
+    await writeKey('face_id_active', faceId);
     currentUserPermission.isFaceIdActive = faceId;
   }
 
   Future<void> setUserCountry({required String country}) async {
-    await writeSecureKey(userCountry, country);
+    await writeSecureKey('country', country);
     currentUserPermission.country = country;
   }
 
   Future<void> setUserCurrency({required String currency}) async {
-    await writeSecureKey(userCurrency, currency);
+    await writeSecureKey('currency', currency);
     currentUserPermission.currency = currency;
   }
 
   Future<void> setUserId(String id) async {
-    await writeSecureKey(userId, id);
+    await writeSecureKey('identity_id', id);
     currentUserPermission.identityId = id;
   }
 
   Future<void> setAppInstalled() async {
-    await writeKey(appInstalled, true);
+    await writeKey('install', true);
   }
 
   Future<void> setLanguage(String locale) async {
@@ -181,52 +181,72 @@ class LocalStorageService {
   }
 
   Future<void> setUserRole(String roleValue) async {
-    await writeSecureKey(role, roleValue);
+    await writeSecureKey('role', roleValue);
   }
 
   Future<void> setUserEmail(String emailValue) async {
-    await writeSecureKey(userEmail, emailValue);
+    await writeSecureKey('email', emailValue);
   }
 
   Future<void> setProfileCompleted(bool completed) async {
-    await writeKey(profileCompleted, completed);
+    await writeKey('is_completed', completed);
   }
 
   ///---- getters
   Future<String?> get getUserToken async {
-    final token = await readSecureKey(userToken);
+    final token = await readSecureKey('token');
     return token;
   }
 
-  Future<String?> get getUserCountry => readSecureKey(userCountry);
+  // String userToken = 'token';
+// String userName = 'name';
+// String fullName = 'full_name';
+// String userCountry = 'country';
+// String serverKey = 'server';
+// String cameraPermission = 'camera_permission';
+// String galleryPermission = 'gallery_permission';
+//
+// String userCurrency = 'currency';
+// String userId = 'identity_id';
+// String userDate = 'dob';
+// String userPinCode = 'pin_code';
+// String userTouchId = 'touch_id_active';
+// String userFaceId = 'face_id_active';
+// String userUUID = 'uuid';
+// String userPhone = 'phone_number';
+// String userEmail = 'email';
+// String appInstalled = 'install';
+// String role = 'role';
+// String profileCompleted = 'is_completed';
+  Future<String?> get getUserCountry => readSecureKey('country');
 
-  Future<String?> get getUserCurrency => readSecureKey(userCurrency);
+  Future<String?> get getUserCurrency => readSecureKey('currency');
 
-  Future<String?> get getUserUUID => readSecureKey(userUUID);
+  Future<String?> get getUserUUID => readSecureKey('uuid');
 
-  Future<String?> get getUserPhone => readSecureKey(userPhone);
+  Future<String?> get getUserPhone => readSecureKey('phone_number');
 
-  Future<String?> get getUserPinCode => readSecureKey(userPinCode);
+  Future<String?> get getUserPinCode => readSecureKey('pin_code');
 
-  Future<String?> get getUserId => readSecureKey(userId);
+  Future<String?> get getUserId => readSecureKey('identity_id');
 
-  Future<String?> get getUserEmail => readSecureKey(userEmail);
+  Future<String?> get getUserEmail => readSecureKey('email');
 
-  bool get getUserTouchId => readBool(userTouchId);
+  bool get getUserTouchId => readBool('touch_id_active');
 
-  bool get getUserFaceId => readBool(userFaceId);
+  bool get getUserFaceId => readBool('face_id_active');
 
-  String? get getUserName => readString(userName);
+  String? get getUserName => readString('name');
 
   String? get getUserLanguage => readString('lang');
 
-  bool get getIsProfileCompleted => readBool(profileCompleted);
+  bool get getIsProfileCompleted => readBool('is_completed');
 
-  Future<String?> get getUserRole => readSecureKey(role);
+  Future<String?> get getUserRole => readSecureKey('role');
 
-  bool get isAppInstalled => readBool(appInstalled);
+  bool get isAppInstalled => readBool('install');
 
-  String? get getFullName => readString(fullName);
+  String? get getFullName => readString('full_name');
 
   Future<void> cacheCurrentUser(UserPermission user) async {
     await setUserId(user.identityId.toString());
