@@ -26,9 +26,9 @@ Future<void> onResumeNetworkError(
   if (!networkError) {
     setNetworkError(true);
     try {
-      if(CustomNavigator.instance.currentScreenName!="network_error"){
+      if(CustomNavigator.instance.currentScreenName!="/error"){
         CustomNavigator.instance.pushWithoutAnimations(
-          name: "network_error",
+          name: "/error",
           routeWidget: NetworkErrorPage(
             callback: () async {
               ///repeat all queue

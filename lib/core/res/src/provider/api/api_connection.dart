@@ -55,9 +55,9 @@ class APIConnection {
 
   APIConnection(
       {String userRole = '',
-      String? baseUrl,
-      Client? client,
-      Future<void> Function()? resetCallback}) {
+        String? baseUrl,
+        Client? client,
+        Future<void> Function()? resetCallback}) {
     dio.options.baseUrl = baseUrl ?? (userOldServer ? "https:/" : "http://gfi.group/api");
     dio.options.followRedirects = false;
     dio.options.contentType = 'application/json';
@@ -124,20 +124,17 @@ class APIConnection {
     final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
 
     ///fetch and activate
-    final bool fetchResult = await remoteConfig.fetchAndActivate();
+    await remoteConfig.fetchAndActivate();
 
-    if (fetchResult) {
-      await remoteConfig.setConfigSettings(
-        RemoteConfigSettings(
-            fetchTimeout: const Duration(minutes: 1),
-            minimumFetchInterval: const Duration(hours: 1)),
-      );
+    await remoteConfig.setConfigSettings(
+      RemoteConfigSettings(
+          fetchTimeout: const Duration(minutes: 1),
+          minimumFetchInterval: const Duration(hours: 1)),
+    );
 
-      ///fetch ssl values
-      final String sslValue = remoteConfig.getString("ssl");
-      final String mockaSSLKey = remoteConfig.getString("ssl_mocka");
-      return sslValue;
-    }
-    return '';
+    ///fetch ssl values
+    final String sslValue = remoteConfig.getString("ssl");
+    final String mockaSSLKey = remoteConfig.getString("ssl_mocka");
+    return sslValue;
   }
 }

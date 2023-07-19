@@ -9,10 +9,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NetworkErrorPage extends StatelessWidget {
-  const NetworkErrorPage({super.key, required this.callback});
+  const NetworkErrorPage({super.key, required this.callback, this.inStartApp=false});
 
   final Future<void> Function() callback;
-
+  final bool inStartApp;
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
@@ -36,22 +36,27 @@ class NetworkErrorPage extends StatelessWidget {
                     title: 'reload',
                     onTap: () async {
                       sl<APIConnection>().networkError = false;
-
-                      CustomNavigator.instance.pop();
+                      if(!inStartApp){
+                        CustomNavigator.instance.pop();
+                      }
                       await callback();
                     },
                   ),
-                  LoadingButton(
-                    topPadding: 0,
-                    hasBottomSaveArea: false,
-                    backgroundColor: Colors.white,
-                    fontColor: AppColors.blackColor,
-                    isLoading: false,
-                    title: 'Ignore This Error',
-                    onTap: () async {
-                      CustomNavigator.instance.pop();
-                    },
-                  )
+                  if(!inStartApp)...[
+                    LoadingButton(
+                      topPadding: 0,
+                      hasBottomSaveArea: false,
+                      backgroundColor: Colors.white,
+                      fontColor: AppColors.blackColor,
+                      isLoading: false,
+                      title: 'Ignore This Error',
+                      onTap: () async {
+                        if(!inStartApp){
+                          CustomNavigator.instance.pop();
+                        }
+                      },
+                    )
+                  ]
                 ],
               ),
             ),
