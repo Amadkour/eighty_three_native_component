@@ -46,23 +46,26 @@ class FirebaseNotificationsService {
   }
 
   void _mapPayload(String? payload) {}
-
+ int _hashCode=0;
   Future<void> sendLocalMessage(
       RemoteMessage? notification, String? payload) async {
-    await _localNotificationsPlugin.show(
-      notification.hashCode,
-      notification?.notification?.title ??
-          notification?.data['title'] as String?,
-      notification?.notification?.body ?? notification?.data['body'] as String?,
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          packageName,
-          appName,
-          icon: 'app_logo',
+    if(_hashCode!= notification.hashCode) {
+      _hashCode=notification.hashCode;
+      await _localNotificationsPlugin.show(
+        notification.hashCode,
+        notification?.notification?.title ??
+            notification?.data['title'] as String?,
+        notification?.notification?.body ?? notification?.data['body'] as String?,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            packageName,
+            appName,
+            icon: 'app_logo',
+          ),
         ),
-      ),
-      payload: payload,
-    );
+        payload: payload,
+      );
+    }
   }
 
   Future<String> getDeviceToken() async {
