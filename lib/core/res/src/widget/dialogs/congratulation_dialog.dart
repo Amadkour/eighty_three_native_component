@@ -8,11 +8,9 @@ import 'package:eighty_three_native_component/eighty_three_component.dart';
 import 'package:flutter/material.dart';
 
 class CongratulationDialog {
-  final String? title;
   final String? dialogSupTitle;
-  final String? image;
 
-  CongratulationDialog(this.title, this.image, {this.dialogSupTitle, required BuildContext context}) {
+  CongratulationDialog({this.dialogSupTitle, required BuildContext context}) {
     showDialog(
         useRootNavigator: false,
         context: context,
@@ -32,7 +30,7 @@ class CongratulationDialog {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       MyImage.assets(
-                        url: image??'assets/images/register_confirmation.png',
+                        url: 'assets/images/register_confirmation.png',
                         height: 188,
                         width: 260,
                       ),
@@ -40,7 +38,7 @@ class CongratulationDialog {
                         height: 24,
                       ),
                       AutoSizeText(
-                       title?? tr('Congratulations!'),
+                        tr('Congratulations!'),
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
