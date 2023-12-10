@@ -219,7 +219,6 @@ void dateSheet({
                   key: const Key("date_picker"),
                   initialDateTime: dateController.text == ''
                       ? DateTime.now()
-                      .subtract(const Duration(days: 6574, hours: 2))
                       : DateTime.tryParse(dateController.text) != null
                       ? DateTime.parse(dateController.text)
                       : DateTime.parse(dob),
@@ -229,7 +228,7 @@ void dateSheet({
 
                     onChanged?.call();
                   },
-                  maximumDate: DateTime.now(),
+                  maximumDate: DateTime.now().add(const Duration(days: 150)),
                   mode: CupertinoDatePickerMode.date,
                   dateOrder: DatePickerDateOrder.dmy,
                 ),
