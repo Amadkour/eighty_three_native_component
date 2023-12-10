@@ -19,7 +19,7 @@ class _SvgImageAssets extends MyImage {
   @override
   Widget build(BuildContext context) {
     return url.isEmpty && defaultUrl.isEmpty
-        ? ResAppImage(
+        ? AppLogo(
             width: width,
             height: height,
             borderRadius: borderRadius,
@@ -59,7 +59,7 @@ class _AssetImage extends MyImage {
     return ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius ?? 0),
       child: url.isEmpty && defaultUrl.isEmpty
-          ? ResAppImage(
+          ? AppLogo(
               width: width,
               height: height,
               borderRadius: borderRadius ?? 180,
@@ -78,7 +78,7 @@ class _AssetImage extends MyImage {
                               width: width,
                               fit: fit,
                             )
-                          : ResAppImage(
+                          : AppLogo(
                               width: width,
                               height: height,
                               borderRadius: borderRadius ?? 180,

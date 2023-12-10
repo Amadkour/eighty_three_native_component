@@ -1,8 +1,8 @@
 import 'dart:io';
 
+import 'package:eighty_three_native_component/core/res/src/widget/images/app_logo.dart';
 import 'package:eighty_three_native_component/core/res/src/widget/images/cashed_network_image.dart';
 import 'package:eighty_three_native_component/core/res/src/loading.dart';
-import 'package:eighty_three_native_component/core/res/src/widget/res_app_image.dart';
 import 'package:eighty_three_native_component/core/res/theme/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

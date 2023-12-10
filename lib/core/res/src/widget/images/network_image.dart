@@ -21,7 +21,7 @@ class _NetworkImage extends MyImage {
         builder: (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
           if (snapshot.hasError) {
             if (defaultUrl.isEmpty) {
-              return ResAppImage(
+              return AppLogo(
                 width: width,
                 height: height,
                 borderRadius: borderRadius,
@@ -74,7 +74,7 @@ class _SvgImageNetwork extends MyImage {
   @override
   Widget build(BuildContext context) {
     if (url.isEmpty && defaultUrl.isEmpty) {
-      return ResAppImage(
+      return AppLogo(
         width: width,
         height: height,
         borderRadius: borderRadius,
@@ -85,7 +85,7 @@ class _SvgImageNetwork extends MyImage {
       builder: (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
         if (snapshot.hasError) {
           if (defaultUrl.isEmpty) {
-            return ResAppImage(
+            return AppLogo(
               width: width,
               height: height,
               borderRadius: borderRadius,
